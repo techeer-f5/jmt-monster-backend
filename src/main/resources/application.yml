@@ -1,0 +1,56 @@
+# All profiles
+spring:
+  profiles:
+    active: local
+  devtools:
+    livereload:
+      enabled: true # live reload
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        # Print all SQL queries from Hibernate execution to console
+        show_sql: true
+        # Format JPA queries on console with readability
+        format_sql: true
+        # Print extra information besides SQL queries for debugging
+        use_sql_comments: true
+
+# Custom properties
+app:
+  cors:
+    # comma (',') seperated list of allowed origins for CORS
+    allowed-origins: http://localhost,http://localhost:3000
+
+server:
+  port: 8000
+---
+# Local settings
+spring:
+  config:
+    activate:
+      on-profile: local
+
+logging:
+  level:
+    root: info
+---
+# Development settings
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+logging:
+  level:
+    root: info
+---
+# Production settings
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+logging:
+  level:
+    root: error

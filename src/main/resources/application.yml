@@ -16,6 +16,12 @@ spring:
         # Print extra information besides SQL queries for debugging
         use_sql_comments: true
 
+# Custom properties
+app:
+  cors:
+    # comma (',') seperated list of allowed origins for CORS
+    allowed-origins: http://localhost,http://localhost:3000
+
 server:
   port: 8000
 ---

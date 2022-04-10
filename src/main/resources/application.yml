@@ -1,0 +1,34 @@
+# All profiles
+spring:
+  profiles:
+    active: local
+---
+# Local settings
+spring:
+  config:
+    activate:
+      on-profile: local
+
+logging:
+  level:
+    root: info
+---
+# Development settings
+spring:
+  config:
+    activate:
+      on-profile: dev
+
+logging:
+  level:
+    root: info
+---
+# Production settings
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+logging:
+  level:
+    root: error

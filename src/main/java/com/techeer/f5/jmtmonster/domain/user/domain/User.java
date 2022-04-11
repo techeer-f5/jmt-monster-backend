@@ -17,7 +17,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(nullable = false)
+    @NotNull
     private String name;
 
     @Email
@@ -26,7 +26,7 @@ public class User {
 
     private String imageUrl;
 
-    @Column(nullable = false)
+    @NotNull
     private Boolean emailVerified = false;
 
     @JsonIgnore

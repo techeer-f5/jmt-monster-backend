@@ -21,7 +21,7 @@ public class User {
     private String name;
 
     @Email
-    @Column(nullable = false)
+    @NotNull
     private String email;
 
     private String imageUrl;

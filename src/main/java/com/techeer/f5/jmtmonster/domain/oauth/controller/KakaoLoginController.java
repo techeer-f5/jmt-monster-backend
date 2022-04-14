@@ -24,7 +24,7 @@ public class KakaoLoginController {
     private KakaoLoginService kakaoLoginService;
 
     @GetMapping
-    public void login(@NonNull HttpServletResponse response, @RequestParam @NotBlank String code) throws IOException {
+    public void login(@NonNull HttpServletResponse response) throws IOException {
         try {
             kakaoLoginService.redirectToKakaoLogin(response);
         } catch (IOException e) {

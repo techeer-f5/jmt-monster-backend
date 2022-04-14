@@ -6,9 +6,14 @@ import com.techeer.f5.jmtmonster.domain.oauth.dto.KakaoOAuthResponseDto;
 import com.techeer.f5.jmtmonster.domain.oauth.dto.KakaoUserDto;
 import com.techeer.f5.jmtmonster.domain.oauth.dto.PersistentTokenDto;
 import com.techeer.f5.jmtmonster.domain.oauth.repository.PersistentTokenRepository;
+import com.techeer.f5.jmtmonster.domain.user.domain.AuthProvider;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
@@ -18,10 +23,13 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.text.html.Option;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 
+@Slf4j
 @Service
 public class KakaoCallbackService {
     @Autowired
@@ -49,12 +57,10 @@ public class KakaoCallbackService {
                 // TokenRepository 사용해서 카카오용 클라이언트 - 서버용 JWT 토큰 만들고 넘겨준다.
                 // Optional이 empty면? 다른 내용으로 빌더 사용..
 
-                var kakaoAccount = kakaoUser.getKakaoAccount();
+                String name = kakaoUser.getProfileNickname();
+                String email = kakaoUser.getEmail();
 
-                String name = kakaoAccount.getName();
-                String email = kakaoAccount.getEmail();
-
-                User user = userRepository.createAndSave(name, email);
+                User user = userRepository.createAndSave(name, email, AuthProvider.KAKAO);
 
                 PersistentToken persistentToken = PersistentToken.builder()
                                             .user(user)
@@ -87,6 +93,8 @@ public class KakaoCallbackService {
         try {
             entity = restTemplate.getForEntity(tokenUrl, KakaoOAuthResponseDto.class);
         } catch (RestClientException e) {
+            log.error("RestClientException on KakaoCallbackService grantAccessToken /auth/kakao/callback {}", e.getMessage());
+
             try {
                 redirectToServerLogin(response);
             } catch (IOException ignored) { }
@@ -95,8 +103,6 @@ public class KakaoCallbackService {
         }
 
         int statusCode = entity.getStatusCode().value();
-
-        assert (200 <= statusCode && statusCode < 300);
 
         Optional<KakaoOAuthResponseDto> responseBody = Optional.ofNullable(entity.getBody());
 
@@ -110,8 +116,14 @@ public class KakaoCallbackService {
         ResponseEntity<KakaoUserDto> entity;
 
         try {
-            entity = restTemplate.getForEntity(myInfoUrl, KakaoUserDto.class);
+            entity = restTemplate.exchange(myInfoUrl,
+                        HttpMethod.GET,
+                        new HttpEntity<>(createBearerHeader(accessToken)),
+                        KakaoUserDto.class);
+
         } catch (RestClientException e) {
+            log.error("RestClientException on KakaoCallbackService getUser /auth/kakao/callback {}", e.getMessage());
+
             return Optional.empty();
         }
 
@@ -121,5 +133,11 @@ public class KakaoCallbackService {
     private void redirectToServerLogin(@NonNull HttpServletResponse response) throws IOException {
         String redirectUrl = kakaoConfig.getServerLoginUrl();
         response.sendRedirect(redirectUrl);
+    }
+
+    private HttpHeaders createBearerHeader(String token){
+        return new HttpHeaders() {{
+            set("Authorization", String.format("Bearer %s", token));
+        }};
     }
 }

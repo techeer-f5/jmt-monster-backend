@@ -5,13 +5,11 @@ import com.techeer.f5.jmtmonster.domain.oauth.domain.PersistentToken;
 import com.techeer.f5.jmtmonster.domain.user.domain.AuthProvider;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -24,8 +22,8 @@ import java.util.UUID;
 @Table(name = "user")
 public class User {
     @Id
-    @GeneratedValue(generator = "uuid4")
-    @GenericGenerator(name = "uuid4", strategy = "uuid4")
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
@@ -37,7 +35,7 @@ public class User {
 
     @Size(min = 1, max = 100, message = "이메일 길이는 1자부터 30자까지 가능합니다.")
     @Email
-    @NotBlank
+    @NotNull
     private String email;
 
 
@@ -48,6 +46,7 @@ public class User {
 
     @Size(min = 1, max = 1024, message = "주소 길이는 1자부터 1024자까지 가능합니다.")
     @Nullable
+    @Column(name="address_")
     private String address = null;
 
     @Size(min = 1, max = 4096, message = "이미지 주소 길이는 1자부터 1024자까지 가능합니다.")
@@ -55,17 +54,16 @@ public class User {
     private String imageUrl = null;
 
     @NotNull
+    @Builder.Default
     private Boolean emailVerified = false;
 
     @NotNull
+    @Builder.Default
     private Boolean extraInfoInjected = false;
 
     @NotNull
+    @Builder.Default
     private Boolean verified = false;
-
-    @Size(min = 1, max = 1024, message = "비밀번호 해시값 길이는 1자부터 1024자까지 가능합니다.")
-    @JsonIgnore
-    private String password;
 
     @NotNull
     @Enumerated(EnumType.STRING)

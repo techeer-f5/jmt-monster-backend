@@ -5,6 +5,7 @@ import com.techeer.f5.jmtmonster.domain.oauth.domain.PersistentToken;
 import com.techeer.f5.jmtmonster.domain.user.domain.AuthProvider;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
@@ -19,23 +20,24 @@ import java.util.UUID;
 @AllArgsConstructor
 @Entity
 @Builder
-@Table(name = "user")
 public class User {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Column(columnDefinition = "BINARY(16)")
-    private UUID id;
+    @Builder.Default
+    private UUID id = UUID.randomUUID();
 
 
     @Size(min = 1, max = 30, message = "이름 길이는 1자부터 30자까지 가능합니다.")
     @NotBlank
+    @Column(unique = true)
     private String name;
 
 
     @Size(min = 1, max = 100, message = "이메일 길이는 1자부터 30자까지 가능합니다.")
     @Email
     @NotNull
+    @Column(unique = true)
     private String email;
 
 
@@ -46,7 +48,6 @@ public class User {
 
     @Size(min = 1, max = 1024, message = "주소 길이는 1자부터 1024자까지 가능합니다.")
     @Nullable
-    @Column(name="address_")
     private String address = null;
 
     @Size(min = 1, max = 4096, message = "이미지 주소 길이는 1자부터 1024자까지 가능합니다.")
@@ -70,7 +71,8 @@ public class User {
     private AuthProvider provider;
 
     @OneToMany
-    private List<PersistentToken> tokens;
+    @Builder.Default
+    private List<PersistentToken> tokens = new ArrayList<>();
 
     public boolean addExtraInfo(String nickname, String address) throws IllegalStateException {
         if (extraInfoInjected) {

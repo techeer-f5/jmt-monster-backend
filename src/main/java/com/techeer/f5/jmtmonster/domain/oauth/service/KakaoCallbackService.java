@@ -60,11 +60,21 @@ public class KakaoCallbackService {
                 String name = kakaoUser.getProfileNickname();
                 String email = kakaoUser.getEmail();
 
-                User user = userRepository.createAndSave(name, email, AuthProvider.KAKAO);
+                Optional<User> userOptional = userRepository.getUserByName(name);
+
+                User user = null;
+
+                if (userOptional.isPresent()) {
+                    user = userOptional.get();
+                } else {
+                    user = userRepository.build(name, email, AuthProvider.KAKAO);
+                    userRepository.save(user);
+                }
 
                 PersistentToken persistentToken = PersistentToken.builder()
-                                            .user(user)
                                             .build();
+
+                user.getTokens().add(persistentToken);
 
                 tokenRepository.save(persistentToken);
 

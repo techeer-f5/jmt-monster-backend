@@ -1,6 +1,7 @@
 package com.techeer.f5.jmtmonster.domain.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.techeer.f5.jmtmonster.domain.user.domain.AuthProvider;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

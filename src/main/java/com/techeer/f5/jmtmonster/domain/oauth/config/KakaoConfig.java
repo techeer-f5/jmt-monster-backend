@@ -4,8 +4,9 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
+
+import javax.validation.constraints.NotNull;
 
 @Component
 @Getter
@@ -33,7 +34,7 @@ public class KakaoConfig {
         this.myInfoUrl = "https://kapi.kakao.com/v2/user/me";
     }
 
-    public String getTokenUrl(@NonNull String code) {
+    public String getTokenUrl(@NotNull String code) {
         return String.format("https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=%s&redirect_uri=%s&code=%s", restApiKey, callbackUrl, code);
     }
 

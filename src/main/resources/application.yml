@@ -10,14 +10,14 @@ spring:
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL57Dialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
         # Print all SQL queries from Hibernate execution to console
         show_sql: true
         # Format JPA queries on console with readability
         format_sql: true
         # Print extra information besides SQL queries for debugging
         use_sql_comments: true
-        ddl-auto: create
+        ddl-auto: update
     generate-ddl: true
   # Disable flyway
   flyway:

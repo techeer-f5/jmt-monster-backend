@@ -1,12 +1,8 @@
 package com.techeer.f5.jmtmonster.domain.user.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.techeer.f5.jmtmonster.domain.oauth.domain.PersistentToken;
-import com.techeer.f5.jmtmonster.domain.user.domain.AuthProvider;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
-import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
@@ -24,6 +20,7 @@ public class User {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Column(columnDefinition = "BINARY(16)")
     @Builder.Default
     private UUID id = UUID.randomUUID();
 
@@ -66,11 +63,9 @@ public class User {
     @Builder.Default
     private Boolean verified = false;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    private AuthProvider provider;
-
-    @OneToMany
+    // List<T>는 여러개의 대응을 가지는 타입
+    // mappedBy는 자기 자신의 테이블 이름
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @Builder.Default
     private List<PersistentToken> tokens = new ArrayList<>();
 

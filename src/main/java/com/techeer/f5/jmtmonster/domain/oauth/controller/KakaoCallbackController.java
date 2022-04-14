@@ -8,7 +8,6 @@ import org.hibernate.validator.constraints.br.CNPJ;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +28,7 @@ public class KakaoCallbackController {
 
 
     @GetMapping
-    public PersistentTokenDto authentication(@NonNull HttpServletResponse response, @RequestParam @NotBlank String code) {
+    public PersistentTokenDto authentication(@NotNull HttpServletResponse response, @RequestParam @NotBlank String code) {
         return kakaoCallbackService.authentication(response, code);
     }
 

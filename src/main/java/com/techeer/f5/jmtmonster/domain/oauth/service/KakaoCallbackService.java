@@ -6,7 +6,7 @@ import com.techeer.f5.jmtmonster.domain.oauth.dto.KakaoOAuthResponseDto;
 import com.techeer.f5.jmtmonster.domain.oauth.dto.KakaoUserDto;
 import com.techeer.f5.jmtmonster.domain.oauth.dto.PersistentTokenDto;
 import com.techeer.f5.jmtmonster.domain.oauth.repository.PersistentTokenRepository;
-import com.techeer.f5.jmtmonster.domain.user.domain.AuthProvider;
+import com.techeer.f5.jmtmonster.domain.oauth.domain.AuthProvider;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -15,18 +15,15 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.NonNull;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.html.Option;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Slf4j
@@ -44,7 +41,7 @@ public class KakaoCallbackService {
     @Autowired
     private PersistentTokenRepository tokenRepository;
 
-    public PersistentTokenDto authentication(@NonNull HttpServletResponse response, @NonNull String code) {
+    public PersistentTokenDto authentication(@NotNull HttpServletResponse response, @NotNull String code) {
         Optional<String> accessToken = grantAccessToken(response, code);
 
         AtomicReference<Optional<PersistentToken>> persistentTokenResult = new AtomicReference<>(Optional.empty());
@@ -62,21 +59,35 @@ public class KakaoCallbackService {
 
                 Optional<User> userOptional = userRepository.getUserByName(name);
 
-                User user = null;
+                User user;
 
                 if (userOptional.isPresent()) {
                     user = userOptional.get();
                 } else {
-                    user = userRepository.build(name, email, AuthProvider.KAKAO);
-                    userRepository.save(user);
+                    user = userRepository.build(name, email);
+                    userRepository.saveAndFlush(user);
                 }
 
-                PersistentToken persistentToken = PersistentToken.builder()
-                                            .build();
+                List<PersistentToken> tokens = user.getTokens()
+                                                    .stream()
+                                                    .filter(tkn -> tkn.getProvider() == AuthProvider.KAKAO)
+                                                    .sorted((a, b) -> a.getId().compareTo(b.getId()))
+                                                    .toList();
 
-                user.getTokens().add(persistentToken);
+                PersistentToken persistentToken;
 
-                tokenRepository.save(persistentToken);
+                if (!tokens.isEmpty()) {
+                    persistentToken = tokens.get(0);
+                } else {
+                    persistentToken = PersistentToken.builder()
+                                    .user(user)
+                                    .provider(AuthProvider.KAKAO)
+                                    .build();
+                    tokenRepository.saveAndFlush(persistentToken);
+
+                    user.getTokens().add(persistentToken);
+                    userRepository.saveAndFlush(user);
+                }
 
                 persistentTokenResult.set(Optional.of(persistentToken));
             });
@@ -95,7 +106,7 @@ public class KakaoCallbackService {
         }).get();
     }
 
-    private Optional<String> grantAccessToken(@NonNull HttpServletResponse response, @NonNull String code) {
+    private Optional<String> grantAccessToken(@NotNull HttpServletResponse response, @NotNull String code) {
         String tokenUrl = kakaoConfig.getTokenUrl(code);
 
         ResponseEntity<KakaoOAuthResponseDto> entity;
@@ -140,7 +151,7 @@ public class KakaoCallbackService {
         return Optional.ofNullable(entity.getBody());
     }
 
-    private void redirectToServerLogin(@NonNull HttpServletResponse response) throws IOException {
+    private void redirectToServerLogin(@NotNull HttpServletResponse response) throws IOException {
         String redirectUrl = kakaoConfig.getServerLoginUrl();
         response.sendRedirect(redirectUrl);
     }

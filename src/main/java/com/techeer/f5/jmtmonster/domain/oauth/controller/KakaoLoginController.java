@@ -5,7 +5,6 @@ import com.techeer.f5.jmtmonster.domain.oauth.service.KakaoCallbackService;
 import com.techeer.f5.jmtmonster.domain.oauth.service.KakaoLoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 
 @Slf4j
@@ -24,7 +24,7 @@ public class KakaoLoginController {
     private KakaoLoginService kakaoLoginService;
 
     @GetMapping
-    public void login(@NonNull HttpServletResponse response) throws IOException {
+    public void login(@NotNull HttpServletResponse response) throws IOException {
         try {
             kakaoLoginService.redirectToKakaoLogin(response);
         } catch (IOException e) {

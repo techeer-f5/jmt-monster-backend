@@ -6,9 +6,11 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -20,5 +22,16 @@ public class PersistentToken {
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    private UUID id;
+    @Column(columnDefinition = "BINARY(16)")
+    @Builder.Default
+    private UUID id = UUID.randomUUID();
+
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private AuthProvider provider = AuthProvider.NONE;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @NotNull
+    private User user;
 }

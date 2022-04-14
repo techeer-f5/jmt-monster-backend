@@ -9,13 +9,13 @@ import org.springframework.stereotype.Component;
 @Component
 @Getter
 public class KakaoConfig {
-    @Value("${oauth.kakao.rest_api_key}")
+    @Value("${oauth.kakao.rest-api-key}")
     private String restApiKey;
 
-    @Value("${oauth.kakao.callback_url}")
+    @Value("${oauth.kakao.callback-url}")
     private String callbackUrl;
 
-    @Value("${oauth.kakao.base_url}")
+    @Value("${oauth.kakao.base-url}")
     // server base url (hostname). doesn't have trailing slash.
     private String baseUrl;
 

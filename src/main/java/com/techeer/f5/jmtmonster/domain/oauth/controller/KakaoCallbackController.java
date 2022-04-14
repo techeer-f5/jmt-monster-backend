@@ -1,6 +1,7 @@
 package com.techeer.f5.jmtmonster.domain.oauth.controller;
 
 import com.techeer.f5.jmtmonster.domain.oauth.config.KakaoConfig;
+import com.techeer.f5.jmtmonster.domain.oauth.dto.PersistentTokenDto;
 import com.techeer.f5.jmtmonster.domain.oauth.service.KakaoCallbackService;
 import lombok.extern.slf4j.Slf4j;
 import org.hibernate.validator.constraints.br.CNPJ;
@@ -28,7 +29,7 @@ public class KakaoCallbackController {
 
 
     @GetMapping
-    public Object authentication(@NonNull HttpServletResponse response, @RequestParam @NotBlank String code) {
+    public PersistentTokenDto authentication(@NonNull HttpServletResponse response, @RequestParam @NotBlank String code) {
         return kakaoCallbackService.authentication(response, code);
     }
 

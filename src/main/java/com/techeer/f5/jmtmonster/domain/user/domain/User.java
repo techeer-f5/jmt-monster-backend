@@ -3,9 +3,7 @@ package com.techeer.f5.jmtmonster.domain.user.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.techeer.f5.jmtmonster.domain.oauth.domain.PersistentToken;
 import com.techeer.f5.jmtmonster.domain.user.domain.AuthProvider;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.Nullable;
 
@@ -20,7 +18,9 @@ import java.util.UUID;
 
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Builder
 @Table(name = "user")
 public class User {
     @Id

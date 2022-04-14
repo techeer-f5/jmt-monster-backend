@@ -13,6 +13,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.security.AuthProvider;
 import java.util.UUID;
 
 @Getter
@@ -66,8 +67,8 @@ public class User {
 
     @NotNull
     @Enumerated(EnumType.STRING)
+    // FIXME: implement AuthProvider
     private AuthProvider provider;
-
 
     public boolean addExtraInfo(String nickname, String address) throws IllegalStateException {
         if (extraInfoInjected) {

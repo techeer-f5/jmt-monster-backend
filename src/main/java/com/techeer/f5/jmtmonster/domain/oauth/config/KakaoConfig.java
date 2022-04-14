@@ -1,10 +1,33 @@
 package com.techeer.f5.jmtmonster.domain.oauth.config;
 
-import lombok.Value;
+import lombok.AccessLevel;
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Component;
 
 @Component
-public class KakaoConfig  {
-    @Value("${oauth.kakao.REST_API_KEY}")
-    private String KAKAO_REST_API_KEY;
+@Getter
+public class KakaoConfig {
+    @Value("${oauth.kakao.rest_api_key}")
+    private String restApiKey;
+
+    @Value("${oauth.kakao.callback_url}")
+    private String callbackUrl;
+
+    @Value("${oauth.kakao.base_url}")
+    // server base url (hostname). doesn't have trailing slash.
+    private String baseUrl;
+
+    private final String redirectUrl = String.format("https://kauth.kakao.com/oauth/authorize?client_id=%s&redirect_uri=%s&response_type=code", restApiKey, callbackUrl);
+
+    private final String serverLoginUrl = String.format("%s/auth/kakao/login", baseUrl);
+
+    private final String myInfoUrl = "https://kapi.kakao.com/v2/user/me";
+
+    public String getTokenUrl(@NonNull String code) {
+        return String.format("https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=%s&redirect_uri=%s&code=%s", restApiKey, redirectUrl, code);
+    }
+
+
 }

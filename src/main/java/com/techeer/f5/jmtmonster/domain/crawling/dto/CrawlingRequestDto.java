@@ -5,14 +5,17 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CrawlingResponseDto {
+public class CrawlingRequestDto {
+    @NotEmpty
+    private String stringValue;
 
-    private Long restId;
-    private String name;
-    private String price;
-    private String picture;
+    @NotNull
+    private Long intValue;
 }

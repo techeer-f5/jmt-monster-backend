@@ -42,3 +42,5 @@ out/
 
 ### secrete.yml ###
 /src/main/resources/secret.yml
+
+application-secret.yml

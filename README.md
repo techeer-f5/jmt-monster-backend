@@ -22,8 +22,16 @@
 
 ## **🔧 Tech stack**
 
-테이블 추가 TODO
-
+- Java 17
+- Gradle 7.4.1
+- Spring Boot 2.6.6
+- Spring Security + OAuth 2.0
+- JPA (Hibernate)
+- MySQL
+- Flyway
+- Lombok
+- Jackson
+- JUnit 5, Mockito, Hamcrest
 
 [//]: # (<br>)
 

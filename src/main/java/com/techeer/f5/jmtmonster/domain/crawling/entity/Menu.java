@@ -8,6 +8,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
@@ -26,7 +27,11 @@ public class Menu {
 
     @NotNull
     private String name; // menu 이름
+
+
+    @Digits(integer = 8, fraction = 2)
     private String price; // 가격
+
     private String picture; // 사진
 
 }

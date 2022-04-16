@@ -3,12 +3,13 @@ package com.techeer.f5.jmtmonster.domain.crawling.entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -16,8 +17,9 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class Menu {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    private UUID id = UUID.randomUUID();
 
     @NotNull // OneToMany
     private Long rest_id;

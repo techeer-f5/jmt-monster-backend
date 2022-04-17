@@ -28,6 +28,7 @@ public class PersistentToken {
 
     @Enumerated(EnumType.STRING)
     @NotNull
+    @Builder.Default
     private AuthProvider provider = AuthProvider.NONE;
 
     @ManyToOne

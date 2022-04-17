@@ -58,7 +58,7 @@ tasks.named('asciidoctor') {
 }
 
 // ./gradlew openapi3
-// See /build/api-spec/openapi3.json
+// See /src/main/resources/static/docs/openapi3.json
 openapi3 {
     server = 'http://localhost:8000'
     title = 'JMT Monster'

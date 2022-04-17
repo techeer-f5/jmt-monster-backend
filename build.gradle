@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.6.6'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'org.asciidoctor.convert' version '1.5.8'
+    id 'com.epages.restdocs-api-spec' version '0.16.0'
     id 'java'
 }
 
@@ -33,6 +34,7 @@ dependencies {
     implementation 'org.flywaydb:flyway-core'
     implementation 'com.fasterxml.jackson.core:jackson-core:2.13.2'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.2'
+    implementation 'org.projectlombok:lombok:1.18.22'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
@@ -42,6 +44,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.16.0'
 }
 
 tasks.named('test') {
@@ -52,4 +55,15 @@ tasks.named('test') {
 tasks.named('asciidoctor') {
     inputs.dir snippetsDir
     dependsOn test
+}
+
+// ./gradlew openapi3
+// See /src/main/resources/static/docs/openapi3.json
+openapi3 {
+    server = 'http://localhost:8000'
+    title = 'JMT Monster'
+    description = 'Interactive Dining Review Game'
+    version = '0.1.0'
+    format = 'json'
+    outputDirectory = 'src/main/resources/static/docs'
 }

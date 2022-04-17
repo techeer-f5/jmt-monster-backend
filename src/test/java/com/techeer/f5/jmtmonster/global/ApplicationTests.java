@@ -1,4 +1,4 @@
-package com.techeer.f5.jmtmonster;
+package com.techeer.f5.jmtmonster.global;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

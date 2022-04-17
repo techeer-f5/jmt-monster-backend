@@ -1,20 +1,13 @@
 package com.techeer.f5.jmtmonster.global.config;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.*;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.client.ClientHttpRequest;
-import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,13 +23,17 @@ public class RestTemplateConfig {
     @Bean
     public ObjectMapper jacksonObjectMapper()
     {
-        return new ObjectMapper().setPropertyNamingStrategy(propertyNamingStrategy()).configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+        return new ObjectMapper()
+                    .setPropertyNamingStrategy(propertyNamingStrategy())
+                    .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
+                    .registerModule(new JavaTimeModule())
+                    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     }
 
     @Bean
     public PropertyNamingStrategy propertyNamingStrategy()
     {
-        return PropertyNamingStrategies.SNAKE_CASE;
+        return PropertyNamingStrategies.LOWER_CAMEL_CASE;
     }
 
 

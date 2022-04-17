@@ -44,3 +44,5 @@ out/
 /src/main/resources/secret.yml
 
 application-secret.yml
+
+target

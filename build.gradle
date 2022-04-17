@@ -65,9 +65,5 @@ openapi3 {
     description = 'Interactive Dining Review Game'
     version = '0.1.0'
     format = 'json'
-
-    copy {
-        from 'build/api-spec'
-        into 'src/main/resources/static/docs'
-    }
+    outputDirectory = 'src/main/resources/static/docs'
 }

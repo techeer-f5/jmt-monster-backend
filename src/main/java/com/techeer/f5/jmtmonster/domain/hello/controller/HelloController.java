@@ -2,7 +2,6 @@ package com.techeer.f5.jmtmonster.domain.hello.controller;
 
 import com.techeer.f5.jmtmonster.domain.hello.dto.HelloRequestDto;
 import com.techeer.f5.jmtmonster.domain.hello.dto.HelloResponseDto;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,7 +34,7 @@ public class HelloController {
                 .success(true)
                 .build();
 
-        return ResponseEntity.status(HttpStatus.CREATED)
+        return ResponseEntity.ok()
                 .body(response);
     }
 }

@@ -44,6 +44,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testImplementation 'org.springframework.security:spring-security-test'
+    testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.16.0'
 }
 
 tasks.named('test') {
@@ -54,4 +55,19 @@ tasks.named('test') {
 tasks.named('asciidoctor') {
     inputs.dir snippetsDir
     dependsOn test
+}
+
+// ./gradlew openapi3
+// See /build/api-spec/openapi3.json
+openapi3 {
+    server = 'http://localhost:8000'
+    title = 'JMT Monster'
+    description = 'Interactive Dining Review Game'
+    version = '0.1.0'
+    format = 'json'
+
+    copy {
+        from 'build/api-spec'
+        into 'src/main/resources/static/docs'
+    }
 }

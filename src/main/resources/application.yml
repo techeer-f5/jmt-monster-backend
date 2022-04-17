@@ -27,7 +27,7 @@ spring:
 app:
   cors:
     # comma (',') seperated list of allowed origins for CORS
-    allowed-origins: http://localhost,http://localhost:3000
+    allowed-origins: http://localhost,http://localhost:3000,http://localhost:8001
 
 server:
   port: 8000

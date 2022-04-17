@@ -22,11 +22,11 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/api-v1-hello1981539668"
+                  "$ref" : "#/components/schemas/api-v1-hello527089244"
                 },
                 "examples" : {
                   "hello-get" : {
-                    "value" : "{\n  \"value\" : \"hello\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-04-18T03:32:46.29356\"\n}"
+                    "value" : "{\n  \"value\" : \"hello\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-04-18T04:19:27.204034\"\n}"
                   }
                 }
               }
@@ -43,7 +43,7 @@
           "content" : {
             "application/json;charset=UTF-8" : {
               "schema" : {
-                "$ref" : "#/components/schemas/api-v1-hello754364377"
+                "$ref" : "#/components/schemas/api-v1-hello-1906941826"
               },
               "examples" : {
                 "hello-create" : {
@@ -59,11 +59,11 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/api-v1-hello1981539668"
+                  "$ref" : "#/components/schemas/api-v1-hello527089244"
                 },
                 "examples" : {
                   "hello-create" : {
-                    "value" : "{\n  \"value\" : \"hello example1\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-04-18T03:32:46.068591\"\n}"
+                    "value" : "{\n  \"value\" : \"hello example1\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-04-18T04:19:26.970268\"\n}"
                   }
                 }
               }
@@ -75,33 +75,33 @@
   },
   "components" : {
     "schemas" : {
-      "api-v1-hello1981539668" : {
+      "api-v1-hello527089244" : {
         "type" : "object",
         "properties" : {
           "success" : {
             "type" : "boolean",
-            "description" : "success flag."
+            "description" : "성공 여부를 나타내는 불린 변수"
           },
           "createdOn" : {
             "type" : "string",
-            "description" : "response created date."
+            "description" : "객체 생성 시각"
           },
           "value" : {
             "type" : "string",
-            "description" : "response message."
+            "description" : "리스폰스 메시지"
           }
         }
       },
-      "api-v1-hello754364377" : {
+      "api-v1-hello-1906941826" : {
         "type" : "object",
         "properties" : {
           "stringValue" : {
             "type" : "string",
-            "description" : "string value."
+            "description" : "문자열 값"
           },
           "intValue" : {
             "type" : "number",
-            "description" : "int value."
+            "description" : "정수 값"
           }
         }
       }

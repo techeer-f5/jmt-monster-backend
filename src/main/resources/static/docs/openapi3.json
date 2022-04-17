@@ -1,0 +1,110 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "JMT Monster",
+    "description" : "Interactive Dining Review Game",
+    "version" : "0.1.0"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:8000"
+  } ],
+  "tags" : [ ],
+  "paths" : {
+    "/api/v1/hello" : {
+      "get" : {
+        "tags" : [ "api" ],
+        "summary" : "Hello 객체 조회",
+        "description" : "Hello 객체를 GET으로 가져옵니다.",
+        "operationId" : "hello-get",
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/api-v1-hello1981539668"
+                },
+                "examples" : {
+                  "hello-get" : {
+                    "value" : "{\n  \"value\" : \"hello\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-04-18T03:32:08.234433\"\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "api" ],
+        "summary" : "Hello 객체 생성",
+        "description" : "Hello 객체를 POST로 만듭니다.",
+        "operationId" : "hello-create",
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/api-v1-hello754364377"
+              },
+              "examples" : {
+                "hello-create" : {
+                  "value" : "{\n  \"stringValue\" : \"example\",\n  \"intValue\" : 1\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/api-v1-hello1981539668"
+                },
+                "examples" : {
+                  "hello-create" : {
+                    "value" : "{\n  \"value\" : \"hello example1\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-04-18T03:32:07.983117\"\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "api-v1-hello1981539668" : {
+        "type" : "object",
+        "properties" : {
+          "success" : {
+            "type" : "boolean",
+            "description" : "success flag."
+          },
+          "createdOn" : {
+            "type" : "string",
+            "description" : "response created date."
+          },
+          "value" : {
+            "type" : "string",
+            "description" : "response message."
+          }
+        }
+      },
+      "api-v1-hello754364377" : {
+        "type" : "object",
+        "properties" : {
+          "stringValue" : {
+            "type" : "string",
+            "description" : "string value."
+          },
+          "intValue" : {
+            "type" : "number",
+            "description" : "int value."
+          }
+        }
+      }
+    }
+  }
+}

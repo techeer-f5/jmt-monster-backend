@@ -51,9 +51,9 @@ public class HelloControllerTest {
                                             .description("Hello 객체를 GET으로 가져옵니다.")
                                             .summary("Hello 객체 조회")
                                             .responseFields(
-                                                    fieldWithPath("value").type(JsonFieldType.STRING).description("response message."),
-                                                    fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("success flag."),
-                                                    fieldWithPath("createdOn").type(JsonFieldType.STRING).description("response created date.")
+                                                    fieldWithPath("value").type(JsonFieldType.STRING).description("리스폰스 메시지"),
+                                                    fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공 여부를 나타내는 불린 변수"),
+                                                    fieldWithPath("createdOn").type(JsonFieldType.STRING).description("객체 생성 시각")
                                             )
                                             .build()
                             )
@@ -83,13 +83,13 @@ public class HelloControllerTest {
                                         .description("Hello 객체를 POST로 만듭니다.")
                                         .summary("Hello 객체 생성")
                                         .requestFields(
-                                                fieldWithPath("stringValue").type(JsonFieldType.STRING).description("string value."),
-                                                fieldWithPath("intValue").type(JsonFieldType.NUMBER).description("int value.")
+                                                fieldWithPath("stringValue").type(JsonFieldType.STRING).description("문자열 값"),
+                                                fieldWithPath("intValue").type(JsonFieldType.NUMBER).description("정수 값")
                                         )
                                         .responseFields(
-                                                fieldWithPath("value").type(JsonFieldType.STRING).description("response message."),
-                                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("success flag."),
-                                                fieldWithPath("createdOn").type(JsonFieldType.STRING).description("response created date.")
+                                                fieldWithPath("value").type(JsonFieldType.STRING).description("리스폰스 메시지"),
+                                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공 여부를 나타내는 불린 변수"),
+                                                fieldWithPath("createdOn").type(JsonFieldType.STRING).description("객체 생성 시각")
                                         )
                                         .build()
                         )

@@ -40,4 +40,18 @@ public class HelloControllerTest {
                 )));
     }
 
+    @Test
+    public void checkPostApi() throws Exception {
+
+        mockMvc.perform(post(path).accept(MediaType.APPLICATION_JSON)
+                        .param("stringValue", "example")
+                        .param("intValue", String.valueOf(1)))
+                .andExpect(status().isCreated())
+                .andDo(document("create", responseFields(
+                        fieldWithPath("value").type(JsonFieldType.STRING).description("response message."),
+                        fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("success flag."),
+                        fieldWithPath("createdOn").type(JsonFieldType.STRING).description("response created date.")
+                )));
+    }
+
 }

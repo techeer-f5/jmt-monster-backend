@@ -1,5 +1,6 @@
 plugins {
     id 'org.springframework.boot' version '2.6.6'
+    id 'org.springframework.experimental.aot' version '0.11.4'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'org.asciidoctor.convert' version '1.5.8'
     id 'com.epages.restdocs-api-spec' version '0.16.0'
@@ -18,6 +19,8 @@ configurations {
 
 repositories {
     mavenCentral()
+    gradlePluginPortal()
+    maven { url 'https://repo.spring.io/release' }
 }
 
 ext {
@@ -36,7 +39,10 @@ dependencies {
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.2'
     implementation 'org.projectlombok:lombok:1.18.22'
     compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // DO NOT set developmentOnly with Spring Native!
+    // Check the issue related: https://github.com/spring-projects-experimental/spring-native/issues/1579
+    implementation 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.projectlombok:lombok'
@@ -57,7 +63,7 @@ tasks.named('asciidoctor') {
     dependsOn test
 }
 
-// ./gradlew openapi3
+// Generate OpenAPI 3 json with ./gradlew openapi3
 // See /src/main/resources/static/docs/openapi3.json
 openapi3 {
     server = 'http://localhost:8000'
@@ -66,4 +72,18 @@ openapi3 {
     version = '0.1.0'
     format = 'json'
     outputDirectory = 'src/main/resources/static/docs'
+}
+
+// If build fails with docker host 'localhost' problem,
+// Consider try `export DOCKER_HOST="unix:///var/run/docker.sock"`.
+// Set socket file path as you did.
+//
+// If build fails with 'Error: Image build request failed with exit status 137',
+// Allocate more RAM on docker (>= 8G)
+// Also check https://docs.spring.io/spring-native/docs/0.11.4/reference/htmlsingle/#_out_of_memory_error_when_building_the_native_image
+bootBuildImage {
+    builder = "paketobuildpacks/builder:tiny"
+    environment = [
+            "BP_NATIVE_IMAGE" : "true"
+    ]
 }

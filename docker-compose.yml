@@ -1,0 +1,11 @@
+version: "3.3"
+
+services:
+  swagger-ui:
+    image: swaggerapi/swagger-ui:latest
+    ports:
+      - "8001:8080"
+    environment:
+      # 프론트엔드에서만 다루는 URL이기 때문에 host.docker.internal이 아닌 localhost 사용
+      - API_URL=http://localhost:8000/docs/openapi3.json
+    tty: true

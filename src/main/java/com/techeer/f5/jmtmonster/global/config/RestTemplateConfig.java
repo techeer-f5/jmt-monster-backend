@@ -2,8 +2,12 @@ package com.techeer.f5.jmtmonster.global.config;
 
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
@@ -13,38 +17,35 @@ import java.util.List;
 
 @Configuration
 public class RestTemplateConfig {
+    @Autowired
+    @Qualifier("camelObjectMapper")
+    private ObjectMapper camelObjectMapper;
 
-    /**
-     * Bean to make jackson automatically convert from
-     * camelCase (java) to under_scores (json) in property names
-     *
-     * @return ObjectMapper that maps from Java camelCase to json under_score names
-     */
+    @Autowired
+    @Qualifier("snakeObjectMapper")
+    private ObjectMapper snakeObjectMapper;
+
     @Bean
-    public ObjectMapper jacksonObjectMapper()
-    {
-        return new ObjectMapper()
-                    .setPropertyNamingStrategy(propertyNamingStrategy())
-                    .configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true)
-                    .registerModule(new JavaTimeModule())
-                    .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    @Primary
+    @Qualifier("camelRestTemplate")
+    public RestTemplate camelRestTemplate() {
+        return createRestTemplate(camelObjectMapper);
     }
 
     @Bean
-    public PropertyNamingStrategy propertyNamingStrategy()
-    {
-        return PropertyNamingStrategies.LOWER_CAMEL_CASE;
+    @Qualifier("snakeRestTemplate")
+    public RestTemplate snakeRestTemplate() {
+        return createRestTemplate(snakeObjectMapper);
     }
 
 
-    @Bean
-    public RestTemplate restTemplate() {
+    public RestTemplate createRestTemplate(ObjectMapper objectMapper) {
         RestTemplate restTemplate = new RestTemplate();
 
         List<HttpMessageConverter<?>> messageConverters = new ArrayList<>();
 
         MappingJackson2HttpMessageConverter jsonMessageConverter = new MappingJackson2HttpMessageConverter();
-        jsonMessageConverter.setObjectMapper(jacksonObjectMapper());
+        jsonMessageConverter.setObjectMapper(objectMapper);
         messageConverters.add(jsonMessageConverter);
 
         restTemplate.setMessageConverters(messageConverters);

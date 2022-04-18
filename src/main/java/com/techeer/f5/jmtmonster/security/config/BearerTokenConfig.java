@@ -1,23 +1,27 @@
 package com.techeer.f5.jmtmonster.security.config;
 
+import com.techeer.f5.jmtmonster.domain.oauth.repository.PersistentTokenRepository;
+import com.techeer.f5.jmtmonster.security.extractor.AuthorizationExtractor;
 import com.techeer.f5.jmtmonster.security.interceptor.BearerTokenInterceptor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.handler.MappedInterceptor;
 
 // Original Code from https://ocblog.tistory.com/56
 @Configuration
 @RequiredArgsConstructor
 @Slf4j
 public class BearerTokenConfig implements WebMvcConfigurer {
-    private final BearerTokenInterceptor bearerTokenInterceptor;
+    private final AuthorizationExtractor authorizationExtractor;
+    private final PersistentTokenRepository persistentTokenRepository;
 
-    public void addInterceptors(InterceptorRegistry registry){
-        log.info(">>> BearerTokenConfig Registered.");
-        registry.addInterceptor(bearerTokenInterceptor)
-                .addPathPatterns("**/*")
-                .excludePathPatterns("/auth/kakao/*", "/auth/verify/*");
+    @Bean
+    public MappedInterceptor bearerTokenInterceptor()
+    {
+        return new MappedInterceptor(null, new BearerTokenInterceptor(authorizationExtractor, persistentTokenRepository));
     }
 }

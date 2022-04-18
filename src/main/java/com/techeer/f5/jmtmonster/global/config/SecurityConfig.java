@@ -25,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .cors().and() // Enable CORS
                 .formLogin().disable() // Disable Spring Security login form
-                .csrf().csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()) // Send CSRF token in a cookie
+                .csrf().disable() // Disable CSRF Token
         ;
     }
 

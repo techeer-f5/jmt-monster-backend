@@ -1,5 +1,7 @@
 package com.techeer.f5.jmtmonster.security.interceptor;
 
+import com.techeer.f5.jmtmonster.domain.oauth.domain.PersistentToken;
+import com.techeer.f5.jmtmonster.domain.oauth.repository.PersistentTokenRepository;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
 import com.techeer.f5.jmtmonster.security.extractor.AuthorizationExtractor;
@@ -21,7 +23,7 @@ import java.util.UUID;
 @Slf4j
 public class BearerTokenInterceptor implements HandlerInterceptor {
     private final AuthorizationExtractor authExtractor;
-    private final UserRepository userRepository;
+    private final PersistentTokenRepository persistentTokenRepository;
 
     @Override
     public boolean preHandle(HttpServletRequest request,
@@ -33,7 +35,7 @@ public class BearerTokenInterceptor implements HandlerInterceptor {
             return true;
         }
 
-        Optional<User> optionalUser = userRepository.findById(UUID.fromString(token));
+        Optional<User> optionalUser = persistentTokenRepository.findById(UUID.fromString(token)).map(PersistentToken::getUser);
 
         optionalUser.ifPresent((user) -> {
             // UUID Type

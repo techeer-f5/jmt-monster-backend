@@ -1,6 +1,6 @@
 package com.techeer.f5.jmtmonster.domain.oauth.dto;
 
-import com.techeer.f5.jmtmonster.domain.user.Dto.UserDto;
+import com.techeer.f5.jmtmonster.domain.user.dto.UserDto;
 import lombok.*;
 import org.springframework.lang.Nullable;
 

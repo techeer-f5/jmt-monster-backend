@@ -1,7 +1,7 @@
 package com.techeer.f5.jmtmonster.domain.user.domain;
 
 import com.techeer.f5.jmtmonster.domain.oauth.domain.PersistentToken;
-import com.techeer.f5.jmtmonster.domain.user.Dto.UserDto;
+import com.techeer.f5.jmtmonster.domain.user.dto.UserDto;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.Nullable;

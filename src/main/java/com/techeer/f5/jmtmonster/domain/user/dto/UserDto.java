@@ -1,4 +1,4 @@
-package com.techeer.f5.jmtmonster.domain.user.Dto;
+package com.techeer.f5.jmtmonster.domain.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

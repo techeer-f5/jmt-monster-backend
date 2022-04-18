@@ -18,7 +18,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 // Original Code from https://ocblog.tistory.com/56
-@Component
 @RequiredArgsConstructor
 @Slf4j
 public class BearerTokenInterceptor implements HandlerInterceptor {
@@ -39,7 +38,7 @@ public class BearerTokenInterceptor implements HandlerInterceptor {
 
         optionalUser.ifPresent((user) -> {
             // UUID Type
-            request.setAttribute("userId", user.getId());
+            request.setAttribute("userId", token);
         });
 
         return true;

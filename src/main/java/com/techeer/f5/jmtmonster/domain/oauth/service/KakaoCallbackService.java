@@ -11,6 +11,7 @@ import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -33,7 +34,8 @@ public class KakaoCallbackService {
     private KakaoConfig kakaoConfig;
 
     @Autowired
-    private RestTemplate restTemplate;
+    @Qualifier("snakeRestTemplate")
+    private RestTemplate snakeRestTemplate;
 
     @Autowired
     private UserRepository userRepository;
@@ -112,13 +114,9 @@ public class KakaoCallbackService {
         ResponseEntity<KakaoOAuthResponseDto> entity;
 
         try {
-            entity = restTemplate.getForEntity(tokenUrl, KakaoOAuthResponseDto.class);
+            entity = snakeRestTemplate.getForEntity(tokenUrl, KakaoOAuthResponseDto.class);
         } catch (RestClientException e) {
             log.error("RestClientException on KakaoCallbackService grantAccessToken /auth/kakao/callback {}", e.getMessage());
-
-            try {
-                redirectToServerLogin(response);
-            } catch (IOException ignored) { }
 
             return Optional.empty();
         }
@@ -137,7 +135,7 @@ public class KakaoCallbackService {
         ResponseEntity<KakaoUserDto> entity;
 
         try {
-            entity = restTemplate.exchange(myInfoUrl,
+            entity = snakeRestTemplate.exchange(myInfoUrl,
                         HttpMethod.GET,
                         new HttpEntity<>(createBearerHeader(accessToken)),
                         KakaoUserDto.class);

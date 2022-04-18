@@ -1,6 +1,7 @@
 package com.techeer.f5.jmtmonster.domain.user.domain;
 
 import com.techeer.f5.jmtmonster.domain.oauth.domain.PersistentToken;
+import com.techeer.f5.jmtmonster.domain.user.Dto.UserDto;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.Nullable;
@@ -105,6 +106,20 @@ public class User {
         this.verified = verified;
 
         return verified;
+    }
+
+    public UserDto convert() {
+        return UserDto.builder()
+                .id(id)
+                .name(name)
+                .email(email)
+                .nickname(nickname)
+                .address(address)
+                .imageUrl(imageUrl)
+                .emailVerified(emailVerified)
+                .extraInfoInjected(extraInfoInjected)
+                .verified(verified)
+                .build();
     }
 
 }

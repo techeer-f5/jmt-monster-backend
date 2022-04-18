@@ -17,7 +17,7 @@ import java.util.UUID;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/auth/verify")
+@RequestMapping("/auth/validate")
 public class TokenValidationController {
     private final TokenValidationService tokenValidationService;
 

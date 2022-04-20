@@ -5,4 +5,6 @@ import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface FriendRequestRepository extends JpaRepository<FriendRequest, UUID> {
+
+    boolean existsByFromUser_idAndToUser_id(UUID fromUserId, UUID toUserId);
 }

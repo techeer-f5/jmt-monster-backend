@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FriendRequestCreateDto {
+public class FriendRequestCreateRequestDto {
 
     @NotNull
     private UUID fromUserId;

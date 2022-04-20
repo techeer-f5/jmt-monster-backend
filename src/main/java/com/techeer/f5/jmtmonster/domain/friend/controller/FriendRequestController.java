@@ -3,7 +3,7 @@ package com.techeer.f5.jmtmonster.domain.friend.controller;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequest;
-import com.techeer.f5.jmtmonster.domain.friend.dto.FriendRequestCreateDto;
+import com.techeer.f5.jmtmonster.domain.friend.dto.FriendRequestCreateRequestDto;
 import com.techeer.f5.jmtmonster.domain.friend.dto.FriendRequestMapper;
 import com.techeer.f5.jmtmonster.domain.friend.dto.FriendRequestModel;
 import com.techeer.f5.jmtmonster.domain.friend.dto.FriendRequestResponseDto;
@@ -40,7 +40,7 @@ public class FriendRequestController {
 
     @PostMapping
     public ResponseEntity<FriendRequestModel> create(
-            @Valid @RequestBody FriendRequestCreateDto dto
+            @Valid @RequestBody FriendRequestCreateRequestDto dto
     ) {
         FriendRequest entity = service.create(mapper.toEntity(dto));
 

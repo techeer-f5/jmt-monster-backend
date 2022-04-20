@@ -15,7 +15,7 @@ public class FriendRequestMapper {
     private final UserMapper userMapper;
     private final UserRepository userRepository;
 
-    public FriendRequest toEntity(FriendRequestCreateDto dto) {
+    public FriendRequest toEntity(FriendRequestCreateRequestDto dto) {
         return FriendRequest.builder()
                 .fromUser(userRepository.getById(dto.getFromUserId()))
                 .toUser(userRepository.getById(dto.getToUserId()))

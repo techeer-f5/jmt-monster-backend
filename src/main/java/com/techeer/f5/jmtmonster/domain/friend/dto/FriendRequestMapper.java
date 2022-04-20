@@ -23,6 +23,14 @@ public class FriendRequestMapper {
                 .build();
     }
 
+    public FriendRequest toEntity(FriendRequestUpdateRequestDto dto) {
+        return FriendRequest.builder()
+                .fromUser(userRepository.getById(dto.getFromUserId()))
+                .toUser(userRepository.getById(dto.getToUserId()))
+                .status(dto.getStatus())
+                .build();
+    }
+
     public FriendRequestResponseDto toResponseDto(FriendRequest entity) {
         return FriendRequestResponseDto.builder()
                 .id(entity.getId())

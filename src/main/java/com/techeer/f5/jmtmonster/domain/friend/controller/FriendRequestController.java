@@ -7,6 +7,7 @@ import com.techeer.f5.jmtmonster.domain.friend.dto.FriendRequestCreateDto;
 import com.techeer.f5.jmtmonster.domain.friend.dto.FriendRequestMapper;
 import com.techeer.f5.jmtmonster.domain.friend.dto.FriendRequestModel;
 import com.techeer.f5.jmtmonster.domain.friend.dto.FriendRequestResponseDto;
+import com.techeer.f5.jmtmonster.domain.friend.dto.FriendRequestUpdateRequestDto;
 import com.techeer.f5.jmtmonster.domain.friend.service.FriendRequestService;
 import java.util.UUID;
 import javax.validation.Valid;
@@ -75,7 +76,7 @@ public class FriendRequestController {
     @PutMapping("/{id}")
     public ResponseEntity<FriendRequestResponseDto> update(
             @PathVariable UUID id,
-            @Valid @RequestBody FriendRequestCreateDto dto
+            @Valid @RequestBody FriendRequestUpdateRequestDto dto
     ) {
         return ResponseEntity
                 .ok(mapper.toResponseDto(service.update(id, mapper.toEntity(dto))));

@@ -8,7 +8,10 @@ import javax.persistence.Convert;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -24,6 +27,9 @@ import org.hibernate.annotations.GenericGenerator;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(uniqueConstraints = {
+        @UniqueConstraint(name = "UniqueFromUserAndToUser",
+                columnNames = {"from_user_id", "to_user_id"})})
 public class FriendRequest extends BaseTimeEntity {
 
     @Id
@@ -33,11 +39,11 @@ public class FriendRequest extends BaseTimeEntity {
     @Builder.Default
     private UUID id = UUID.randomUUID();
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @NotNull
     private User fromUser;
 
-    @ManyToOne
+    @ManyToOne(optional = false)
     @NotNull
     private User toUser;
 

@@ -83,7 +83,10 @@ public class FriendRequestController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable UUID id) {
+    public ResponseEntity<Void> delete(@PathVariable UUID id) {
         service.deleteById(id);
+        return ResponseEntity
+                .noContent()
+                .build();
     }
 }

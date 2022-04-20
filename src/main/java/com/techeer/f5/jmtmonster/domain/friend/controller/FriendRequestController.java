@@ -3,9 +3,9 @@ package com.techeer.f5.jmtmonster.domain.friend.controller;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequest;
-import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequestModel;
 import com.techeer.f5.jmtmonster.domain.friend.dto.FriendRequestCreateDto;
 import com.techeer.f5.jmtmonster.domain.friend.dto.FriendRequestMapper;
+import com.techeer.f5.jmtmonster.domain.friend.dto.FriendRequestModel;
 import com.techeer.f5.jmtmonster.domain.friend.dto.FriendRequestResponseDto;
 import com.techeer.f5.jmtmonster.domain.friend.service.FriendRequestService;
 import java.util.UUID;

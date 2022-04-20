@@ -1,7 +1,6 @@
-package com.techeer.f5.jmtmonster.domain.friend.domain;
+package com.techeer.f5.jmtmonster.domain.friend.dto;
 
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
-import com.techeer.f5.jmtmonster.domain.friend.dto.FriendRequestResponseDto;
 import lombok.AllArgsConstructor;
 import org.springframework.hateoas.RepresentationModel;
 

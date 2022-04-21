@@ -46,3 +46,7 @@ out/
 application-secret.yml
 
 target
+
+### ACT Secret file ###
+### See https://github.com/nektos/act ###
+.secret

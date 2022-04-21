@@ -7,7 +7,7 @@ on:
 
 jobs:
   duplicate_guard:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     outputs:
       should_skip: ${{ steps.skip_check.outputs.should_skip }}
     steps:
@@ -22,7 +22,7 @@ jobs:
   docker-build:
     needs: duplicate_guard
     if: ${{ needs.duplicate_guard.outputs.should_skip != 'true' }}
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: checkout
         uses: actions/checkout@v2

@@ -57,6 +57,10 @@ tasks.named('asciidoctor') {
     dependsOn test
 }
 
+tasks.named("bootBuildImage") {
+    imageName = "jmt-monster-backend:latest"
+}
+
 // ./gradlew openapi3
 // See /src/main/resources/static/docs/openapi3.json
 openapi3 {

@@ -42,8 +42,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_ECR_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-2
       - name: Login to Amazon ECR
-        run: |
-          docker login -u AWS -p $(aws ecr-public get-login-password --region ap-northeast-2) public.ecr.aws/w1d0u6d8
+        uses: aws-actions/amazon-ecr-login@v1
       - name: Build and push images & upload to ECR
         id: build_images
         run: |

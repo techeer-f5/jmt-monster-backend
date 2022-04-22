@@ -4,11 +4,11 @@
 - 친구끼리 공유하는 수집형 맛집 어플리케이션
 - [기획 및 기술 선정 Notion 페이지](https://litsynp.notion.site/7a3cbfc9e2724a8d9520757e2da254bd)
 
-## 🛠 Work in Progress
+## **🛠 Work in Progress**
 
 맛집 몬스터는 아직 개발 중입니다..😂 직접 사용하실 수 있는 웹앱이 만들어질 때까지 체험하시고 싶으셔도 잠시만 기다려 주세요!
 
-## **🌎Production Server**
+## **🌎 Production Server**
 
 배포 후 링크 TODO
 

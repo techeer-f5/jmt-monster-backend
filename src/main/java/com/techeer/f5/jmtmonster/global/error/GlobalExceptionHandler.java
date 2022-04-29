@@ -1,5 +1,6 @@
 package com.techeer.f5.jmtmonster.global.error;
 
+import com.techeer.f5.jmtmonster.global.error.exception.CustomStatusErrorsException;
 import com.techeer.f5.jmtmonster.global.error.exception.CustomStatusException;
 import com.techeer.f5.jmtmonster.global.error.exception.DuplicateResourceException;
 import com.techeer.f5.jmtmonster.global.error.exception.ErrorCode;
@@ -113,9 +114,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(response, errorCode.getStatus());
     }
 
-    @ExceptionHandler(DuplicateResourceException.class)
-    protected ResponseEntity<ErrorResponse> handleDuplicateResourceException(DuplicateResourceException e, WebRequest request) {
-        log.error("handleDuplicateResourceException {}", e.getMessage());
+    @ExceptionHandler(CustomStatusErrorsException.class)
+    protected ResponseEntity<ErrorResponse> handleCustomStatusErrorsException(CustomStatusErrorsException e, WebRequest request) {
+        log.error("handleCustomStatusErrorsException {}", e.getMessage());
 
         ErrorCode errorCode = e.getCode();
         final ErrorResponse response = ErrorResponse.of(errorCode, e.getMessage(), e.getErrors());

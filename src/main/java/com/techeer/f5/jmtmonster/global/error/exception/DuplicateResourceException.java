@@ -7,12 +7,9 @@ import org.springframework.validation.FieldError;
 
 @Getter
 @Setter
-public class DuplicateResourceException extends CustomStatusException {
-
-    private final List<FieldError> errors;
+public class DuplicateResourceException extends CustomStatusErrorsException {
 
     public DuplicateResourceException(String resourceName, List<FieldError> errors) {
-        super(ErrorCode.CONFLICT, resourceName + " already exists with given condition.");
-        this.errors = errors;
+        super(ErrorCode.CONFLICT, resourceName + " already exists with given condition.", errors);
     }
 }

@@ -62,7 +62,7 @@
 | 이름  | 개발분야           | Github                                      |
 |-----|----------------|---------------------------------------------|
 | 이승준 | FE, BE, DevOps | [litsynp](https://github.com/litsynp)       |
-| 이지호 | FE, DevOps     | [DPS0340](https://github.com/DPS0340)       |
+| 이지호 | FE, BE, DevOps     | [DPS0340](https://github.com/DPS0340)       |
 | 용길한 | BE             | [Yong-ga-ri](https://github.com/Yong-ga-ri) |
 | 권종석 | BE             | [himJJong](https://github.com/himJJong)     |
 | 최우석 | BE             | [Sith-call](https://github.com/Sith-call)   |

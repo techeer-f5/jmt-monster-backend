@@ -1,7 +1,10 @@
 package com.techeer.f5.jmtmonster.global.error;
 
+import com.techeer.f5.jmtmonster.global.error.exception.CustomStatusErrorsException;
 import com.techeer.f5.jmtmonster.global.error.exception.CustomStatusException;
+import com.techeer.f5.jmtmonster.global.error.exception.DuplicateResourceException;
 import com.techeer.f5.jmtmonster.global.error.exception.ErrorCode;
+import javax.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -94,6 +97,15 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(response, errorCode.getStatus());
     }
 
+    @ExceptionHandler(ConstraintViolationException.class)
+    protected ResponseEntity<ErrorResponse> handleConstraintViolationException(ConstraintViolationException e) {
+        log.error("handleConstraintViolationException {}", e.getMessage());
+
+        ErrorCode errorCode = ErrorCode.INVALID_INPUT_VALUE;
+        final ErrorResponse response = ErrorResponse.of(errorCode, errorCode.getCode(), e.getConstraintViolations());
+        return new ResponseEntity<>(response, errorCode.getStatus());
+    }
+
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         log.error("handleHttpMessageNotReadable {}", ex.getMessage());
 
@@ -102,12 +114,21 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(response, errorCode.getStatus());
     }
 
+    @ExceptionHandler(CustomStatusErrorsException.class)
+    protected ResponseEntity<ErrorResponse> handleCustomStatusErrorsException(CustomStatusErrorsException e, WebRequest request) {
+        log.error("handleCustomStatusErrorsException {}", e.getMessage());
+
+        ErrorCode errorCode = e.getCode();
+        final ErrorResponse response = ErrorResponse.of(errorCode, e.getMessage(), e.getErrors());
+        return new ResponseEntity<>(response, errorCode.getStatus());
+    }
+
     @ExceptionHandler(CustomStatusException.class)
     protected ResponseEntity<ErrorResponse> handleCustomStatusException(CustomStatusException e, WebRequest request) {
         log.error("handleCustomStatusException {}", e.getMessage());
 
         ErrorCode errorCode = e.getCode();
-        final ErrorResponse response = ErrorResponse.of(errorCode, errorCode.getCode(), e.getMessage());
+        final ErrorResponse response = ErrorResponse.of(errorCode, e.getMessage());
         return new ResponseEntity<>(response, errorCode.getStatus());
     }
 

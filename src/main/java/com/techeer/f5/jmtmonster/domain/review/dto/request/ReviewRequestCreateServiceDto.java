@@ -1,6 +1,8 @@
 package com.techeer.f5.jmtmonster.domain.review.dto.request;
 
 import com.techeer.f5.jmtmonster.domain.review.domain.Like;
+import com.techeer.f5.jmtmonster.domain.review.domain.ReviewFood;
+import com.techeer.f5.jmtmonster.domain.review.domain.ReviewImage;
 import com.techeer.f5.jmtmonster.domain.review.domain.Star;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import lombok.AllArgsConstructor;
@@ -24,11 +26,11 @@ public class ReviewRequestCreateServiceDto {
     private Like like;
 
     @NotNull
-    private List<String> foodList;
-
-    @NotNull
     private Star star;
 
     @NotNull
-    private MultipartFile imageList;
+    private List<String> foodList;
+
+    @NotNull
+    private List<String> imageList;
 }

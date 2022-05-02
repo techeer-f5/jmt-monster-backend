@@ -30,7 +30,7 @@ public class ReviewRequest extends BaseTimeEntity {
     @ManyToOne
     private User user;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT") // 장문 텍스트
     private String content;
 
     @NotNull

@@ -5,6 +5,8 @@ import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.RestaurantRespon
 import com.techeer.f5.jmtmonster.domain.restaurant.entity.Restaurant;
 import com.techeer.f5.jmtmonster.domain.restaurant.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@Slf4j
 @RequestMapping("/api/v1/restaurants")
 @RequiredArgsConstructor
 public class RestaurantController {
@@ -23,10 +26,24 @@ public class RestaurantController {
 //    public ResponseEntity<List<RestaurantResponseDto>> getList() {
 //
 //    }
+    @GetMapping("/example")
+    public ResponseEntity getJsonData() {
+
+        String response = restaurantService.getFirstTodosTest();
+        System.out.println("string");
+
+
+        return ResponseEntity.ok()
+                .body(response);
+    }
+
+
     @PostMapping("/{cid}")
     public ResponseEntity getOneRestaurantInformation(@PathVariable Long cid) {
 //    public ResponseEntity<RestaurantResponseDto> getOneRestaurantInformation(@PathVariable Long cid) {
         // Todo Cid를 통하여 kakao REST API 조회를 통한 정보 획득
+
+
         Optional<Restaurant> restaurantOptional = restaurantService.findOneByCid(cid);
 
         // Todo 저장된 정보가 있으면

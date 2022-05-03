@@ -10,7 +10,6 @@ import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class RestaurantService {
 
     private final WebClient webClient;
@@ -21,8 +20,9 @@ public class RestaurantService {
         return restaurantRepository.findByCid(cid);
     }
 
-    public RestaurantService(WebClient.Builder webClientBuilder) {
+    public RestaurantService(WebClient.Builder webClientBuilder, RestaurantRepository restaurantRepository) {
         this.webClient = webClientBuilder.baseUrl("https://jsonplaceholder.typicode.com").build();
+        this.restaurantRepository = restaurantRepository;
     }
     public String getFirstTodosTest() {
         String response =

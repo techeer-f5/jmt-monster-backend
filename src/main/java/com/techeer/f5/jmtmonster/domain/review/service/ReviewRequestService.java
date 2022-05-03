@@ -1,9 +1,5 @@
 package com.techeer.f5.jmtmonster.domain.review.service;
 
-import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequest;
-import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestCreateServiceDto;
-import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestUpdateRequestDto;
-import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestUpdateServiceDto;
 import com.techeer.f5.jmtmonster.domain.review.dao.ReviewFoodRepository;
 import com.techeer.f5.jmtmonster.domain.review.dao.ReviewImageRepository;
 import com.techeer.f5.jmtmonster.domain.review.dao.ReviewRequestRepository;
@@ -11,7 +7,6 @@ import com.techeer.f5.jmtmonster.domain.review.domain.ReviewFood;
 import com.techeer.f5.jmtmonster.domain.review.domain.ReviewImage;
 import com.techeer.f5.jmtmonster.domain.review.domain.ReviewRequest;
 import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestCreateRequestDto;
-import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestUpdateRequestDto;
 import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestUpdateServiceDto;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
@@ -74,7 +69,7 @@ public class ReviewRequestService  {
         List<ReviewImage> imageEntityList = new ArrayList<>();
         for(MultipartFile image : images){
             try {
-                String url = s3Uploader.upload(image, s3Uploader.getDIR_NAME())
+                String url = s3Uploader.upload(image, s3Uploader.getDIR_NAME());
                 ReviewImage imageEntity = ReviewImage.builder()
                         .user(user)
                         .url(url)
@@ -113,7 +108,7 @@ public class ReviewRequestService  {
         List<ReviewImage> imageEntityList = new ArrayList<>();
         for(MultipartFile image : images){
             try {
-                String url = s3Uploader.upload(image, s3Uploader.getDIR_NAME())
+                String url = s3Uploader.upload(image, s3Uploader.getDIR_NAME());
                 ReviewImage imageEntity = ReviewImage.builder()
                         .user(user)
                         .url(url)

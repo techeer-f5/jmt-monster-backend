@@ -23,9 +23,11 @@ public class ReviewRequestMapper {
 
     public ReviewRequestUpdateServiceDto toServiceDto(ReviewRequestUpdateRequestDto dto){
         return ReviewRequestUpdateServiceDto.builder()
+                .like(dto.getLike())
                 .content(dto.getContent())
                 .star(dto.getStar())
                 .foodList(dto.getFoodList())
                 .imageList(dto.getImageList())
+                .build();
     }
 }

@@ -47,7 +47,8 @@ public class ReviewRequest extends BaseTimeEntity {
     @OneToMany(mappedBy = "user")
     private List<ReviewImage> imageList;
 
-    public void update(String content, Like like, Star star){
+    public void update(User user,String content, Like like, Star star){
+        this.user = user;
         this.content = content;
         this.like = like;
         this.star = star;

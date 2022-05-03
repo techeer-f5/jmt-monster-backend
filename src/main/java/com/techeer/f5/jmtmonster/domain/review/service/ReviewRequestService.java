@@ -2,6 +2,7 @@ package com.techeer.f5.jmtmonster.domain.review.service;
 
 import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequest;
 import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestCreateServiceDto;
+import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestUpdateRequestDto;
 import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestUpdateServiceDto;
 import com.techeer.f5.jmtmonster.domain.review.dao.ReviewFoodRepository;
 import com.techeer.f5.jmtmonster.domain.review.dao.ReviewImageRepository;
@@ -10,6 +11,8 @@ import com.techeer.f5.jmtmonster.domain.review.domain.ReviewFood;
 import com.techeer.f5.jmtmonster.domain.review.domain.ReviewImage;
 import com.techeer.f5.jmtmonster.domain.review.domain.ReviewRequest;
 import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestCreateRequestDto;
+import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestUpdateRequestDto;
+import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestUpdateServiceDto;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
 import com.techeer.f5.jmtmonster.global.error.exception.DuplicateResourceException;
@@ -25,8 +28,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -58,29 +63,28 @@ public class ReviewRequestService  {
         }
         // Save foods
         List<String> foods = dto.getFoodList();
-        for(String food : foods){
-            ReviewFood food_entity = ReviewFood.builder()
-                    .user(user)
-                    .food(food)
-                    .build();
-            reviewFoodRepository.save(food_entity);
-        }
+        List<ReviewFood> foodEntityList = foods.stream().map(food -> ReviewFood.builder()
+                .user(user)
+                .food(food)
+                .build()).collect(Collectors.toList());
+        reviewFoodRepository.saveAll(foodEntityList);
 
         // Upload Images to S3 Bucket
         MultipartFile[] images = dto.getImageList();
+        List<ReviewImage> imageEntityList = new ArrayList<>();
         for(MultipartFile image : images){
             try {
                 String url = s3Uploader.upload(image, s3Uploader.getDIR_NAME())
-                ReviewImage image_entity = ReviewImage.builder()
+                ReviewImage imageEntity = ReviewImage.builder()
                         .user(user)
                         .url(url)
                         .build();
-                reviewImageRepository.save(image_entity);
+                imageEntityList.add(imageEntity);
             } catch(IOException e){
                 e.printStackTrace();
             }
         }
-
+        reviewImageRepository.saveAll(imageEntityList);
 
         ReviewRequest request_entity = ReviewRequest.builder()
                 .user(user)
@@ -92,8 +96,42 @@ public class ReviewRequestService  {
         return reviewRequestRepository.save(request_entity);
     }
 
-    public ReviewRequest update(UUID id, FriendRequestUpdateServiceDto dto){
+    public ReviewRequest update(UUID id, ReviewRequestUpdateServiceDto dto){
+        ReviewRequest entity = findOneById(id);
+        User user = entity.getUser();
 
+        // Save foods
+        List<String> foods = dto.getFoodList();
+        List<ReviewFood> foodEntityList = foods.stream().map(food -> ReviewFood.builder()
+                .user(user)
+                .food(food)
+                .build()).collect(Collectors.toList());
+        reviewFoodRepository.saveAll(foodEntityList);
+
+        // Upload Images to S3 Bucket
+        MultipartFile[] images = dto.getImageList();
+        List<ReviewImage> imageEntityList = new ArrayList<>();
+        for(MultipartFile image : images){
+            try {
+                String url = s3Uploader.upload(image, s3Uploader.getDIR_NAME())
+                ReviewImage imageEntity = ReviewImage.builder()
+                        .user(user)
+                        .url(url)
+                        .build();
+                imageEntityList.add(imageEntity);
+            } catch(IOException e){
+                e.printStackTrace();
+            }
+        }
+        reviewImageRepository.saveAll(imageEntityList);
+
+        entity.update(
+                user,
+                dto.getContent(),
+                dto.getLike(),
+                dto.getStar()
+        );
+        return reviewRequestRepository.save(entity);
     }
 
 

@@ -14,7 +14,7 @@ public class ReviewRequestMapper {
 
     public ReviewRequestResponseDto toResponseDto(ReviewRequest entity) {
         return ReviewRequestResponseDto.builder()
-                .id(entity.getId())
+                .reviewId(entity.getId())
                 .user(userMapper.toBasicUserResponseDto(entity.getUser()))
                 .build();
     }

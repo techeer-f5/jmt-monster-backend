@@ -1,4 +1,4 @@
-package com.techeer.f5.jmtmonster.global.config;
+package com.techeer.f5.jmtmonster.s3.config;
 
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;

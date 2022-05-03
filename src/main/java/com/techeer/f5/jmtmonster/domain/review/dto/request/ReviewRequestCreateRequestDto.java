@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Builder
@@ -21,7 +22,7 @@ import java.util.List;
 public class ReviewRequestCreateRequestDto {
 
     @NotNull
-    private User user;
+    private UUID userId;
 
     @NotNull
     private String content;

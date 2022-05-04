@@ -2,6 +2,7 @@ package com.techeer.f5.jmtmonster.domain.friend.service;
 
 import com.techeer.f5.jmtmonster.domain.friend.dao.FriendRequestRepository;
 import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequest;
+import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequestStatus;
 import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestCreateServiceDto;
 import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestUpdateServiceDto;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
@@ -20,13 +21,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class FriendRequestService {
+public class FriendService {
 
     private final FriendRequestRepository friendRequestRepository;
     private final UserRepository userRepository;
 
     @Transactional
-    public FriendRequest create(FriendRequestCreateServiceDto dto) {
+    public FriendRequest createRequest(FriendRequestCreateServiceDto dto) {
 
         // Check user information
         UUID fromUserId = dto.getFromUserId();
@@ -65,19 +66,31 @@ public class FriendRequestService {
     }
 
     @Transactional
-    public FriendRequest update(UUID id, FriendRequestUpdateServiceDto dto) {
-        FriendRequest entity = findOneById(id);
+    public FriendRequest updateRequest(UUID id, FriendRequestUpdateServiceDto dto) {
+        FriendRequest entity = findRequestById(id);
+
+        // If accepted, create a friend
+        if (dto.getStatus() == FriendRequestStatus.ACCEPTED) {
+            Friend friend = Friend.builder()
+                    .fromUser(entity.getFromUser())
+                    .toUser(entity.getToUser())
+                    .isHangingOut(false)
+                    .build();
+
+            friendRepository.save(friend);
+        }
 
         entity.update(
                 entity.getFromUser(),
                 entity.getToUser(),
                 dto.getStatus()
         );
+
         return friendRequestRepository.save(entity);
     }
 
     @Transactional
-    public void deleteById(UUID id) {
+    public void deleteRequestById(UUID id) {
         if (!friendRequestRepository.existsById(id)) {
             throw new ResourceNotFoundException(FriendRequest.class.getSimpleName(), "id", id);
         }
@@ -85,14 +98,13 @@ public class FriendRequestService {
     }
 
     @Transactional(readOnly = true)
-    public FriendRequest findOneById(UUID id) {
+    public FriendRequest findRequestById(UUID id) {
         return friendRequestRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         FriendRequest.class.getSimpleName(), "id", id));
     }
 
     @Transactional(readOnly = true)
-    public Page<FriendRequest> findAll(Pageable pageable) {
+    public Page<FriendRequest> findAllRequests(Pageable pageable) {
         return friendRequestRepository.findAll(pageable);
     }
-}

@@ -79,13 +79,14 @@ public class User {
     @Builder.Default
     private List<PersistentToken> tokens = new ArrayList<>();
 
-    public boolean addExtraInfo(String nickname, String address) throws IllegalStateException {
+    public boolean addExtraInfo(String nickname, String address, String imageUrl) throws IllegalStateException {
         if (extraInfoInjected) {
             throw new IllegalStateException("사용자 추가 정보가 이미 입력되었습니다.");
         }
 
         this.nickname = nickname;
         this.address = address;
+        this.imageUrl = imageUrl;
 
         extraInfoInjected = true;
 

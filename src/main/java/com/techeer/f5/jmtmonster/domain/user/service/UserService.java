@@ -8,6 +8,8 @@ import com.techeer.f5.jmtmonster.domain.user.dto.ExtraUserInfoRequestDto;
 import com.techeer.f5.jmtmonster.domain.user.dto.UserDto;
 import com.techeer.f5.jmtmonster.domain.user.dto.UserMapper;
 import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
+import com.techeer.f5.jmtmonster.global.error.exception.CustomStatusException;
+import com.techeer.f5.jmtmonster.global.error.exception.ErrorCode;
 import com.techeer.f5.jmtmonster.global.error.exception.NotAuthorizedException;
 import com.techeer.f5.jmtmonster.global.error.exception.ResourceNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +30,7 @@ public class UserService {
 
     public UUID getTokenId(HttpServletRequest request) {
 
-        String userId = (String) request.getAttribute("userId");
+        String userId = (String) request.getAttribute("tokenId");
 
         if (userId == null) {
             throw new NotAuthorizedException("토큰이 주어지지 않았습니다.");
@@ -83,12 +85,12 @@ public class UserService {
     public UserResponseDto submitExtraInfo(HttpServletRequest request, ExtraUserInfoRequestDto extraUserInfoRequestDto) {
         User user = findUserWithRequest(request);
 
-        user.setNickname(extraUserInfoRequestDto.getNickname());
-        user.setAddress(extraUserInfoRequestDto.getAddress());
-        user.setImageUrl(extraUserInfoRequestDto.getImageUrl());
-        user.setExtraInfoInjected(true);
 
-        user.setVerified(user.getVerified() && user.getExtraInfoInjected());
+        try {
+            user.addExtraInfo(extraUserInfoRequestDto.getNickname(), extraUserInfoRequestDto.getAddress(), extraUserInfoRequestDto.getImageUrl());
+        } catch (IllegalStateException exception) {
+            throw new CustomStatusException(ErrorCode.CONFLICT, exception.getMessage());
+        }
 
         return userMapper.toUserResponseDto(user);
     }

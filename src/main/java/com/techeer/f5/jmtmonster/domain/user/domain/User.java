@@ -42,29 +42,35 @@ public class User {
     @Size(min = 1, max = 3, message = "이메일 길이는 1자부터 30자까지 가능합니다.")
     @Nullable
     @Builder.Default
+    @Setter
     private String nickname = null;
 
 
     @Size(min = 1, max = 1024, message = "주소 길이는 1자부터 1024자까지 가능합니다.")
     @Nullable
     @Builder.Default
+    @Setter
     private String address = null;
 
     @Size(min = 1, max = 4096, message = "이미지 주소 길이는 1자부터 1024자까지 가능합니다.")
     @Nullable
     @Builder.Default
+    @Setter
     private String imageUrl = null;
 
     @NotNull
     @Builder.Default
+    @Setter
     private Boolean emailVerified = false;
 
     @NotNull
     @Builder.Default
+    @Setter
     private Boolean extraInfoInjected = false;
 
     @NotNull
     @Builder.Default
+    @Setter
     private Boolean verified = false;
 
     // List<T>는 여러개의 대응을 가지는 타입
@@ -106,20 +112,6 @@ public class User {
         this.verified = verified;
 
         return verified;
-    }
-
-    public UserDto convert() {
-        return UserDto.builder()
-                .id(id)
-                .name(name)
-                .email(email)
-                .nickname(nickname)
-                .address(address)
-                .imageUrl(imageUrl)
-                .emailVerified(emailVerified)
-                .extraInfoInjected(extraInfoInjected)
-                .verified(verified)
-                .build();
     }
 
 }

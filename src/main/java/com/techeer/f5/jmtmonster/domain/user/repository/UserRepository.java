@@ -12,6 +12,7 @@ import java.util.UUID;
 public interface UserRepository extends JpaRepository<User, UUID> {
 
     Optional<User> getUserByName(String name);
+    Optional<User> getUserByEmail(String email);
 
     default User build(String name, String email) {
         return User.builder()

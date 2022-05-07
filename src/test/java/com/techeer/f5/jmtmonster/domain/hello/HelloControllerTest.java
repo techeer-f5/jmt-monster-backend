@@ -39,8 +39,7 @@ public class HelloControllerTest {
     @Test
     public void checkGetApi() throws Exception {
         mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/hello")
-                            .accept(MediaType.APPLICATION_JSON)
-                            .with(csrf()))
+                            .accept(MediaType.APPLICATION_JSON))
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andDo(MockMvcRestDocumentationWrapper.document("hello-get",
@@ -71,8 +70,7 @@ public class HelloControllerTest {
         mockMvc.perform(RestDocumentationRequestBuilders.post("/api/v1/hello")
                             .accept(MediaType.APPLICATION_JSON)
                             .contentType(MediaType.APPLICATION_JSON)
-                            .content(requestBody)
-                            .with(csrf()))
+                            .content(requestBody))
                 .andDo(print())
                 .andExpect(status().is(200))
                 .andDo(document("hello-create",

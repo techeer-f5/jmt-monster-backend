@@ -1,5 +1,7 @@
 package com.techeer.f5.jmtmonster.domain.user;
 
+import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
+import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techeer.f5.jmtmonster.domain.oauth.domain.AuthProvider;
 import com.techeer.f5.jmtmonster.domain.oauth.domain.PersistentToken;
@@ -17,14 +19,22 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.headers.HeaderDescriptor;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.springframework.restdocs.payload.PayloadDocumentation.beneathPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
@@ -65,11 +75,36 @@ public class UserControllerTest {
         persistentToken = persistentTokenRepository.saveAndFlush(persistentToken);
         user.getTokens().add(persistentToken);
 
-        MvcResult mvcResult = mockMvc.perform(get("/users/me")
+        MvcResult mvcResult = mockMvc.perform(RestDocumentationRequestBuilders.get("/users/me")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer " + persistentToken.getId().toString())
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
+                .andDo(MockMvcRestDocumentationWrapper.document("my-user",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(
+                                ResourceSnippetParameters.builder()
+                                        .description("현재 사용자를 가져옵니다.")
+                                        .summary("현재 사용자 조회")
+                                        .requestHeaders(
+                                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 사용자 토큰")
+                                        )
+                                        .responseFields(
+                                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공 여부"),
+                                                fieldWithPath("user.id").type(JsonFieldType.STRING).description("사용자 ID"),
+                                                fieldWithPath("user.name").type(JsonFieldType.STRING).description("사용자 이름"),
+                                                fieldWithPath("user.email").type(JsonFieldType.STRING).description("사용자 이메일"),
+                                                fieldWithPath("user.nickname").type(JsonFieldType.STRING).optional().description("사용자 닉네임"),
+                                                fieldWithPath("user.address").type(JsonFieldType.STRING).optional().description("사용자 주소"),
+                                                fieldWithPath("user.imageUrl").type(JsonFieldType.STRING).optional().description("사용자 이미지 URL"),
+                                                fieldWithPath("user.emailVerified").type(JsonFieldType.BOOLEAN).description("사용자 이메일 인증 여부"),
+                                                fieldWithPath("user.extraInfoInjected").type(JsonFieldType.BOOLEAN).description("사용자 추가 정보 입력 여부"),
+                                                fieldWithPath("user.verified").type(JsonFieldType.BOOLEAN).description("사용자 인증 여부 (emailVerified && extraInfoInjected)")
+                                        )
+                                        .build()
+                        )
+                ))
                 .andReturn();
 
         UserResponseDto userResponseDto = JsonMapper.fromMvcResult(mvcResult, UserResponseDto.class);
@@ -99,13 +134,38 @@ public class UserControllerTest {
                 .imageUrl(null)
                 .build();
 
-        MvcResult mvcResult = mockMvc.perform(post("/users/me/extra-info")
+        MvcResult mvcResult = mockMvc.perform(RestDocumentationRequestBuilders.post("/users/me/extra-info")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer " + persistentToken.getId().toString())
                         .content(JsonMapper.asJsonString(extraUserInfoRequestDto))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
+                .andDo(MockMvcRestDocumentationWrapper.document("submit-extra-info",
+                        preprocessRequest(prettyPrint()),
+                        preprocessResponse(prettyPrint()),
+                        resource(
+                                ResourceSnippetParameters.builder()
+                                        .description("추가 정보를 입력합니다.")
+                                        .summary("추가 정보 입력")
+                                        .requestHeaders(
+                                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 사용자 토큰")
+                                        )
+                                        .responseFields(
+                                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공 여부"),
+                                                fieldWithPath("user.id").type(JsonFieldType.STRING).description("사용자 ID"),
+                                                fieldWithPath("user.name").type(JsonFieldType.STRING).description("사용자 이름"),
+                                                fieldWithPath("user.email").type(JsonFieldType.STRING).description("사용자 이메일"),
+                                                fieldWithPath("user.nickname").type(JsonFieldType.STRING).optional().description("사용자 닉네임"),
+                                                fieldWithPath("user.address").type(JsonFieldType.STRING).optional().description("사용자 주소"),
+                                                fieldWithPath("user.imageUrl").type(JsonFieldType.STRING).optional().description("사용자 이미지 URL"),
+                                                fieldWithPath("user.emailVerified").type(JsonFieldType.BOOLEAN).description("사용자 이메일 인증 여부"),
+                                                fieldWithPath("user.extraInfoInjected").type(JsonFieldType.BOOLEAN).description("사용자 추가 정보 입력 여부"),
+                                                fieldWithPath("user.verified").type(JsonFieldType.BOOLEAN).description("사용자 인증 여부 (emailVerified && extraInfoInjected)")
+                                        )
+                                        .build()
+                        )
+                ))
                 .andReturn();
 
         UserResponseDto userResponseDto = JsonMapper.fromMvcResult(mvcResult, UserResponseDto.class);

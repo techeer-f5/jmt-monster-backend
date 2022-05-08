@@ -38,7 +38,7 @@ public class BearerTokenInterceptor implements HandlerInterceptor {
 
         optionalUser.ifPresent((user) -> {
             // UUID Type
-            request.setAttribute("userId", token);
+            request.setAttribute("tokenId", token);
         });
 
         return true;

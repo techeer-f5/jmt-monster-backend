@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
 
     NOT_FOUND(HttpStatus.NOT_FOUND, "NOT_FOUND"),
+    NOT_AUTHORIZED(HttpStatus.UNAUTHORIZED, "NOT_AUTHORIZED"),
     BAD_REQUEST(HttpStatus.BAD_REQUEST, "BAD_REQUEST"),
     CONFLICT(HttpStatus.CONFLICT, "CONFLICT"),
     INNER_RESOURCE_NOT_FOUND(HttpStatus.UNPROCESSABLE_ENTITY, "INNER_RESOURCE_NOT_FOUND"),

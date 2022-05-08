@@ -20,13 +20,13 @@
           "200" : {
             "description" : "200",
             "content" : {
-              "application/json" : {
+              "application/json;charset=UTF-8" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/api-v1-hello527089244"
                 },
                 "examples" : {
                   "hello-get" : {
-                    "value" : "{\n  \"value\" : \"hello\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-04-18T04:19:27.204034\"\n}"
+                    "value" : "{\n  \"value\" : \"hello\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-05-07T17:35:14.374569\"\n}"
                   }
                 }
               }
@@ -57,13 +57,97 @@
           "200" : {
             "description" : "200",
             "content" : {
-              "application/json" : {
+              "application/json;charset=UTF-8" : {
                 "schema" : {
                   "$ref" : "#/components/schemas/api-v1-hello527089244"
                 },
                 "examples" : {
                   "hello-create" : {
-                    "value" : "{\n  \"value\" : \"hello example1\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-04-18T04:19:26.970268\"\n}"
+                    "value" : "{\n  \"value\" : \"hello example1\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-05-07T17:35:14.033719\"\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/me" : {
+      "get" : {
+        "tags" : [ "users" ],
+        "summary" : "현재 사용자 조회",
+        "description" : "현재 사용자를 가져옵니다.",
+        "operationId" : "my-user",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Bearer 사용자 토큰",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "Bearer b9f140fd-ad09-4679-ab18-082d6f8f2bfe"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/users-me-769911594"
+                },
+                "examples" : {
+                  "my-user" : {
+                    "value" : "{\n  \"success\" : true,\n  \"user\" : {\n    \"id\" : \"81fe2ace-a6f5-482e-9ae1-718020abc247\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : null,\n    \"address\" : null,\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : false,\n    \"verified\" : false\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/me/extra-info" : {
+      "post" : {
+        "tags" : [ "users" ],
+        "summary" : "추가 정보 입력",
+        "description" : "추가 정보를 입력합니다.",
+        "operationId" : "submit-extra-info",
+        "parameters" : [ {
+          "name" : "Authorization",
+          "in" : "header",
+          "description" : "Bearer 사용자 토큰",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "example" : "Bearer 44ccdc6c-acef-456a-b73d-23c7a0d7aec4"
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json;charset=UTF-8" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/users-me-extra-info486549215"
+              },
+              "examples" : {
+                "submit-extra-info" : {
+                  "value" : "{\n  \"nickname\" : \"DPS0340\",\n  \"address\" : \"경기도 시흥시 서울대학로278번길 19-13\",\n  \"imageUrl\" : null\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json;charset=UTF-8" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/users-me-769911594"
+                },
+                "examples" : {
+                  "submit-extra-info" : {
+                    "value" : "{\n  \"success\" : true,\n  \"user\" : {\n    \"id\" : \"42b0e192-3641-49e5-a29c-55e8c1dd26ea\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : \"DPS0340\",\n    \"address\" : \"경기도 시흥시 서울대학로278번길 19-13\",\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : true,\n    \"verified\" : false\n  }\n}"
                   }
                 }
               }
@@ -104,6 +188,59 @@
             "description" : "정수 값"
           }
         }
+      },
+      "users-me-769911594" : {
+        "type" : "object",
+        "properties" : {
+          "success" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
+          },
+          "user" : {
+            "type" : "object",
+            "properties" : {
+              "emailVerified" : {
+                "type" : "boolean",
+                "description" : "사용자 이메일 인증 여부"
+              },
+              "address" : {
+                "type" : "string",
+                "description" : "사용자 주소"
+              },
+              "extraInfoInjected" : {
+                "type" : "boolean",
+                "description" : "사용자 추가 정보 입력 여부"
+              },
+              "imageUrl" : {
+                "type" : "string",
+                "description" : "사용자 이미지 URL"
+              },
+              "verified" : {
+                "type" : "boolean",
+                "description" : "사용자 인증 여부 (emailVerified && extraInfoInjected)"
+              },
+              "nickname" : {
+                "type" : "string",
+                "description" : "사용자 닉네임"
+              },
+              "name" : {
+                "type" : "string",
+                "description" : "사용자 이름"
+              },
+              "id" : {
+                "type" : "string",
+                "description" : "사용자 ID"
+              },
+              "email" : {
+                "type" : "string",
+                "description" : "사용자 이메일"
+              }
+            }
+          }
+        }
+      },
+      "users-me-extra-info486549215" : {
+        "type" : "object"
       }
     }
   }

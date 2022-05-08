@@ -8,7 +8,7 @@ import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestCreateRe
 import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestModel;
 import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestUpdateRequestDto;
 import com.techeer.f5.jmtmonster.domain.friend.dto.response.FriendRequestResponseDto;
-import com.techeer.f5.jmtmonster.domain.friend.service.FriendRequestService;
+import com.techeer.f5.jmtmonster.domain.friend.service.FriendService;
 import java.util.UUID;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class FriendRequestController {
 
-    private final FriendRequestService service;
+    private final FriendService service;
     private final FriendRequestMapper mapper;
 
     // TODO: add authorization with given user identity
@@ -42,7 +42,7 @@ public class FriendRequestController {
     public ResponseEntity<FriendRequestModel> create(
             @Valid @RequestBody FriendRequestCreateRequestDto dto
     ) {
-        FriendRequest entity = service.create(mapper.toServiceDto(dto));
+        FriendRequest entity = service.createRequest(mapper.toServiceDto(dto));
         FriendRequestResponseDto response = mapper.toResponseDto(entity);
 
         WebMvcLinkBuilder listLink = linkTo(FriendRequestController.class);
@@ -63,7 +63,7 @@ public class FriendRequestController {
     public ResponseEntity<FriendRequestResponseDto> getOne(@PathVariable UUID id) {
 
         return ResponseEntity
-                .ok(mapper.toResponseDto(service.findOneById(id)));
+                .ok(mapper.toResponseDto(service.findRequestById(id)));
     }
 
     @GetMapping
@@ -71,7 +71,7 @@ public class FriendRequestController {
             @PageableDefault(size = 20, sort = "createdOn", direction = Direction.DESC) final Pageable pageable
     ) {
         return ResponseEntity
-                .ok(service.findAll(pageable).map(mapper::toResponseDto));
+                .ok(service.findAllRequests(pageable).map(mapper::toResponseDto));
     }
 
     @PutMapping("/{id}")
@@ -80,12 +80,12 @@ public class FriendRequestController {
             @Valid @RequestBody FriendRequestUpdateRequestDto dto
     ) {
         return ResponseEntity
-                .ok(mapper.toResponseDto(service.update(id, mapper.toServiceDto(dto))));
+                .ok(mapper.toResponseDto(service.updateRequest(id, mapper.toServiceDto(dto))));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
-        service.deleteById(id);
+        service.deleteRequestById(id);
         return ResponseEntity
                 .noContent()
                 .build();

@@ -1,6 +1,6 @@
 package com.techeer.f5.jmtmonster.domain.friend.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 
@@ -92,9 +92,12 @@ class FriendServiceTests {
                 FriendRequest actual = friendRequestRepository.getById(friendRequest.getId());
 
                 // then
-                assertEquals(friendRequest.getFromUser().getId(), actual.getFromUser().getId());
-                assertEquals(friendRequest.getToUser().getId(), actual.getToUser().getId());
-                assertEquals(friendRequest.getStatus(), actual.getStatus());
+                assertThat(friendRequest.getFromUser().getId()).isEqualTo(
+                        actual.getFromUser().getId());
+                assertThat(friendRequest.getFromUser().getId()).isEqualTo(
+                        actual.getFromUser().getId());
+                assertThat(friendRequest.getToUser().getId()).isEqualTo(actual.getToUser().getId());
+                assertThat(friendRequest.getStatus()).isEqualTo(actual.getStatus());
             }
         }
 
@@ -129,9 +132,10 @@ class FriendServiceTests {
                 // then
                 FriendRequest actual = friendService.findRequestById(friendRequest.getId());
 
-                assertEquals(friendRequest.getFromUser().getId(), actual.getFromUser().getId());
-                assertEquals(friendRequest.getToUser().getId(), actual.getToUser().getId());
-                assertEquals(friendRequest.getStatus(), actual.getStatus());
+                assertThat(friendRequest.getFromUser().getId()).isEqualTo(
+                        actual.getFromUser().getId());
+                assertThat(friendRequest.getToUser().getId()).isEqualTo(actual.getToUser().getId());
+                assertThat(friendRequest.getStatus()).isEqualTo(actual.getStatus());
             }
         }
 
@@ -190,9 +194,9 @@ class FriendServiceTests {
                 FriendRequest actual = friendRequestRepository.getById(updated.getId());
 
                 // then
-                assertEquals(updated.getFromUser().getId(), actual.getFromUser().getId());
-                assertEquals(updated.getToUser().getId(), actual.getToUser().getId());
-                assertEquals(updated.getStatus(), actual.getStatus());
+                assertThat(updated.getFromUser().getId()).isEqualTo(actual.getFromUser().getId());
+                assertThat(updated.getToUser().getId()).isEqualTo(actual.getToUser().getId());
+                assertThat(updated.getStatus()).isEqualTo(actual.getStatus());
             }
         }
     }
@@ -232,9 +236,9 @@ class FriendServiceTests {
                 // then
                 Friend actual = friendService.findFriendById(friend.getId());
 
-                assertEquals(friend.getFromUser().getId(), actual.getFromUser().getId());
-                assertEquals(friend.getToUser().getId(), actual.getToUser().getId());
-                assertEquals(friend.isHangingOut(), actual.isHangingOut());
+                assertThat(friend.getFromUser().getId()).isEqualTo(actual.getFromUser().getId());
+                assertThat(friend.getToUser().getId()).isEqualTo(actual.getToUser().getId());
+                assertThat(friend.isHangingOut()).isEqualTo(actual.isHangingOut());
             }
         }
 
@@ -293,9 +297,9 @@ class FriendServiceTests {
                 Friend actual = friendRepository.getById(updated.getId());
 
                 // then
-                assertEquals(updated.getFromUser().getId(), actual.getFromUser().getId());
-                assertEquals(updated.getToUser().getId(), actual.getToUser().getId());
-                assertEquals(updated.isHangingOut(), actual.isHangingOut());
+                assertThat(updated.getFromUser().getId()).isEqualTo(actual.getFromUser().getId());
+                assertThat(updated.getToUser().getId()).isEqualTo(actual.getToUser().getId());
+                assertThat(updated.isHangingOut()).isEqualTo(actual.isHangingOut());
             }
         }
     }

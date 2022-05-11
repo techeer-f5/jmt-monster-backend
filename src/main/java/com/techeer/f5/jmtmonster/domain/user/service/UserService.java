@@ -19,11 +19,13 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class UserService {
+
     private final UserRepository userRepository;
     private final PersistentTokenRepository persistentTokenRepository;
     private final UserMapper userMapper;
@@ -82,16 +84,47 @@ public class UserService {
                 .build();
     }
 
-    public UserResponseDto submitExtraInfo(HttpServletRequest request, ExtraUserInfoRequestDto extraUserInfoRequestDto) {
+    @Transactional
+    public UserResponseDto submitExtraInfo(HttpServletRequest request,
+            ExtraUserInfoRequestDto extraUserInfoRequestDto) {
         User user = findUserWithRequest(request);
 
+        if (user.getExtraInfoInjected()) {
+            throw new IllegalStateException("사용자 추가 정보가 이미 입력되어 있습니다.");
+        }
 
         try {
-            user.addExtraInfo(extraUserInfoRequestDto.getNickname(), extraUserInfoRequestDto.getAddress(), extraUserInfoRequestDto.getImageUrl());
+            user.addExtraInfo(
+                    extraUserInfoRequestDto.getNickname(),
+                    extraUserInfoRequestDto.getAddress(),
+                    extraUserInfoRequestDto.getImageUrl());
         } catch (IllegalStateException exception) {
             throw new CustomStatusException(ErrorCode.CONFLICT, exception.getMessage());
         }
 
+        userRepository.save(user);
+        return userMapper.toUserResponseDto(user);
+    }
+
+    @Transactional
+    public UserResponseDto updateExtraInfo(HttpServletRequest request,
+            ExtraUserInfoRequestDto extraUserInfoRequestDto) {
+        User user = findUserWithRequest(request);
+
+        if (!user.getExtraInfoInjected()) {
+            throw new IllegalStateException("사용자 추가 정보가 기존에 입력되지 않았습니다.");
+        }
+
+        try {
+            user.addExtraInfo(
+                    extraUserInfoRequestDto.getNickname(),
+                    extraUserInfoRequestDto.getAddress(),
+                    extraUserInfoRequestDto.getImageUrl());
+        } catch (IllegalStateException exception) {
+            throw new CustomStatusException(ErrorCode.CONFLICT, exception.getMessage());
+        }
+
+        userRepository.save(user);
         return userMapper.toUserResponseDto(user);
     }
 }

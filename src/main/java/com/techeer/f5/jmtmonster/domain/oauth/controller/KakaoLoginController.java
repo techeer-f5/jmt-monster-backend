@@ -5,6 +5,7 @@ import com.techeer.f5.jmtmonster.domain.oauth.service.KakaoCallbackService;
 import com.techeer.f5.jmtmonster.domain.oauth.service.KakaoLoginService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,7 +31,7 @@ public class KakaoLoginController {
         } catch (IOException e) {
             log.error("IOException on KakaoLoginController login /auth/kakao/login {}", e.getMessage());
 
-            response.sendError(503);
+            response.sendError(HttpStatus.SERVICE_UNAVAILABLE.value());
         }
     }
 }

@@ -29,7 +29,13 @@ public class KakaoCallbackController {
 
     @GetMapping
     public PersistentTokenDto authentication(@NotNull HttpServletResponse response, @RequestParam @NotBlank String code) {
-        return kakaoCallbackService.authentication(response, code);
+        var authResult = kakaoCallbackService.authentication(response, code);
+
+        if (authResult.isEmpty()) {
+            return PersistentTokenDto.builder().id(null).build();
+        }
+
+        return authResult.get();
     }
 
 

@@ -43,69 +43,43 @@ public class KakaoCallbackService {
     @Autowired
     private PersistentTokenRepository tokenRepository;
 
-    public PersistentTokenDto authentication(@NotNull HttpServletResponse response, @NotNull String code) {
-        Optional<String> accessToken = grantAccessToken(response, code);
+    public Optional<PersistentTokenDto> authentication(@NotNull HttpServletResponse response, @NotNull String code) {
+        Optional<String> optionalAccessToken = grantAccessToken(response, code);
 
-        AtomicReference<Optional<PersistentToken>> persistentTokenResult = new AtomicReference<>(Optional.empty());
-
-        accessToken.ifPresent((token) -> {
-            Optional<KakaoUserDto> kakaoUserDto = getUser(token);
-
-            kakaoUserDto.ifPresent((kakaoUser) -> {
-                // KakaoUserDto userObj 사용해서 UserRepository 메소드로 영속화.
-                // TokenRepository 사용해서 카카오용 클라이언트 - 서버용 JWT 토큰 만들고 넘겨준다.
-                // Optional이 empty면? 다른 내용으로 빌더 사용..
-
-                String name = kakaoUser.getProfileNickname();
-                String email = kakaoUser.getEmail();
-
-                Optional<User> userOptional = userRepository.getUserByName(name);
-
-                User user;
-
-                if (userOptional.isPresent()) {
-                    user = userOptional.get();
-                } else {
-                    user = userRepository.build(name, email);
-                    userRepository.saveAndFlush(user);
-                }
-
-                List<PersistentToken> tokens = user.getTokens()
-                                                    .stream()
-                                                    .filter(tkn -> tkn.getProvider() == AuthProvider.KAKAO)
-                                                    .sorted((a, b) -> a.getId().compareTo(b.getId()))
-                                                    .toList();
-
-                PersistentToken persistentToken;
-
-                if (!tokens.isEmpty()) {
-                    persistentToken = tokens.get(0);
-                } else {
-                    persistentToken = PersistentToken.builder()
-                                    .user(user)
-                                    .provider(AuthProvider.KAKAO)
-                                    .build();
-                    tokenRepository.saveAndFlush(persistentToken);
-
-                    user.getTokens().add(persistentToken);
-                    userRepository.saveAndFlush(user);
-                }
-
-                persistentTokenResult.set(Optional.of(persistentToken));
-            });
-        });
-
-        Optional<PersistentToken> persistentToken = persistentTokenResult.get();
-
-        if(persistentToken.isEmpty()) {
-            return PersistentTokenDto.builder().id(null).build();
+        if (optionalAccessToken.isEmpty()) {
+            return Optional.empty();
         }
 
-        return persistentToken.map((token) -> {
-            UUID id = token.getId();
+        Optional<KakaoUserDto> optionalKakaoUserDto = getUser(optionalAccessToken.get());
 
-            return PersistentTokenDto.builder().id(id).build();
-        }).get();
+        if (optionalKakaoUserDto.isEmpty()) {
+            return Optional.empty();
+        }
+
+        KakaoUserDto kakaoUserDto = optionalKakaoUserDto.get();
+
+        String name = kakaoUserDto.getProfileNickname();
+        String email = kakaoUserDto.getEmail();
+
+        Optional<User> userOptional = userRepository.getUserByName(name);
+
+        User user = userOptional.orElseGet(() -> userRepository.build(name, email));
+
+        List<PersistentToken> tokens = user.getTokens()
+                .stream()
+                .filter(tkn -> tkn.getProvider() == AuthProvider.KAKAO)
+                .sorted((a, b) -> a.getId().compareTo(b.getId()))
+                .toList();
+
+        PersistentToken persistentToken;
+
+        if (!tokens.isEmpty()) {
+            persistentToken = tokens.get(tokens.size() - 1);
+        } else {
+            persistentToken = tokenRepository.build(user, AuthProvider.KAKAO);
+        }
+
+        return Optional.of(PersistentTokenDto.builder().id(persistentToken.getId()).build());
     }
 
     private Optional<String> grantAccessToken(@NotNull HttpServletResponse response, @NotNull String code) {

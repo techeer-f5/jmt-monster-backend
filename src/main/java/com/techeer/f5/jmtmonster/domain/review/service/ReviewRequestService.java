@@ -8,6 +8,7 @@ import com.techeer.f5.jmtmonster.domain.review.domain.ReviewImage;
 import com.techeer.f5.jmtmonster.domain.review.domain.ReviewRequest;
 import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestCreateRequestDto;
 import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestUpdateServiceDto;
+import com.techeer.f5.jmtmonster.domain.review.dto.response.FileUploadResponseDto;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
 import com.techeer.f5.jmtmonster.global.error.exception.DuplicateResourceException;
@@ -38,6 +39,30 @@ public class ReviewRequestService  {
     private final UserRepository userRepository;
     private final S3Uploader s3Uploader;
 
+    public FileUploadResponseDto uploadImage(MultipartFile[] images, User user){
+        // Upload Images to S3 Bucket
+        List<String> urls = new ArrayList<>();
+        List<ReviewImage> imageEntityList = new ArrayList<>();
+        for(MultipartFile image : images){
+            try {
+                String url = s3Uploader.upload(image, s3Uploader.getDIR_NAME());
+                urls.add(url);
+                ReviewImage imageEntity = ReviewImage.builder()
+                        .user(user)
+                        .url(url)
+                        .build();
+                imageEntityList.add(imageEntity);
+            } catch(IOException e){
+                e.printStackTrace();
+            }
+        }
+        reviewImageRepository.saveAll(imageEntityList);
+
+        return FileUploadResponseDto.builder()
+                .urls(urls)
+                .build();
+    }
+
     public ReviewRequest create(ReviewRequestCreateRequestDto dto){
         // Check user information
         UUID userId = dto.getUserId();
@@ -64,23 +89,6 @@ public class ReviewRequestService  {
                 .build()).collect(Collectors.toList());
         reviewFoodRepository.saveAll(foodEntityList);
 
-        // Upload Images to S3 Bucket
-        MultipartFile[] images = dto.getImageList();
-        List<ReviewImage> imageEntityList = new ArrayList<>();
-        for(MultipartFile image : images){
-            try {
-                String url = s3Uploader.upload(image, s3Uploader.getDIR_NAME());
-                ReviewImage imageEntity = ReviewImage.builder()
-                        .user(user)
-                        .url(url)
-                        .build();
-                imageEntityList.add(imageEntity);
-            } catch(IOException e){
-                e.printStackTrace();
-            }
-        }
-        reviewImageRepository.saveAll(imageEntityList);
-
         ReviewRequest request_entity = ReviewRequest.builder()
                 .user(user)
                 .content(dto.getContent())
@@ -102,23 +110,6 @@ public class ReviewRequestService  {
                 .food(food)
                 .build()).collect(Collectors.toList());
         reviewFoodRepository.saveAll(foodEntityList);
-
-        // Upload Images to S3 Bucket
-        MultipartFile[] images = dto.getImageList();
-        List<ReviewImage> imageEntityList = new ArrayList<>();
-        for(MultipartFile image : images){
-            try {
-                String url = s3Uploader.upload(image, s3Uploader.getDIR_NAME());
-                ReviewImage imageEntity = ReviewImage.builder()
-                        .user(user)
-                        .url(url)
-                        .build();
-                imageEntityList.add(imageEntity);
-            } catch(IOException e){
-                e.printStackTrace();
-            }
-        }
-        reviewImageRepository.saveAll(imageEntityList);
 
         entity.update(
                 user,

@@ -29,5 +29,5 @@ public class ReviewRequestUpdateServiceDto {
     private List<String> foodList;
 
     @NotNull
-    private MultipartFile[] imageList;
+    private List<String> imageList;
 }

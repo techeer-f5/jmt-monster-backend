@@ -37,5 +37,5 @@ public class ReviewRequestCreateRequestDto {
     private List<String> foodList;
 
     @NotNull
-    private MultipartFile[] imageList;
+    private List<String> imageList;
 }

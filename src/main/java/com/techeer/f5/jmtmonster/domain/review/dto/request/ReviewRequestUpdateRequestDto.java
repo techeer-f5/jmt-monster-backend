@@ -33,5 +33,5 @@ public class ReviewRequestUpdateRequestDto {
     private List<String> foodList;
 
     @NotNull
-    private MultipartFile[] imageList;
+    private List<String> imageList;
 }

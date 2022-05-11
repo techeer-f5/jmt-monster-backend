@@ -33,8 +33,8 @@ public class UserController {
                 .body(userResponseDto);
     }
 
-    @PutMapping("/me")
-    public  ResponseEntity<UserResponseDto> updateUser(HttpServletRequest request, @Valid @RequestBody ExtraUserInfoRequestDto extraUserInfoRequestDto) {
+    @PutMapping("/me/extra-info")
+    public ResponseEntity<UserResponseDto> updateUser(HttpServletRequest request, @Valid @RequestBody ExtraUserInfoRequestDto extraUserInfoRequestDto) {
         UserResponseDto userResponseDto = userService.updateExtraInfo(request, extraUserInfoRequestDto);
 
         return ResponseEntity.status(HttpStatus.OK)

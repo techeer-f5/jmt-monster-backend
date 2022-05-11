@@ -4,11 +4,9 @@ import com.techeer.f5.jmtmonster.domain.review.dao.ReviewFoodRepository;
 import com.techeer.f5.jmtmonster.domain.review.dao.ReviewImageRepository;
 import com.techeer.f5.jmtmonster.domain.review.dao.ReviewRequestRepository;
 import com.techeer.f5.jmtmonster.domain.review.domain.ReviewFood;
-import com.techeer.f5.jmtmonster.domain.review.domain.ReviewImage;
 import com.techeer.f5.jmtmonster.domain.review.domain.ReviewRequest;
-import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestCreateRequestDto;
+import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestCreateServiceDto;
 import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestUpdateServiceDto;
-import com.techeer.f5.jmtmonster.domain.review.dto.response.FileUploadResponseDto;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
 import com.techeer.f5.jmtmonster.global.error.exception.DuplicateResourceException;
@@ -24,7 +22,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -39,31 +36,13 @@ public class ReviewRequestService  {
     private final UserRepository userRepository;
     private final S3Uploader s3Uploader;
 
-    public FileUploadResponseDto uploadImage(MultipartFile[] images, User user){
+    public String uploadImage(MultipartFile image) throws IOException {
         // Upload Images to S3 Bucket
-        List<String> urls = new ArrayList<>();
-        List<ReviewImage> imageEntityList = new ArrayList<>();
-        for(MultipartFile image : images){
-            try {
-                String url = s3Uploader.upload(image, s3Uploader.getDIR_NAME());
-                urls.add(url);
-                ReviewImage imageEntity = ReviewImage.builder()
-                        .user(user)
-                        .url(url)
-                        .build();
-                imageEntityList.add(imageEntity);
-            } catch(IOException e){
-                e.printStackTrace();
-            }
-        }
-        reviewImageRepository.saveAll(imageEntityList);
-
-        return FileUploadResponseDto.builder()
-                .urls(urls)
-                .build();
+        String url = s3Uploader.upload(image, s3Uploader.getDIR_NAME());
+        return url;
     }
 
-    public ReviewRequest create(ReviewRequestCreateRequestDto dto){
+    public ReviewRequest create(ReviewRequestCreateServiceDto dto){
         // Check user information
         UUID userId = dto.getUserId();
         String resourceName = ReviewRequest.class.getSimpleName();
@@ -99,8 +78,8 @@ public class ReviewRequestService  {
         return reviewRequestRepository.save(request_entity);
     }
 
-    public ReviewRequest update(UUID id, ReviewRequestUpdateServiceDto dto){
-        ReviewRequest entity = findOneById(id);
+    public ReviewRequest updateRequest(UUID id, ReviewRequestUpdateServiceDto dto){
+        ReviewRequest entity = findRequestById(id);
         User user = entity.getUser();
 
         // Save foods
@@ -121,7 +100,7 @@ public class ReviewRequestService  {
     }
 
 
-    public void deleteById(UUID id){
+    public void deleteRequestById(UUID id){
         if (!reviewRequestRepository.existsById(id)) {
             throw new ResourceNotFoundException(ReviewRequest.class.getSimpleName(), "id", id);
         }
@@ -129,16 +108,18 @@ public class ReviewRequestService  {
     }
 
     @Transactional(readOnly = true)
-    public ReviewRequest findOneById(UUID id){
+    public ReviewRequest findRequestById(UUID id){
         return reviewRequestRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         ReviewRequest.class.getSimpleName(), "id", id));
     }
 
     @Transactional(readOnly = true)
-    public Page<ReviewRequest> findAll(Pageable pageable){
+    public Page<ReviewRequest> findAllRequests(Pageable pageable){
         return reviewRequestRepository.findAll(pageable);
     }
+
+
 
 }
 

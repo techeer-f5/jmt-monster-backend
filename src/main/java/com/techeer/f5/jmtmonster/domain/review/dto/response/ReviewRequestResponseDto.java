@@ -15,7 +15,7 @@ import java.util.UUID;
 public class ReviewRequestResponseDto extends BaseTimeEntityDto {
 
     @NotNull
-    private UUID reviewId;
+    private UUID id; // review id
 
     @NotNull
     private BasicUserResponseDto user;

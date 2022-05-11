@@ -30,6 +30,9 @@ app:
     allowed-origins: http://localhost,http://localhost:3000,http://localhost:8001
 
 server:
+  servlet:
+    encoding:
+      force-response: true
   port: 8000
 ---
 # Local settings

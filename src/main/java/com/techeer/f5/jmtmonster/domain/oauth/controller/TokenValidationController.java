@@ -3,6 +3,8 @@ package com.techeer.f5.jmtmonster.domain.oauth.controller;
 import com.techeer.f5.jmtmonster.domain.oauth.dto.TokenValidationResponseDto;
 import com.techeer.f5.jmtmonster.domain.oauth.service.TokenValidationService;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
+import com.techeer.f5.jmtmonster.domain.user.dto.UserDto;
+import com.techeer.f5.jmtmonster.domain.user.dto.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ import java.util.UUID;
 @RequestMapping("/auth/validate")
 public class TokenValidationController {
     private final TokenValidationService tokenValidationService;
+    private final UserMapper userMapper;
 
     @GetMapping("/{token}")
     public ResponseEntity<TokenValidationResponseDto> validate(@PathVariable @Valid @NotNull UUID token) {
@@ -33,10 +36,12 @@ public class TokenValidationController {
                             .build());
         }
 
+        UserDto userDto = userMapper.toUserDto(user);
+
         return ResponseEntity.status(HttpStatus.OK)
                 .body(TokenValidationResponseDto.builder()
                         .success(true)
-                        .user(user.convert())
+                        .user(userDto)
                         .build());
     }
 }

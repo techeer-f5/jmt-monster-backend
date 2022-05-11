@@ -1,6 +1,5 @@
 package com.techeer.f5.jmtmonster.domain.friend.dto.request;
 
-import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequestStatus;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,8 +11,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FriendRequestUpdateRequestDto {
+public class FriendUpdateRequestDto {
 
     @NotNull
-    private FriendRequestStatus status;
+    private boolean isHangingOut;
 }

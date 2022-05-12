@@ -90,7 +90,7 @@ public class UserService {
         User user = findUserWithRequest(request);
 
         if (user.getExtraInfoInjected()) {
-            throw new IllegalStateException("사용자 추가 정보가 이미 입력되어 있습니다.");
+            throw new CustomStatusException(ErrorCode.BAD_REQUEST, "사용자 추가 정보가 이미 입력되어 있습니다.");
         }
 
         try {
@@ -102,7 +102,6 @@ public class UserService {
             throw new CustomStatusException(ErrorCode.CONFLICT, exception.getMessage());
         }
 
-        userRepository.save(user);
         return userMapper.toUserResponseDto(user);
     }
 
@@ -112,7 +111,7 @@ public class UserService {
         User user = findUserWithRequest(request);
 
         if (!user.getExtraInfoInjected()) {
-            throw new IllegalStateException("사용자 추가 정보가 기존에 입력되지 않았습니다.");
+            throw new CustomStatusException(ErrorCode.BAD_REQUEST, "사용자 추가 정보가 기존에 입력되지 않았습니다.");
         }
 
         try {
@@ -124,7 +123,6 @@ public class UserService {
             throw new CustomStatusException(ErrorCode.CONFLICT, exception.getMessage());
         }
 
-        userRepository.save(user);
         return userMapper.toUserResponseDto(user);
     }
 }

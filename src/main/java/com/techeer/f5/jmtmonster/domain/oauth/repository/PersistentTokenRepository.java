@@ -23,10 +23,11 @@ public interface PersistentTokenRepository extends JpaRepository<PersistentToken
                 .provider(authProvider)
                 .build();
 
+        persistentToken = saveAndFlush(persistentToken);
 
         user.addToken(persistentToken);
 
-        return saveAndFlush(persistentToken);
+        return persistentToken;
     }
 }
 

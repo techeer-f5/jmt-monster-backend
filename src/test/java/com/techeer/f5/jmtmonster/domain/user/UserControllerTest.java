@@ -120,8 +120,6 @@ public class UserControllerTest {
         User user = getMyUser();
         PersistentToken persistentToken = user.getTokens().stream().findFirst().get();
 
-        persistentToken = persistentTokenRepository.saveAndFlush(persistentToken);
-
         assertThat(user.getExtraInfoInjected()).isFalse();
         assertThat(user.getEmailVerified()).isFalse();
         assertThat(user.getVerified()).isFalse();

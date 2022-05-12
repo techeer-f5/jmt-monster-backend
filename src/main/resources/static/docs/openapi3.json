@@ -28,7 +28,7 @@
                 },
                 "examples" : {
                   "hello-get" : {
-                    "value" : "{\n  \"value\" : \"hello\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-05-13T02:37:16.841388\"\n}"
+                    "value" : "{\n  \"value\" : \"hello\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-05-13T02:42:46.386589\"\n}"
                   }
                 }
               }
@@ -65,7 +65,7 @@
                 },
                 "examples" : {
                   "hello-create" : {
-                    "value" : "{\n  \"value\" : \"hello example1\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-05-13T02:37:16.818816\"\n}"
+                    "value" : "{\n  \"value\" : \"hello example1\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-05-13T02:42:46.125211\"\n}"
                   }
                 }
               }
@@ -88,7 +88,7 @@
           "schema" : {
             "type" : "string"
           },
-          "example" : "Bearer b8e0b855-5e5c-486e-ba3b-e1e728b00378"
+          "example" : "Bearer 8febb371-2d00-47bc-9e5a-017789f7c3df"
         } ],
         "responses" : {
           "200" : {
@@ -96,11 +96,11 @@
             "content" : {
               "application/json;charset=UTF-8" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/users-me-extra-info-769911594"
+                  "$ref" : "#/components/schemas/users-me-769911594"
                 },
                 "examples" : {
                   "my-user" : {
-                    "value" : "{\n  \"success\" : true,\n  \"user\" : {\n    \"id\" : \"e72771d3-3ed3-4c61-aaf4-015b66d1afa5\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : null,\n    \"address\" : null,\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : false,\n    \"verified\" : false\n  }\n}"
+                    "value" : "{\n  \"success\" : true,\n  \"user\" : {\n    \"id\" : \"520ed0cf-8f94-4597-a105-21218052439d\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : null,\n    \"address\" : null,\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : false,\n    \"verified\" : false\n  }\n}"
                   }
                 }
               }
@@ -123,7 +123,7 @@
           "schema" : {
             "type" : "string"
           },
-          "example" : "Bearer 3419acd6-547c-4d68-9430-9426136473c9"
+          "example" : "Bearer 976a4327-91b5-433b-b38a-ac1faf388352"
         } ],
         "requestBody" : {
           "content" : {
@@ -145,11 +145,11 @@
             "content" : {
               "application/json;charset=UTF-8" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/users-me-extra-info-769911594"
+                  "$ref" : "#/components/schemas/users-me-769911594"
                 },
                 "examples" : {
                   "submit-extra-info" : {
-                    "value" : "{\n  \"success\" : true,\n  \"user\" : {\n    \"id\" : \"45b59f29-542b-4006-929e-2032b373c7b1\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : \"DPS0340\",\n    \"address\" : \"경기도 시흥시 서울대학로278번길 19-13\",\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : true,\n    \"verified\" : false\n  }\n}"
+                    "value" : "{\n  \"success\" : true,\n  \"user\" : {\n    \"id\" : \"a8e64992-98db-460e-91a3-f00c86fb1214\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : \"DPS0340\",\n    \"address\" : \"경기도 시흥시 서울대학로278번길 19-13\",\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : true,\n    \"verified\" : false\n  }\n}"
                   }
                 }
               }
@@ -191,7 +191,7 @@
           }
         }
       },
-      "users-me-extra-info-769911594" : {
+      "users-me-769911594" : {
         "type" : "object",
         "properties" : {
           "success" : {

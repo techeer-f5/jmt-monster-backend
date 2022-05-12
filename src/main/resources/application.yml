@@ -27,7 +27,7 @@ spring:
 app:
   cors:
     # comma (',') seperated list of allowed origins for CORS
-    allowed-origins: http://localhost,http://localhost:3000,http://localhost:8001
+    allowed-origins: http://localhost,http://localhost:3000,http://localhost:8001,https://frontend.jmtmonster.com,https://swagger.jmtmonster.com
 
 server:
   servlet:

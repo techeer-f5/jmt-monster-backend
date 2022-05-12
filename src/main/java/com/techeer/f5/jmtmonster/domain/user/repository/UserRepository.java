@@ -23,8 +23,6 @@ public interface UserRepository extends JpaRepository<User, UUID> {
                 .email(email)
                 .build();
 
-        user = saveAndFlush(user);
-
-        return user;
+        return saveAndFlush(user);
     }
 }

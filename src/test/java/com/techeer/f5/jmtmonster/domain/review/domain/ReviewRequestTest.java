@@ -5,6 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.util.UUID;
+
 @SpringBootTest
 @ActiveProfiles(profiles = {"test"})
 public class ReviewRequestTest {
@@ -13,7 +15,7 @@ public class ReviewRequestTest {
     void ReviewRequestTest() {
         // given
         ReviewRequest givenReviewRequest = ReviewRequest.builder()
-                .id()
+                .id(UUID.randomUUID())
                 .user()
                 .likeStatus()
                 .foodList()

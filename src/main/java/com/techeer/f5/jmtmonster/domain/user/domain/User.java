@@ -5,6 +5,7 @@ import com.techeer.f5.jmtmonster.domain.user.dto.UserDto;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.Nullable;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -79,11 +80,13 @@ public class User {
     @Builder.Default
     private List<PersistentToken> tokens = new ArrayList<>();
 
-    public boolean addExtraInfo(String nickname, String address, String imageUrl) throws IllegalStateException {
-        if (extraInfoInjected) {
-            throw new IllegalStateException("사용자 추가 정보가 이미 입력되었습니다.");
-        }
 
+    @Transactional
+    public void addToken(PersistentToken persistentToken) {
+        tokens.add(persistentToken);
+    }
+
+    public boolean addExtraInfo(String nickname, String address, String imageUrl) throws IllegalStateException {
         this.nickname = nickname;
         this.address = address;
         this.imageUrl = imageUrl;

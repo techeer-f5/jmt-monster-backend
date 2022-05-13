@@ -1,8 +1,10 @@
 package com.techeer.f5.jmtmonster.domain.oauth.controller;
 
-import com.techeer.f5.jmtmonster.domain.oauth.config.KakaoConfig;
+import com.techeer.f5.jmtmonster.domain.oauth.dto.PersistentTokenDto;
+import com.techeer.f5.jmtmonster.domain.oauth.service.GoogleLoginService;
 import com.techeer.f5.jmtmonster.domain.oauth.service.KakaoCallbackService;
 import com.techeer.f5.jmtmonster.domain.oauth.service.KakaoLoginService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,18 +20,17 @@ import java.io.IOException;
 
 @Slf4j
 @RestController
-@RequestMapping("/auth/kakao/login")
-public class KakaoLoginController {
-
-    @Autowired
-    private KakaoLoginService kakaoLoginService;
+@RequestMapping("/auth/google/login")
+@RequiredArgsConstructor
+public class GoogleLoginController {
+    private final GoogleLoginService googleLoginService;
 
     @GetMapping
     public void login(@NotNull HttpServletResponse response) throws IOException {
         try {
-            kakaoLoginService.redirectToKakaoLogin(response);
+            googleLoginService.redirectToGoogleLogin(response);
         } catch (IOException e) {
-            log.error("IOException on KakaoLoginController login /auth/kakao/login {}", e.getMessage());
+            log.error("IOException on GoogleLoginController login /auth/google/login {}", e.getMessage());
 
             response.sendError(HttpStatus.SERVICE_UNAVAILABLE.value());
         }

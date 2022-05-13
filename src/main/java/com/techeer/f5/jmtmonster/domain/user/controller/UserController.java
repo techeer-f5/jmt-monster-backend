@@ -32,4 +32,12 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK)
                 .body(userResponseDto);
     }
+
+    @PutMapping("/me/extra-info")
+    public ResponseEntity<UserResponseDto> updateUser(HttpServletRequest request, @Valid @RequestBody ExtraUserInfoRequestDto extraUserInfoRequestDto) {
+        UserResponseDto userResponseDto = userService.updateExtraInfo(request, extraUserInfoRequestDto);
+
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(userResponseDto);
+    }
 }

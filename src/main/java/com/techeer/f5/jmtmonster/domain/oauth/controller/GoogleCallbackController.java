@@ -1,14 +1,11 @@
 package com.techeer.f5.jmtmonster.domain.oauth.controller;
 
-import com.techeer.f5.jmtmonster.domain.oauth.config.KakaoConfig;
 import com.techeer.f5.jmtmonster.domain.oauth.dto.PersistentTokenDto;
+import com.techeer.f5.jmtmonster.domain.oauth.service.GoogleCallbackService;
 import com.techeer.f5.jmtmonster.domain.oauth.service.KakaoCallbackService;
+import com.techeer.f5.jmtmonster.global.error.exception.CustomStatusException;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.validator.constraints.br.CNPJ;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,26 +14,34 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.io.IOException;
+import java.util.Optional;
 
 @Slf4j
 @RestController
-@RequestMapping("/auth/kakao/callback")
-public class KakaoCallbackController {
+@RequestMapping("/auth/google/callback")
+public class GoogleCallbackController {
 
     @Autowired
-    private KakaoCallbackService kakaoCallbackService;
+    private GoogleCallbackService googleCallbackService;
 
 
     @GetMapping
     public PersistentTokenDto authentication(@NotNull HttpServletResponse response, @RequestParam @NotBlank String code) {
-        var authResult = kakaoCallbackService.authentication(response, code);
+        Optional<PersistentTokenDto> authResult = Optional.empty();
 
-        if (authResult.isEmpty()) {
-            return PersistentTokenDto.builder().id(null).build();
+        PersistentTokenDto nullDto = PersistentTokenDto.builder().id(null).build();
+
+        try {
+            authResult = googleCallbackService.authentication(response, code);
+        } catch (IOException ignored) {
+            return nullDto;
         }
 
-        return authResult.get();
+        if (authResult.isEmpty()) {
+            return nullDto;
+        }
+
+        return PersistentTokenDto.builder().id(authResult.get().getId()).build();
     }
-
-
 }

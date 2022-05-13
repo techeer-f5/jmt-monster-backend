@@ -71,7 +71,7 @@ public class ReviewRequestService  {
         ReviewRequest request_entity = ReviewRequest.builder()
                 .user(user)
                 .content(dto.getContent())
-                .like(dto.getLike())
+                .likeStatus(dto.getLike())
                 .star(dto.getStar())
                 .build();
 
@@ -91,7 +91,6 @@ public class ReviewRequestService  {
         reviewFoodRepository.saveAll(foodEntityList);
 
         entity.update(
-                user,
                 dto.getContent(),
                 dto.getLike(),
                 dto.getStar()

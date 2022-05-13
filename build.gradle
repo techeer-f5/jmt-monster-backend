@@ -66,7 +66,7 @@ tasks.named("bootBuildImage") {
 // ./gradlew openapi3
 // See /src/main/resources/static/docs/openapi3.json
 openapi3 {
-    server = 'http://localhost:8000'
+    servers = [ { url = 'http://localhost:8000' }, { url = 'https://backend.jmtmonster.com' } ]
     title = 'JMT Monster'
     description = 'Interactive Dining Review Game'
     version = '0.1.0'

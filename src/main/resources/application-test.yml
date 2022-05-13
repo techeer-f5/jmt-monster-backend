@@ -11,3 +11,12 @@ spring:
     hibernate.dialect: org.hibernate.dialect.MariaDBDialect
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate.ddl-auto: create-drop
+
+oauth:
+  back-end-base-url: http://localhost:8000
+  front-end-base-url: http://localhost:3000
+  kakao:
+    rest-api-key: ''
+  google:
+    client-id: ''
+    client-secret: ''

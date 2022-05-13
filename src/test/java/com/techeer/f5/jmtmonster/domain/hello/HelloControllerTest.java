@@ -4,7 +4,6 @@ package com.techeer.f5.jmtmonster.domain.hello;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.*;
@@ -12,25 +11,23 @@ import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.*;
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.techeer.f5.jmtmonster.domain.hello.controller.HelloController;
 import com.techeer.f5.jmtmonster.domain.hello.dto.HelloRequestDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
-import org.springframework.test.context.TestPropertySource;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
 // For use test db
-@TestPropertySource("classpath:application-test.yml")
+@ActiveProfiles(profiles = {"test"})
 public class HelloControllerTest {
     // See https://spring.io/guides/gs/testing-restdocs/
     @Autowired

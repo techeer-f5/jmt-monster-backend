@@ -7,6 +7,8 @@
   },
   "servers" : [ {
     "url" : "http://localhost:8000"
+  }, {
+    "url" : "https://backend.jmtmonster.com"
   } ],
   "tags" : [ ],
   "paths" : {
@@ -26,7 +28,7 @@
                 },
                 "examples" : {
                   "hello-get" : {
-                    "value" : "{\n  \"value\" : \"hello\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-05-07T17:35:14.374569\"\n}"
+                    "value" : "{\n  \"value\" : \"hello\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-05-13T02:42:46.386589\"\n}"
                   }
                 }
               }
@@ -63,7 +65,7 @@
                 },
                 "examples" : {
                   "hello-create" : {
-                    "value" : "{\n  \"value\" : \"hello example1\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-05-07T17:35:14.033719\"\n}"
+                    "value" : "{\n  \"value\" : \"hello example1\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-05-13T02:42:46.125211\"\n}"
                   }
                 }
               }
@@ -86,7 +88,7 @@
           "schema" : {
             "type" : "string"
           },
-          "example" : "Bearer b9f140fd-ad09-4679-ab18-082d6f8f2bfe"
+          "example" : "Bearer 8febb371-2d00-47bc-9e5a-017789f7c3df"
         } ],
         "responses" : {
           "200" : {
@@ -98,7 +100,7 @@
                 },
                 "examples" : {
                   "my-user" : {
-                    "value" : "{\n  \"success\" : true,\n  \"user\" : {\n    \"id\" : \"81fe2ace-a6f5-482e-9ae1-718020abc247\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : null,\n    \"address\" : null,\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : false,\n    \"verified\" : false\n  }\n}"
+                    "value" : "{\n  \"success\" : true,\n  \"user\" : {\n    \"id\" : \"520ed0cf-8f94-4597-a105-21218052439d\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : null,\n    \"address\" : null,\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : false,\n    \"verified\" : false\n  }\n}"
                   }
                 }
               }
@@ -121,7 +123,7 @@
           "schema" : {
             "type" : "string"
           },
-          "example" : "Bearer 44ccdc6c-acef-456a-b73d-23c7a0d7aec4"
+          "example" : "Bearer 976a4327-91b5-433b-b38a-ac1faf388352"
         } ],
         "requestBody" : {
           "content" : {
@@ -147,7 +149,7 @@
                 },
                 "examples" : {
                   "submit-extra-info" : {
-                    "value" : "{\n  \"success\" : true,\n  \"user\" : {\n    \"id\" : \"42b0e192-3641-49e5-a29c-55e8c1dd26ea\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : \"DPS0340\",\n    \"address\" : \"경기도 시흥시 서울대학로278번길 19-13\",\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : true,\n    \"verified\" : false\n  }\n}"
+                    "value" : "{\n  \"success\" : true,\n  \"user\" : {\n    \"id\" : \"a8e64992-98db-460e-91a3-f00c86fb1214\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : \"DPS0340\",\n    \"address\" : \"경기도 시흥시 서울대학로278번길 19-13\",\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : true,\n    \"verified\" : false\n  }\n}"
                   }
                 }
               }

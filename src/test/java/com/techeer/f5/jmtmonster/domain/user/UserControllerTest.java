@@ -22,6 +22,7 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.headers.HeaderDescriptor;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -41,7 +42,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
 // For use test db
-@TestPropertySource("classpath:application-test.yml")
+@ActiveProfiles(profiles = {"test"})
 public class UserControllerTest {
 
     @Autowired
@@ -68,12 +69,7 @@ public class UserControllerTest {
     public User getMyUser() throws Exception {
         User user = userRepository.build("이지호", "optional.int@kakao.com");
 
-        user = userRepository.saveAndFlush(user);
-
-        PersistentToken persistentToken = PersistentToken.builder().user(user).provider(AuthProvider.KAKAO).build();
-
-        persistentToken = persistentTokenRepository.saveAndFlush(persistentToken);
-        user.getTokens().add(persistentToken);
+        PersistentToken persistentToken = persistentTokenRepository.build(user, AuthProvider.KAKAO);
 
         MvcResult mvcResult = mockMvc.perform(RestDocumentationRequestBuilders.get("/users/me")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer " + persistentToken.getId().toString())

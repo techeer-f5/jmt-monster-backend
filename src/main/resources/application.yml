@@ -4,7 +4,6 @@ spring:
     active:
       - local
       - secret
-      - test
   devtools:
     livereload:
       enabled: true # live reload

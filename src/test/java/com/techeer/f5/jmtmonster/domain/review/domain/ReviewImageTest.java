@@ -1,10 +1,8 @@
 package com.techeer.f5.jmtmonster.domain.review.domain;
 
-import com.techeer.f5.jmtmonster.domain.review.domain.ReviewFood;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -14,23 +12,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @ActiveProfiles(profiles = {"test"})
-public class ReviewFoodTest {
-
+public class ReviewImageTest {
     @Test
-    @DisplayName("ReviewFood Domain update 테스트")
-    void updataTest() {
+    @DisplayName("ReviewImage Domain Update 테스트")
+    void ReviewImageTest() {
         // given
-        ReviewFood givenReviewFood = ReviewFood.builder()
+        ReviewImage givenReviewImage = ReviewImage.builder()
                 .id(UUID.randomUUID())
                 .user(null)
-                .food("짜장면")
+                .url("given URL")
                 .build();
 
         // when
-        givenReviewFood.update("짬뽕");
+        givenReviewImage.update("Changed URL");
 
         // then
-        assertThat(givenReviewFood.getFood()).isEqualTo("짬뽕");
+        assertThat(givenReviewImage.getUrl()).isEqualTo("Changed URL");
     }
 
 }

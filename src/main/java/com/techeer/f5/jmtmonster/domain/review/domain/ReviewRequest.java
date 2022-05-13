@@ -34,7 +34,7 @@ public class ReviewRequest extends BaseTimeEntity {
     private String content;
 
     @NotNull
-    private Like like;
+    private Like likeStatus;
 
     @NotNull
     private Star star;

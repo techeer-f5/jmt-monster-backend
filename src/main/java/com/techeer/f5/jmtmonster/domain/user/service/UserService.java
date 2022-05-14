@@ -62,7 +62,7 @@ public class UserService {
         return Optional.ofNullable(persistentToken.getUser());
     }
 
-    public User findUserWithRequest(HttpServletRequest request) {
+    public User findUserWithRequest(HttpServletRequest request) throws ResourceNotFoundException {
         UUID tokenId = getTokenId(request);
         Optional<User> optionalUser = findUserByTokenId(tokenId);
 
@@ -84,44 +84,15 @@ public class UserService {
                 .build();
     }
 
-    @Transactional
+    @Transactional(rollbackFor = {ResourceNotFoundException.class, NotAuthorizedException.class})
     public UserResponseDto submitExtraInfo(HttpServletRequest request,
-            ExtraUserInfoRequestDto extraUserInfoRequestDto) {
+            ExtraUserInfoRequestDto extraUserInfoRequestDto) throws ResourceNotFoundException, NotAuthorizedException {
         User user = findUserWithRequest(request);
 
-        if (user.getExtraInfoInjected()) {
-            throw new CustomStatusException(ErrorCode.BAD_REQUEST, "사용자 추가 정보가 이미 입력되어 있습니다.");
-        }
-
-        try {
-            user.addExtraInfo(
-                    extraUserInfoRequestDto.getNickname(),
-                    extraUserInfoRequestDto.getAddress(),
-                    extraUserInfoRequestDto.getImageUrl());
-        } catch (IllegalStateException exception) {
-            throw new CustomStatusException(ErrorCode.CONFLICT, exception.getMessage());
-        }
-
-        return userMapper.toUserResponseDto(user);
-    }
-
-    @Transactional
-    public UserResponseDto updateExtraInfo(HttpServletRequest request,
-            ExtraUserInfoRequestDto extraUserInfoRequestDto) {
-        User user = findUserWithRequest(request);
-
-        if (!user.getExtraInfoInjected()) {
-            throw new CustomStatusException(ErrorCode.BAD_REQUEST, "사용자 추가 정보가 기존에 입력되지 않았습니다.");
-        }
-
-        try {
-            user.addExtraInfo(
-                    extraUserInfoRequestDto.getNickname(),
-                    extraUserInfoRequestDto.getAddress(),
-                    extraUserInfoRequestDto.getImageUrl());
-        } catch (IllegalStateException exception) {
-            throw new CustomStatusException(ErrorCode.CONFLICT, exception.getMessage());
-        }
+        user.addExtraInfo(
+                extraUserInfoRequestDto.getNickname(),
+                extraUserInfoRequestDto.getAddress(),
+                extraUserInfoRequestDto.getImageUrl());
 
         return userMapper.toUserResponseDto(user);
     }

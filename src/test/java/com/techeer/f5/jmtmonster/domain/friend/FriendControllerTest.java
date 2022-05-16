@@ -158,7 +158,7 @@ public class FriendControllerTest {
                                                                     .map(Object::toString)
                                                                     .reduce("", (a, b) -> a + b + " | "));
 
-        // check every boolean field of eve element has "is" prefix
+        // check every boolean field of every element has "is" prefix
         boolean hasIsPrefix = friendResponseDtos.stream()
                 .map(e -> objectMapper.convertValue(e, new TypeReference<Map<String, Object>>() {}))
                 .map(e -> e.entrySet()

@@ -66,7 +66,7 @@ public class FriendService {
                 .status(dto.getStatus())
                 .build();
 
-        return friendRequestRepository.save(entity);
+        return friendRequestRepository.saveAndFlush(entity);
     }
 
     @Transactional
@@ -81,7 +81,7 @@ public class FriendService {
                     .isHangingOut(false)
                     .build();
 
-            friendRepository.save(friend);
+            friendRepository.saveAndFlush(friend);
         }
 
         entity.update(
@@ -90,7 +90,7 @@ public class FriendService {
                 dto.getStatus()
         );
 
-        return friendRequestRepository.save(entity);
+        return friendRequestRepository.saveAndFlush(entity);
     }
 
     @Transactional

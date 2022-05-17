@@ -40,7 +40,7 @@ public class User {
     private String email;
 
 
-    @Size(min = 1, max = 3, message = "이메일 길이는 1자부터 30자까지 가능합니다.")
+    @Size(min = 1, max = 30, message = "닉네임 길이는 1자부터 30자까지 가능합니다.")
     @Nullable
     @Builder.Default
     @Setter

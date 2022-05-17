@@ -1,6 +1,7 @@
 package com.techeer.f5.jmtmonster.domain.friend.service;
 
 import com.techeer.f5.jmtmonster.domain.friend.dao.FriendRepository;
+import com.techeer.f5.jmtmonster.domain.friend.dao.FriendRequestCustomRepository;
 import com.techeer.f5.jmtmonster.domain.friend.dao.FriendRequestRepository;
 import com.techeer.f5.jmtmonster.domain.friend.domain.Friend;
 import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequest;
@@ -28,6 +29,7 @@ public class FriendService {
 
     private final FriendRepository friendRepository;
     private final FriendRequestRepository friendRequestRepository;
+    private final FriendRequestCustomRepository friendRequestCustomRepository;
     private final UserRepository userRepository;
 
     @Transactional
@@ -110,7 +112,7 @@ public class FriendService {
 
     @Transactional(readOnly = true)
     public Page<FriendRequest> findAllRequests(Pageable pageable) {
-        return friendRequestRepository.findAll(pageable);
+        return friendRequestCustomRepository.findAll(pageable);
     }
 
     @Transactional

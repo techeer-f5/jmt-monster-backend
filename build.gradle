@@ -39,6 +39,17 @@ dependencies {
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
+
+    // Querydsl
+    implementation 'com.querydsl:querydsl-jpa'
+
+    // Querydsl JPAAnnotationProcessor 사용 지정
+    annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"
+    // java.lang.NoClassDefFoundError(javax.annotation.Entity) 발생 대응
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+    // java.lang.NoClassDefFoundError(javax.annotation.Generated) 발생 대응
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     implementation 'org.springframework.boot:spring-boot-starter-test'
@@ -61,6 +72,12 @@ tasks.named('asciidoctor') {
 
 tasks.named("bootBuildImage") {
     imageName = "jmt-monster-backend:latest"
+}
+
+// clean task 실행시 QClass 삭제
+tasks.clean {
+    // IntelliJ Annotation processor 생성물 생성 위치
+    delete file('src/main/generated')
 }
 
 // ./gradlew openapi3

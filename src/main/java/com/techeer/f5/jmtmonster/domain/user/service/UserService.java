@@ -94,6 +94,8 @@ public class UserService {
                 extraUserInfoRequestDto.getAddress(),
                 extraUserInfoRequestDto.getImageUrl());
 
+        user = userRepository.saveAndFlush(user);
+
         return userMapper.toUserResponseDto(user);
     }
 }

@@ -1,10 +1,10 @@
 package com.techeer.f5.jmtmonster.domain.review.controller;
 
+import com.techeer.f5.jmtmonster.domain.review.domain.Updatable;
 import com.techeer.f5.jmtmonster.domain.review.service.ReviewRequestService;
+import com.techeer.f5.jmtmonster.domain.review.service.S3Service;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -14,11 +14,21 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class S3Controller {
 
-    private ReviewRequestService reviewRequestService;
+    private S3Service s3Service;
 
     @PostMapping
     public String uploadImage(MultipartFile image) throws IOException {
-        return reviewRequestService.uploadImage(image);
+        return s3Service.uploadImage(image);
+    }
+
+    @DeleteMapping
+    public String deleteByURL(@RequestParam String filename){
+        return s3Service.deleteByURL(filename);
+    }
+
+    @PutMapping
+    public String updateByURL(MultipartFile multipartFile, Updatable<String> updatable) throws IOException {
+        return s3Service.updateByURL(multipartFile,updatable);
     }
 
 }

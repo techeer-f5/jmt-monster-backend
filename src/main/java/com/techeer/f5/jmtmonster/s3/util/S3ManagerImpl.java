@@ -83,10 +83,10 @@ public class S3ManagerImpl implements S3Manager {
     }
 
     @Override
-    public String deleteByURL(String url) {
-        DeleteObjectRequest request = new DeleteObjectRequest(bucket, url);
+    public String deleteByURL(String filename) {
+        DeleteObjectRequest request = new DeleteObjectRequest(bucket, filename);
         amazonS3Client.deleteObject(request);
-        return url;
+        return filename;
     }
 
     @Override

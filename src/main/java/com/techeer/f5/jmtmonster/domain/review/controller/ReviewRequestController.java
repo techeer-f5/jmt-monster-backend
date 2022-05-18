@@ -26,7 +26,7 @@ import java.util.UUID;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
-@RequestMapping("/api/v1/review-requests")
+@RequestMapping("/api/v1/reviews")
 @RequiredArgsConstructor
 public class ReviewRequestController {
 

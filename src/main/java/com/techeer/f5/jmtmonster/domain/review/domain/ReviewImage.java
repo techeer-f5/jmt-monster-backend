@@ -6,6 +6,7 @@ import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
@@ -15,7 +16,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ReviewImage extends BaseTimeEntity {
+public class ReviewImage extends BaseTimeEntity implements Updatable<String> {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -31,6 +32,13 @@ public class ReviewImage extends BaseTimeEntity {
     @NotNull
     private String url;
 
+    @Override
+    public String getColumn() {
+        return url;
+    }
+
+    @Transactional
+    @Override
     public void update(String url){
         this.url = url;
     }

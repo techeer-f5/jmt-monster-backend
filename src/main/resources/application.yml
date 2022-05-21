@@ -18,6 +18,7 @@ spring:
         # Print extra information besides SQL queries for debugging
         use_sql_comments: true
         ddl-auto: update
+        default_batch_fetch_size: 100
     generate-ddl: true
   # Disable flyway
   flyway:

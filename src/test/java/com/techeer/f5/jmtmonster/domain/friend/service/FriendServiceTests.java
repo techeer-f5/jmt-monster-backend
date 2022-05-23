@@ -70,7 +70,7 @@ class FriendServiceTests {
                         .status(FriendRequestStatus.PENDING)
                         .build();
 
-                given(friendRequestRepository.save(any()))
+                given(friendRequestRepository.saveAndFlush(any()))
                         .willReturn(friendRequest);
 
                 given(userRepository.findById(friendRequest.getFromUser().getId()))
@@ -179,7 +179,7 @@ class FriendServiceTests {
                 given(friendRequestRepository.findById(existing.getId()))
                         .willReturn(Optional.of(existing));
 
-                given(friendRequestRepository.save(existing))
+                given(friendRequestRepository.saveAndFlush(existing))
                         .willReturn(updated);
 
                 given(friendRequestRepository.getById(updated.getId()))

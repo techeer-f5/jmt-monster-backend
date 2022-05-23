@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.context.annotation.Profile;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.handler.MappedInterceptor;
 
@@ -15,6 +15,7 @@ import org.springframework.web.servlet.handler.MappedInterceptor;
 @Configuration
 @RequiredArgsConstructor
 @Slf4j
+@Profile("!test")
 public class BearerTokenConfig implements WebMvcConfigurer {
     private final AuthorizationExtractor authorizationExtractor;
     private final PersistentTokenRepository persistentTokenRepository;

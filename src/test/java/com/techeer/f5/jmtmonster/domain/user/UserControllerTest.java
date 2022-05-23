@@ -19,17 +19,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.restdocs.headers.HeaderDescriptor;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.springframework.restdocs.payload.PayloadDocumentation.beneathPath;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
@@ -59,6 +55,9 @@ public class UserControllerTest {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JsonMapper jsonMapper;
 
     @Test
     @Transactional
@@ -103,7 +102,7 @@ public class UserControllerTest {
                 ))
                 .andReturn();
 
-        UserResponseDto userResponseDto = JsonMapper.fromMvcResult(mvcResult, UserResponseDto.class);
+        UserResponseDto userResponseDto = jsonMapper.fromMvcResult(mvcResult, UserResponseDto.class);
 
         assertThat(userResponseDto.isSuccess()).isTrue();
         assertThat(userResponseDto.getUser()).isNotNull();
@@ -132,7 +131,7 @@ public class UserControllerTest {
 
         MvcResult mvcResult = mockMvc.perform(RestDocumentationRequestBuilders.post("/users/me/extra-info")
                         .header(HttpHeaders.AUTHORIZATION, "Bearer " + persistentToken.getId().toString())
-                        .content(JsonMapper.asJsonString(extraUserInfoRequestDto))
+                        .content(jsonMapper.asJsonString(extraUserInfoRequestDto))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
@@ -164,7 +163,7 @@ public class UserControllerTest {
                 ))
                 .andReturn();
 
-        UserResponseDto userResponseDto = JsonMapper.fromMvcResult(mvcResult, UserResponseDto.class);
+        UserResponseDto userResponseDto = jsonMapper.fromMvcResult(mvcResult, UserResponseDto.class);
 
         assertThat(userResponseDto.isSuccess()).isTrue();
         assertThat(userResponseDto.getUser()).isNotNull();

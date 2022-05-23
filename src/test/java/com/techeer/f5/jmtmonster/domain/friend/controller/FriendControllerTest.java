@@ -54,8 +54,8 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureRestDocs
 @ActiveProfiles(profiles = {"secret", "test"})
 @Import({FriendRequestMapper.class, UserMapper.class})
-@DisplayName("친구 요청 API")
-class FriendRequestControllerTests {
+@DisplayName("친구 API")
+class FriendControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

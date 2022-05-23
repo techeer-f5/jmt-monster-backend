@@ -28,7 +28,7 @@ import org.springframework.test.context.ActiveProfiles;
 @ExtendWith(MockitoExtension.class)
 @ActiveProfiles("test")
 @DisplayName("친구 Service")
-class FriendServiceTests {
+class FriendServiceTest {
 
     @InjectMocks
     private FriendService friendService;

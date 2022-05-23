@@ -8,6 +8,7 @@ import com.techeer.f5.jmtmonster.domain.review.dto.response.ImageUpdateResponseD
 import com.techeer.f5.jmtmonster.domain.review.service.ReviewRequestService;
 import com.techeer.f5.jmtmonster.domain.review.service.S3Service;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

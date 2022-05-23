@@ -29,7 +29,6 @@ public class S3ManagerImpl implements S3Manager {
 
     private final MultipartFileConverter multipartFileConverter;
 
-
     @Value("${cloud.aws.s3.bucket}")
     public String bucket;  // S3 버킷 이름
 
@@ -37,7 +36,6 @@ public class S3ManagerImpl implements S3Manager {
     public String upload(MultipartFile multipartFile, Optional<String> dirName) throws IOException {
         File uploadFile = multipartFileConverter.toFile(multipartFile)  // 파일 변환할 수 없으면 에러
                 .orElseThrow(() -> new IllegalArgumentException("error: MultipartFile -> File convert fail"));
-
         return upload(uploadFile, dirName);
     }
 
@@ -45,18 +43,13 @@ public class S3ManagerImpl implements S3Manager {
     @Override
     public String upload(File uploadFile, Optional<String> optionalDirectoryName) {
         String dirName = getDirectoryName();
-
         if (optionalDirectoryName.isPresent()) {
             dirName += "/" + optionalDirectoryName.get();
         }
-
         String fileName = uploadFile.getName();
-
         String nanoId = NanoIdUtils.randomNanoId(NanoIdUtils.DEFAULT_NUMBER_GENERATOR, "1234567890".toCharArray(), 10);
         fileName = String.format("%s-%s", fileName, nanoId);
-
         fileName = String.format("%s/%s", dirName, fileName);  // S3에 저장된 파일 이름
-
         String uploadImageUrl = putS3(uploadFile, fileName); // s3로 업로드
         multipartFileConverter.removeNewFile(uploadFile);
         return uploadImageUrl;
@@ -74,7 +67,6 @@ public class S3ManagerImpl implements S3Manager {
     public String uploadImage(MultipartFile multipartFile) throws IOException {
         File uploadFile = multipartFileConverter.toFile(multipartFile)  // 파일 변환할 수 없으면 에러
                 .orElseThrow(() -> new IllegalArgumentException("error: MultipartFile -> File convert fail"));
-
         return upload(uploadFile, Optional.empty());
         // return url
     }
@@ -89,11 +81,8 @@ public class S3ManagerImpl implements S3Manager {
 
     @Override
     public String updateByURL(MultipartFile multipartFile, String url) throws IOException {
-
         String newUrl = upload(multipartFile, Optional.empty());
-
         deleteByURL(url);
-
         return newUrl;
     }
 

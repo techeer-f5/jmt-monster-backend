@@ -48,6 +48,7 @@ dependencies {
     testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.16.2'
     testCompileOnly 'org.projectlombok:lombok:1.18.22'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+    testImplementation 'io.findify:s3mock_2.12:0.2.4'
 }
 
 tasks.named('test') {

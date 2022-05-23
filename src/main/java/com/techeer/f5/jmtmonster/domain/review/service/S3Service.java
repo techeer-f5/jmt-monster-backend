@@ -23,7 +23,7 @@ public class S3Service {
         return s3Manager.deleteByURL(url);
     }
 
-    public String updateByURL(MultipartFile multipartFile, Updatable<String> updatable) throws IOException {
-        return s3Manager.updateByURL(multipartFile,updatable);
+    public String updateByURL(MultipartFile multipartFile, String url) throws IOException {
+        return s3Manager.updateByURL(multipartFile,url);
     }
 }

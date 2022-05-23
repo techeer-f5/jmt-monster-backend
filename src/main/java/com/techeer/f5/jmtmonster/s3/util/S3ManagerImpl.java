@@ -1,17 +1,15 @@
 package com.techeer.f5.jmtmonster.s3.util;
 
-import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
-import com.techeer.f5.jmtmonster.domain.review.dao.ReviewImageRepository;
+import com.techeer.f5.jmtmonster.domain.review.domain.ReviewImage;
 import com.techeer.f5.jmtmonster.domain.review.domain.Updatable;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.Optional;
-import java.util.UUID;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -31,6 +28,7 @@ public class S3ManagerImpl implements S3Manager {
     private final AmazonS3Client amazonS3Client;
 
     private final MultipartFileConverter multipartFileConverter;
+
 
     @Value("${cloud.aws.s3.bucket}")
     public String bucket;  // S3 버킷 이름
@@ -77,28 +75,30 @@ public class S3ManagerImpl implements S3Manager {
         File uploadFile = multipartFileConverter.toFile(multipartFile)  // 파일 변환할 수 없으면 에러
                 .orElseThrow(() -> new IllegalArgumentException("error: MultipartFile -> File convert fail"));
 
-        String url = upload(uploadFile, Optional.empty());
+        return upload(uploadFile, Optional.empty());
+        // return url
+    }
 
+    @Override
+    public String deleteByURL(String url) {
+        String filename = getFilename(url);
+        DeleteObjectRequest request = new DeleteObjectRequest(bucket, filename);
+        amazonS3Client.deleteObject(request);
         return url;
     }
 
     @Override
-    public String deleteByURL(String filename) {
-        DeleteObjectRequest request = new DeleteObjectRequest(bucket, filename);
-        amazonS3Client.deleteObject(request);
-        return filename;
-    }
-
-    @Override
-    public String updateByURL(MultipartFile multipartFile, Updatable<String> updatable) throws IOException {
-        String prevUrl = updatable.getColumn();
+    public String updateByURL(MultipartFile multipartFile, String url) throws IOException {
 
         String newUrl = upload(multipartFile, Optional.empty());
 
-        updatable.update(newUrl);
-
-        deleteByURL(prevUrl);
+        deleteByURL(url);
 
         return newUrl;
+    }
+
+    public String getFilename(String url){
+        String urlPrefix = "s3://jmt-monster-bucket/JMT-Review-Image/";
+        return url.replaceAll(urlPrefix,"");
     }
 }

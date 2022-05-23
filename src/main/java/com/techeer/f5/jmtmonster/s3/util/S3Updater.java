@@ -7,5 +7,5 @@ import java.io.IOException;
 import java.util.UUID;
 
 public interface S3Updater {
-    String updateByURL(MultipartFile multipartFile, Updatable<String> updatable) throws IOException;
+    String updateByURL(MultipartFile multipartFile, String url) throws IOException;
 }

@@ -22,13 +22,13 @@ public class S3Controller {
     }
 
     @DeleteMapping
-    public String deleteByURL(@RequestParam String filename){
-        return s3Service.deleteByURL(filename);
+    public String deleteByURL(@RequestParam String url){
+        return s3Service.deleteByURL(url);
     }
 
     @PutMapping
-    public String updateByURL(MultipartFile multipartFile, Updatable<String> updatable) throws IOException {
-        return s3Service.updateByURL(multipartFile,updatable);
+    public String updateByURL(MultipartFile multipartFile, String url) throws IOException {
+        return s3Service.updateByURL(multipartFile,url);
     }
 
 }

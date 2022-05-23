@@ -1,12 +1,13 @@
 package com.techeer.f5.jmtmonster.domain.hello;
 
-
+import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
@@ -51,7 +52,7 @@ public class HelloControllerTest {
                                             .summary("Hello 객체 조회")
                                             .responseFields(
                                                     fieldWithPath("value").type(JsonFieldType.STRING).description("리스폰스 메시지"),
-                                                    fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공 여부를 나타내는 불린 변수"),
+                                                    fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("성공 여부를 나타내는 불린 변수"),
                                                     fieldWithPath("createdOn").type(JsonFieldType.STRING).description("객체 생성 시각")
                                             )
                                             .build()
@@ -86,7 +87,7 @@ public class HelloControllerTest {
                                         )
                                         .responseFields(
                                                 fieldWithPath("value").type(JsonFieldType.STRING).description("리스폰스 메시지"),
-                                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공 여부를 나타내는 불린 변수"),
+                                                fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("성공 여부를 나타내는 불린 변수"),
                                                 fieldWithPath("createdOn").type(JsonFieldType.STRING).description("객체 생성 시각")
                                         )
                                         .build()

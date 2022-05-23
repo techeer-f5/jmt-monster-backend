@@ -10,7 +10,6 @@ spring:
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
         # Print all SQL queries from Hibernate execution to console
         show_sql: true
         # Format JPA queries on console with readability

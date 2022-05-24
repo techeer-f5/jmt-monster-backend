@@ -114,7 +114,7 @@ class FriendControllerTest {
             given(friendService.findRequestById(any()))
                     .willReturn(friendRequest);
 
-            mockMvc.perform(get("/api/v1/friend-requests/" + friendRequest.getId())
+            mockMvc.perform(get("/api/v1/friend-requests/{id}", friendRequest.getId())
                             .accept(MediaType.APPLICATION_JSON)
                             .header("Origin", "*")
                     )

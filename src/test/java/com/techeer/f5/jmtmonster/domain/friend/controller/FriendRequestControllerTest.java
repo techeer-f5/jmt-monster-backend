@@ -2,7 +2,10 @@ package com.techeer.f5.jmtmonster.domain.friend.controller;
 
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
+import static com.techeer.f5.jmtmonster.document.util.ResponseFieldDescriptorUtils.withHateOasDescriptorsIgnored;
+import static com.techeer.f5.jmtmonster.document.util.ResponseFieldDescriptorUtils.withPageDescriptorsIgnored;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
@@ -28,8 +31,8 @@ import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestUpdateSe
 import com.techeer.f5.jmtmonster.domain.friend.dto.response.FriendRequestResponseDto;
 import com.techeer.f5.jmtmonster.domain.friend.service.FriendService;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
-import com.techeer.f5.jmtmonster.domain.user.dto.BasicUserResponseDto;
 import com.techeer.f5.jmtmonster.domain.user.dto.UserMapper;
+import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -41,14 +44,18 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 
-@WebMvcTest(controllers = FriendRequestController.class)
+@WebMvcTest(FriendRequestController.class)
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc(addFilters = false)
 @AutoConfigureRestDocs
@@ -63,14 +70,18 @@ class FriendRequestControllerTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private FriendRequestMapper friendRequestMapper;
+
     @MockBean
     private FriendService friendService;
 
     @Nested
-    @DisplayName("친구 요청 조회")
-    class GetFriendshipTest {
+    @DisplayName("친구 요청 단일 조회")
+    class GetFriendRequestTest {
 
         @Test
+        @DisplayName("성공")
         void getFriendRequest_ok() throws Exception {
             FriendRequest friendRequest = FriendRequest.builder()
                     .id(UUID.randomUUID())
@@ -91,24 +102,7 @@ class FriendRequestControllerTest {
                     .status(FriendRequestStatus.PENDING)
                     .build();
 
-            FriendRequestResponseDto responseDto = FriendRequestResponseDto.builder()
-                    .id(friendRequest.getId())
-                    .fromUser(BasicUserResponseDto.builder()
-                            .id(friendRequest.getFromUser().getId())
-                            .name(friendRequest.getFromUser().getName())
-                            .nickname(friendRequest.getFromUser().getNickname())
-                            .email(friendRequest.getFromUser().getEmail())
-                            .imageUrl(friendRequest.getFromUser().getImageUrl())
-                            .build())
-                    .toUser(BasicUserResponseDto.builder()
-                            .id(friendRequest.getToUser().getId())
-                            .name(friendRequest.getToUser().getName())
-                            .nickname(friendRequest.getToUser().getNickname())
-                            .email(friendRequest.getToUser().getEmail())
-                            .imageUrl(friendRequest.getToUser().getImageUrl())
-                            .build())
-                    .status(FriendRequestStatus.PENDING)
-                    .build();
+            FriendRequestResponseDto responseDto = friendRequestMapper.toResponseDto(friendRequest);
 
             given(friendService.findRequestById(any()))
                     .willReturn(friendRequest);
@@ -117,9 +111,9 @@ class FriendRequestControllerTest {
                             .accept(MediaType.APPLICATION_JSON)
                             .header("Origin", "*")
                     )
-                    .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(content().string(objectMapper.writeValueAsString(responseDto)))
+                    .andDo(print())
                     .andDo(document("friend-request-get-one",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
@@ -163,11 +157,110 @@ class FriendRequestControllerTest {
                                                             .description("친구 요청을 받은 사용자 프로필 사진 주소"),
                                                     fieldWithPath("status")
                                                             .type(JsonFieldType.STRING)
-                                                            .description("상태")
-                                            )
+                                                            .description("상태"))
                                             .build()
                             )
                     ));
+        }
+    }
+
+    @Nested
+    @DisplayName("친구 요청 목록 검색")
+    class GetFriendshipTest {
+
+        @Test
+        @DisplayName("전체 쿼리 사용 - 성공")
+        void getFriendRequestList_ok() throws Exception {
+            FriendRequest friendRequest = FriendRequest.builder()
+                    .id(UUID.randomUUID())
+                    .fromUser(User.builder()
+                            .id(UUID.randomUUID())
+                            .name("FromUser")
+                            .nickname("FromUser")
+                            .email("test@jmt-monster.com")
+                            .imageUrl("https://profile.example.com/from-user")
+                            .build())
+                    .toUser(User.builder()
+                            .id(UUID.randomUUID())
+                            .name("ToUser")
+                            .nickname("ToUser")
+                            .email("test@jmt-monster.com")
+                            .imageUrl("https://profile.example.com/to-user")
+                            .build())
+                    .status(FriendRequestStatus.PENDING)
+                    .build();
+
+            List<FriendRequest> content = List.of(friendRequest);
+
+            Page<FriendRequest> pageResponse = new PageImpl<>(
+                    content,
+                    PageRequest.of(0, 10),
+                    content.size());
+
+            given(friendService.findAllRequests(
+                    any(),
+                    eq(friendRequest.getFromUser().getId()),
+                    eq(friendRequest.getToUser().getId()),
+                    any()))
+                    .willReturn(pageResponse);
+
+            FieldDescriptor[] responseFieldDescriptors = {
+                    fieldWithPath("content.[].id")
+                            .type(JsonFieldType.STRING)
+                            .description("ID"),
+                    fieldWithPath("content.[].fromUser.id")
+                            .type(JsonFieldType.STRING)
+                            .description("친구 요청을 보낸 사용자 ID"),
+                    fieldWithPath("content.[].fromUser.name")
+                            .type(JsonFieldType.STRING)
+                            .description("친구 요청을 보낸 사용자 이름"),
+                    fieldWithPath("content.[].fromUser.email")
+                            .type(JsonFieldType.STRING)
+                            .description("친구 요청을 보낸 사용자 이메일"),
+                    fieldWithPath("content.[].fromUser.nickname")
+                            .type(JsonFieldType.STRING)
+                            .description("친구 요청을 보낸 사용자 닉네임"),
+                    fieldWithPath("content.[].fromUser.imageUrl")
+                            .type(JsonFieldType.STRING)
+                            .description("친구 요청을 보낸 사용자 프로필 사진 주소"),
+                    fieldWithPath("content.[].toUser.id")
+                            .type(JsonFieldType.STRING)
+                            .description("친구 요청을 받은 사용자"),
+                    fieldWithPath("content.[].toUser.name")
+                            .type(JsonFieldType.STRING)
+                            .description("친구 요청을 받은 사용자 이름"),
+                    fieldWithPath("content.[].toUser.email")
+                            .type(JsonFieldType.STRING)
+                            .description("친구 요청을 받은 사용자 이메일"),
+                    fieldWithPath("content.[].toUser.nickname")
+                            .type(JsonFieldType.STRING)
+                            .description("친구 요청을 받은 사용자 닉네임"),
+                    fieldWithPath("content.[].toUser.imageUrl")
+                            .type(JsonFieldType.STRING)
+                            .description("친구 요청을 받은 사용자 프로필 사진 주소"),
+                    fieldWithPath("content.[].status")
+                            .type(JsonFieldType.STRING)
+                            .description("상태")};
+
+            mockMvc.perform(get("/api/v1/friend-requests")
+                            .queryParam("from-user-id", friendRequest.getFromUser().getId().toString())
+                            .queryParam("to-user-id", friendRequest.getToUser().getId().toString())
+                            .queryParam("status", friendRequest.getStatus().name())
+                            .accept(MediaType.APPLICATION_JSON)
+                            .header("Origin", "*"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().string(objectMapper.writeValueAsString(
+                            pageResponse.map(friendRequestMapper::toResponseDto))))
+                    .andDo(print())
+                    .andDo(document("friend-request-get-one",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            resource(ResourceSnippetParameters.builder()
+                                    .description("친구 요청 한 건을 조회합니다.")
+                                    .summary("친구 요청 조회")
+                                    .responseFields(
+                                            withPageDescriptorsIgnored(responseFieldDescriptors))
+                                    .build())));
         }
     }
 
@@ -176,6 +269,7 @@ class FriendRequestControllerTest {
     class CreateFriendRequestTest {
 
         @Test
+        @DisplayName("성공")
         void createFriendRequest_ok() throws Exception {
             FriendRequestCreateRequestDto requestDto = FriendRequestCreateRequestDto.builder()
                     .fromUserId(UUID.randomUUID())
@@ -204,12 +298,50 @@ class FriendRequestControllerTest {
             given(friendService.createRequest(any(FriendRequestCreateServiceDto.class)))
                     .willReturn(actual);
 
+            FieldDescriptor[] fieldDescriptors = {
+                    fieldWithPath("id")
+                            .type(JsonFieldType.STRING)
+                            .description("ID"),
+                    fieldWithPath("fromUser.id")
+                            .type(JsonFieldType.STRING)
+                            .description("친구 요청을 보낸 사용자 ID"),
+                    fieldWithPath("fromUser.name")
+                            .type(JsonFieldType.STRING)
+                            .description("친구 요청을 보낸 사용자 이름"),
+                    fieldWithPath("fromUser.email")
+                            .type(JsonFieldType.STRING)
+                            .description("친구 요청을 보낸 사용자 이메일"),
+                    fieldWithPath("fromUser.nickname")
+                            .type(JsonFieldType.STRING)
+                            .description("친구 요청을 보낸 사용자 닉네임"),
+                    fieldWithPath("fromUser.imageUrl")
+                            .type(JsonFieldType.STRING)
+                            .description("친구 요청을 보낸 사용자 프로필 사진 주소"),
+                    fieldWithPath("toUser.id")
+                            .type(JsonFieldType.STRING)
+                            .description("친구 요청을 받은 사용자"),
+                    fieldWithPath("toUser.name")
+                            .type(JsonFieldType.STRING)
+                            .description("친구 요청을 받은 사용자 이름"),
+                    fieldWithPath("toUser.email")
+                            .type(JsonFieldType.STRING)
+                            .description("친구 요청을 받은 사용자 이메일"),
+                    fieldWithPath("toUser.nickname")
+                            .type(JsonFieldType.STRING)
+                            .description("친구 요청을 받은 사용자 닉네임"),
+                    fieldWithPath("toUser.imageUrl")
+                            .type(JsonFieldType.STRING)
+                            .description("친구 요청을 받은 사용자 프로필 사진 주소"),
+                    fieldWithPath("status")
+                            .type(JsonFieldType.STRING)
+                            .description("상태")};
+
             mockMvc.perform(post("/api/v1/friend-requests")
                             .contentType(MediaType.APPLICATION_JSON)
                             .accept(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(requestDto)))
+                    .andExpect(status().isCreated())
                     .andDo(print())
-                    .andExpect(status().is(201))
                     .andDo(document("friend-request-create",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
@@ -222,49 +354,9 @@ class FriendRequestControllerTest {
                                                     .description("친구 요청을 보낸 사용자 ID"),
                                             fieldWithPath("toUserId")
                                                     .type(JsonFieldType.STRING)
-                                                    .description("친구 요청을 받은 사용자 ID")
-                                    )
-                                    .responseFields(
-                                            fieldWithPath("id")
-                                                    .type(JsonFieldType.STRING)
-                                                    .description("ID"),
-                                            fieldWithPath("fromUser.id")
-                                                    .type(JsonFieldType.STRING)
-                                                    .description("친구 요청을 보낸 사용자 ID"),
-                                            fieldWithPath("fromUser.name")
-                                                    .type(JsonFieldType.STRING)
-                                                    .description("친구 요청을 보낸 사용자 이름"),
-                                            fieldWithPath("fromUser.email")
-                                                    .type(JsonFieldType.STRING)
-                                                    .description("친구 요청을 보낸 사용자 이메일"),
-                                            fieldWithPath("fromUser.nickname")
-                                                    .type(JsonFieldType.STRING)
-                                                    .description("친구 요청을 보낸 사용자 닉네임"),
-                                            fieldWithPath("fromUser.imageUrl")
-                                                    .type(JsonFieldType.STRING)
-                                                    .description("친구 요청을 보낸 사용자 프로필 사진 주소"),
-                                            fieldWithPath("toUser.id")
-                                                    .type(JsonFieldType.STRING)
-                                                    .description("친구 요청을 받은 사용자"),
-                                            fieldWithPath("toUser.name")
-                                                    .type(JsonFieldType.STRING)
-                                                    .description("친구 요청을 받은 사용자 이름"),
-                                            fieldWithPath("toUser.email")
-                                                    .type(JsonFieldType.STRING)
-                                                    .description("친구 요청을 받은 사용자 이메일"),
-                                            fieldWithPath("toUser.nickname")
-                                                    .type(JsonFieldType.STRING)
-                                                    .description("친구 요청을 받은 사용자 닉네임"),
-                                            fieldWithPath("toUser.imageUrl")
-                                                    .type(JsonFieldType.STRING)
-                                                    .description("친구 요청을 받은 사용자 프로필 사진 주소"),
-                                            fieldWithPath("status")
-                                                    .type(JsonFieldType.STRING)
-                                                    .description("상태"),
-                                            subsectionWithPath("_links")
-                                                    .ignored())
-                                    .build()
-                            )));
+                                                    .description("친구 요청을 받은 사용자 ID"))
+                                    .responseFields(withHateOasDescriptorsIgnored(fieldDescriptors))
+                                    .build())));
         }
     }
 
@@ -273,6 +365,7 @@ class FriendRequestControllerTest {
     class UpdateFriendRequestToCreateFriendTest {
 
         @Test
+        @DisplayName("성공")
         void updateFriendRequestToCreateFriend_ok() throws Exception {
             FriendRequestUpdateRequestDto requestDto = FriendRequestUpdateRequestDto.builder()
                     .status(FriendRequestStatus.ACCEPTED)
@@ -317,8 +410,7 @@ class FriendRequestControllerTest {
                                     .requestFields(
                                             fieldWithPath("status")
                                                     .type(JsonFieldType.STRING)
-                                                    .description("친구 요청 상태 (ACCEPTED)")
-                                    )
+                                                    .description("친구 요청 상태 (ACCEPTED)"))
                                     .responseFields(
                                             fieldWithPath("id")
                                                     .type(JsonFieldType.STRING)
@@ -356,8 +448,7 @@ class FriendRequestControllerTest {
                                             fieldWithPath("status")
                                                     .type(JsonFieldType.STRING)
                                                     .description("상태"))
-                                    .build()
-                            )));
+                                    .build())));
         }
     }
 }

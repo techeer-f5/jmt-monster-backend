@@ -109,8 +109,9 @@ public class FriendService {
     }
 
     @Transactional(readOnly = true)
-    public Page<FriendRequest> findAllRequests(Pageable pageable) {
-        return friendRequestRepository.findAll(pageable);
+    public Page<FriendRequest> findAllRequests(Pageable pageable, UUID fromUserId, UUID toUserId,
+            FriendRequestStatus status) {
+        return friendRequestRepository.searchFriendRequests(pageable, fromUserId, toUserId, status);
     }
 
     @Transactional

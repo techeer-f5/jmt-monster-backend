@@ -52,7 +52,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc(addFilters = false)
 @AutoConfigureRestDocs
-@ActiveProfiles(profiles = {"secret", "test"})
+@ActiveProfiles(profiles = {"secret", "test", "disable-auth"})
 @Import({FriendRequestMapper.class, UserMapper.class})
 @DisplayName("친구 요청 API")
 class FriendRequestControllerTest {

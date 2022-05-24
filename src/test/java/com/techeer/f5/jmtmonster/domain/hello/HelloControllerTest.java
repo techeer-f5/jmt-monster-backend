@@ -28,7 +28,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
 // For use test db
-@ActiveProfiles(profiles = {"test"})
+@ActiveProfiles(profiles = {"test", "disable-auth"})
 public class HelloControllerTest {
     // See https://spring.io/guides/gs/testing-restdocs/
     @Autowired

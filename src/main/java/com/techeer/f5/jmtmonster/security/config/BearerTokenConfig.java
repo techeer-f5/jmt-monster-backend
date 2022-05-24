@@ -15,7 +15,7 @@ import org.springframework.web.servlet.handler.MappedInterceptor;
 @Configuration
 @RequiredArgsConstructor
 @Slf4j
-@Profile("!test")
+@Profile("!disable-auth")
 public class BearerTokenConfig implements WebMvcConfigurer {
     private final AuthorizationExtractor authorizationExtractor;
     private final PersistentTokenRepository persistentTokenRepository;

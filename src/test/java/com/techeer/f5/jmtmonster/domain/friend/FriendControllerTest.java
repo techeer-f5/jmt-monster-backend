@@ -1,9 +1,9 @@
 package com.techeer.f5.jmtmonster.domain.friend;
 
 
-import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,7 +12,6 @@ import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequest;
 import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequestStatus;
 import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestCreateRequestDto;
 import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestUpdateRequestDto;
-import com.techeer.f5.jmtmonster.domain.friend.dto.response.FriendRequestResponseDto;
 import com.techeer.f5.jmtmonster.domain.friend.dto.response.FriendResponseDto;
 import com.techeer.f5.jmtmonster.domain.oauth.domain.AuthProvider;
 import com.techeer.f5.jmtmonster.domain.oauth.domain.PersistentToken;
@@ -20,6 +19,8 @@ import com.techeer.f5.jmtmonster.domain.oauth.repository.PersistentTokenReposito
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
 import com.techeer.f5.jmtmonster.global.utils.JsonMapper;
+import java.util.Map;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,11 +36,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Map;
-import java.util.UUID;
 
 @SpringBootTest
 @AutoConfigureRestDocs

@@ -1,7 +1,9 @@
 package com.techeer.f5.jmtmonster.domain.friend.domain;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.global.domain.domain.BaseTimeEntity;
+
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -41,6 +44,7 @@ public class Friend extends BaseTimeEntity {
     private User toUser;
 
     @NotNull
+    @JsonProperty("isHangingOut")
     private boolean isHangingOut;
 
     public void update(User fromUser, User toUser, boolean isHangingOut) {

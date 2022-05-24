@@ -25,7 +25,7 @@ public class FriendMapper {
 
     public FriendUpdateServiceDto toServiceDto(FriendUpdateRequestDto dto) {
         return FriendUpdateServiceDto.builder()
-                .isHangingOut(dto.isHangingOut())
+                .isHangingOut(dto.getIsHangingOut())
                 .build();
     }
 }

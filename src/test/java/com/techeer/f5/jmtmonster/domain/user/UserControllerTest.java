@@ -86,7 +86,7 @@ public class UserControllerTest {
                                                 headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 사용자 토큰")
                                         )
                                         .responseFields(
-                                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공 여부"),
+                                                fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("성공 여부"),
                                                 fieldWithPath("user.id").type(JsonFieldType.STRING).description("사용자 ID"),
                                                 fieldWithPath("user.name").type(JsonFieldType.STRING).description("사용자 이름"),
                                                 fieldWithPath("user.email").type(JsonFieldType.STRING).description("사용자 이메일"),
@@ -104,7 +104,7 @@ public class UserControllerTest {
 
         UserResponseDto userResponseDto = jsonMapper.fromMvcResult(mvcResult, UserResponseDto.class);
 
-        assertThat(userResponseDto.isSuccess()).isTrue();
+        assertThat(userResponseDto.getIsSuccess()).isTrue();
         assertThat(userResponseDto.getUser()).isNotNull();
 
         assertThat(user.getName()).isEqualTo(userResponseDto.getUser().getName());
@@ -147,7 +147,7 @@ public class UserControllerTest {
                                                 headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 사용자 토큰")
                                         )
                                         .responseFields(
-                                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공 여부"),
+                                                fieldWithPath("isSuccess").type(JsonFieldType.BOOLEAN).description("성공 여부"),
                                                 fieldWithPath("user.id").type(JsonFieldType.STRING).description("사용자 ID"),
                                                 fieldWithPath("user.name").type(JsonFieldType.STRING).description("사용자 이름"),
                                                 fieldWithPath("user.email").type(JsonFieldType.STRING).description("사용자 이메일"),
@@ -165,7 +165,7 @@ public class UserControllerTest {
 
         UserResponseDto userResponseDto = jsonMapper.fromMvcResult(mvcResult, UserResponseDto.class);
 
-        assertThat(userResponseDto.isSuccess()).isTrue();
+        assertThat(userResponseDto.getIsSuccess()).isTrue();
         assertThat(userResponseDto.getUser()).isNotNull();
 
         assertThat(user.getName()).isEqualTo(userResponseDto.getUser().getName());

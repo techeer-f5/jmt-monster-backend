@@ -79,7 +79,7 @@ public class UserService {
         UserDto userDto = userMapper.toUserDto(user);
 
         return UserResponseDto.builder()
-                .success(true)
+                .isSuccess(true)
                 .user(userDto)
                 .build();
     }

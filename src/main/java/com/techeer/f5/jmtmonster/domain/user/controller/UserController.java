@@ -49,7 +49,7 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(UserResponseDto.builder()
-                        .success(false)
+                        .isSuccess(false)
                         .user(UserDto.builder().id(null).build())
                         .build());
     }

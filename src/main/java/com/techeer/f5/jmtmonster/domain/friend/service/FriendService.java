@@ -124,7 +124,7 @@ public class FriendService {
                 .orElseThrow(() -> new ResourceNotFoundException(Friend.class.getSimpleName(), "id",
                         id));
 
-        entity.update(entity.getFromUser(), entity.getToUser(), dto.isHangingOut());
+        entity.update(entity.getFromUser(), entity.getToUser(), dto.getIsHangingOut());
         return friendRepository.save(entity);
     }
 

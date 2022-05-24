@@ -25,10 +25,6 @@ public class FriendResponseDto extends BaseTimeEntityDto {
     private BasicUserResponseDto toUser;
 
     @NotNull
-    @JsonProperty("isAccepted")
-    private boolean isAccepted;
-
-    @NotNull
     @JsonProperty("isHangingOut")
     private boolean isHangingOut;
 }

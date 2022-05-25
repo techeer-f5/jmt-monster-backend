@@ -2,14 +2,18 @@ package com.techeer.f5.jmtmonster.global.utils;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import org.springframework.test.web.servlet.MvcResult;
 
 @Component
-@RequiredArgsConstructor
 public class JsonMapper {
-    public final ObjectMapper objectMapper;
+
+    @Autowired
+    @Qualifier("camelObjectMapper")
+    public ObjectMapper objectMapper;
+
     public String asJsonString(final Object obj) {
         try {
             return objectMapper.writeValueAsString(obj);
@@ -25,5 +29,4 @@ public class JsonMapper {
     public <T> T fromMvcResult(MvcResult result, TypeReference<T> typeReference) throws Exception {
         return objectMapper.readValue(result.getResponse().getContentAsString(), typeReference);
     }
-
 }

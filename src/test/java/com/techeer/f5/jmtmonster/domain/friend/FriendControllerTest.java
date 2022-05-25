@@ -1,9 +1,9 @@
 package com.techeer.f5.jmtmonster.domain.friend;
 
 
-import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,7 +12,6 @@ import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequest;
 import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequestStatus;
 import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestCreateRequestDto;
 import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestUpdateRequestDto;
-import com.techeer.f5.jmtmonster.domain.friend.dto.response.FriendRequestResponseDto;
 import com.techeer.f5.jmtmonster.domain.friend.dto.response.FriendResponseDto;
 import com.techeer.f5.jmtmonster.domain.oauth.domain.AuthProvider;
 import com.techeer.f5.jmtmonster.domain.oauth.domain.PersistentToken;
@@ -20,9 +19,12 @@ import com.techeer.f5.jmtmonster.domain.oauth.repository.PersistentTokenReposito
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
 import com.techeer.f5.jmtmonster.global.utils.JsonMapper;
+import java.util.Map;
+import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -32,15 +34,12 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Map;
-import java.util.UUID;
-
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
@@ -48,6 +47,7 @@ import java.util.UUID;
 @ActiveProfiles(profiles = {"test"})
 @Slf4j
 public class FriendControllerTest {
+
     // See https://spring.io/guides/gs/testing-restdocs/
     @Autowired
     private MockMvc mockMvc;
@@ -106,17 +106,21 @@ public class FriendControllerTest {
 
         String requestBody = objectMapper.writeValueAsString(requestDto);
 
-        MvcResult mvcResult = mockMvc.perform(RestDocumentationRequestBuilders.post("/api/v1/friend-requests")
-                        .accept(MediaType.APPLICATION_JSON)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestBody)
-                        .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", userOneToken.getId())))
+        MvcResult mvcResult = mockMvc.perform(
+                        RestDocumentationRequestBuilders.post("/api/v1/friend-requests")
+                                .accept(MediaType.APPLICATION_JSON)
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(requestBody)
+                                .header(HttpHeaders.AUTHORIZATION,
+                                        String.format("Bearer %s", userOneToken.getId())))
                 .andDo(print())
                 .andExpect(status().is(201))
                 .andReturn();
 
         // Extract post result
-        Map<String, Object> result = jsonMapper.fromMvcResult(mvcResult, new TypeReference<Map<String, Object>>() {});
+        Map<String, Object> result = jsonMapper.fromMvcResult(mvcResult,
+                new TypeReference<Map<String, Object>>() {
+                });
 
         UUID id = UUID.fromString((String) result.get("id"));
 
@@ -124,18 +128,19 @@ public class FriendControllerTest {
 
         // Set accepted status with put (it's necessary)
         FriendRequestUpdateRequestDto friendRequestUpdateRequestDto = FriendRequestUpdateRequestDto.builder()
-                                                                        .status(FriendRequestStatus.ACCEPTED)
-                                                                        .build();
+                .status(FriendRequestStatus.ACCEPTED)
+                .build();
 
         requestBody = objectMapper.writeValueAsString(friendRequestUpdateRequestDto);
 
-
         // Friend entity is saved at this time.
-        mockMvc.perform(RestDocumentationRequestBuilders.put(String.format("/api/v1/friend-requests/%s", id))
+        mockMvc.perform(RestDocumentationRequestBuilders.put(
+                                String.format("/api/v1/friend-requests/%s", id))
                         .accept(MediaType.APPLICATION_JSON)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestBody)
-                        .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", userOneToken.getId())))
+                        .header(HttpHeaders.AUTHORIZATION,
+                                String.format("Bearer %s", userOneToken.getId())))
                 .andDo(print())
                 .andExpect(status().is(200))
                 .andReturn();
@@ -146,29 +151,32 @@ public class FriendControllerTest {
 
         mvcResult = mockMvc.perform(RestDocumentationRequestBuilders.get("/api/v1/friends")
                         .accept(MediaType.APPLICATION_JSON)
-                        .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", userOneToken.getId())))
+                        .header(HttpHeaders.AUTHORIZATION,
+                                String.format("Bearer %s", userOneToken.getId())))
                 .andDo(print())
                 .andExpect(status().is(200))
                 .andReturn();
 
         // type check
-        var friendResponseDtos = jsonMapper.fromMvcResult(mvcResult, new TypeReference<Page<FriendResponseDto>>() {}).get().toList();
+        var friendResponseDtos = jsonMapper.fromMvcResult(mvcResult,
+                new TypeReference<Page<FriendResponseDto>>() {
+                }).get().toList();
 
         log.info("friendRequestResponseDto: " + friendResponseDtos.stream()
-                                                                    .map(Object::toString)
-                                                                    .reduce("", (a, b) -> a + b + " | "));
+                .map(Object::toString)
+                .reduce("", (a, b) -> a + b + " | "));
 
         // check every boolean field of every element has "is" prefix
         boolean hasIsPrefix = friendResponseDtos.stream()
-                .map(e -> objectMapper.convertValue(e, new TypeReference<Map<String, Object>>() {}))
+                .map(e -> objectMapper.convertValue(e, new TypeReference<Map<String, Object>>() {
+                }))
                 .map(e -> e.entrySet()
-                            .stream()
-                            .filter((entry) -> entry.getValue() instanceof Boolean)
-                            .filter((entry) -> !entry.getKey().startsWith("is"))
-                            .toList()
-                            .isEmpty())
+                        .stream()
+                        .filter((entry) -> entry.getValue() instanceof Boolean)
+                        .filter((entry) -> !entry.getKey().startsWith("is"))
+                        .toList()
+                        .isEmpty())
                 .reduce(true, (a, b) -> a && b);
-
 
         assertTrue(hasIsPrefix);
     }

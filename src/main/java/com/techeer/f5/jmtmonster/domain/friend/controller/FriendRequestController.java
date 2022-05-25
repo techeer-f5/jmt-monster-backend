@@ -3,6 +3,7 @@ package com.techeer.f5.jmtmonster.domain.friend.controller;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequest;
+import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequestStatus;
 import com.techeer.f5.jmtmonster.domain.friend.dto.mapper.FriendRequestMapper;
 import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestCreateRequestDto;
 import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestModel;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -68,10 +70,14 @@ public class FriendRequestController {
 
     @GetMapping
     public ResponseEntity<Page<FriendRequestResponseDto>> getList(
-            @PageableDefault(size = 20, sort = "createdOn", direction = Direction.DESC) final Pageable pageable
+            @PageableDefault(size = 20, sort = "createdOn", direction = Direction.DESC) final Pageable pageable,
+            @RequestParam(value = "from-user-id", required = false) UUID fromUserId,
+            @RequestParam(value = "to-user-id", required = false) UUID toUserId,
+            @RequestParam(value = "status", required = false) FriendRequestStatus status
     ) {
         return ResponseEntity
-                .ok(service.findAllRequests(pageable).map(mapper::toResponseDto));
+                .ok(service.findAllRequests(pageable, fromUserId, toUserId, status)
+                        .map(mapper::toResponseDto));
     }
 
     @PutMapping("/{id}")

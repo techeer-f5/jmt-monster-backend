@@ -1,5 +1,15 @@
 package com.techeer.f5.jmtmonster.domain.user;
 
+import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.restdocs.headers.HeaderDocumentation.headerWithName;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 import com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper;
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,6 +23,7 @@ import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
 import com.techeer.f5.jmtmonster.domain.user.service.UserService;
 import com.techeer.f5.jmtmonster.global.utils.JsonMapper;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -22,18 +33,12 @@ import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
-import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
-import static org.springframework.restdocs.headers.HeaderDocumentation.*;
-import static org.assertj.core.api.Assertions.assertThat;
-
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 @AutoConfigureRestDocs
 @AutoConfigureMockMvc
@@ -83,28 +88,48 @@ public class UserControllerTest {
                                         .description("현재 사용자를 가져옵니다.")
                                         .summary("현재 사용자 조회")
                                         .requestHeaders(
-                                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 사용자 토큰")
+                                                headerWithName(
+                                                        HttpHeaders.AUTHORIZATION).description(
+                                                        "Bearer 사용자 토큰")
                                         )
                                         .responseFields(
-                                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공 여부"),
-                                                fieldWithPath("user.id").type(JsonFieldType.STRING).description("사용자 ID"),
-                                                fieldWithPath("user.name").type(JsonFieldType.STRING).description("사용자 이름"),
-                                                fieldWithPath("user.email").type(JsonFieldType.STRING).description("사용자 이메일"),
-                                                fieldWithPath("user.nickname").type(JsonFieldType.STRING).optional().description("사용자 닉네임"),
-                                                fieldWithPath("user.address").type(JsonFieldType.STRING).optional().description("사용자 주소"),
-                                                fieldWithPath("user.imageUrl").type(JsonFieldType.STRING).optional().description("사용자 이미지 URL"),
-                                                fieldWithPath("user.emailVerified").type(JsonFieldType.BOOLEAN).description("사용자 이메일 인증 여부"),
-                                                fieldWithPath("user.extraInfoInjected").type(JsonFieldType.BOOLEAN).description("사용자 추가 정보 입력 여부"),
-                                                fieldWithPath("user.verified").type(JsonFieldType.BOOLEAN).description("사용자 인증 여부 (emailVerified && extraInfoInjected)")
+                                                fieldWithPath("isSuccess").type(
+                                                        JsonFieldType.BOOLEAN).description("성공 여부"),
+                                                fieldWithPath("user.id").type(JsonFieldType.STRING)
+                                                        .description("사용자 ID"),
+                                                fieldWithPath("user.name").type(
+                                                        JsonFieldType.STRING).description("사용자 이름"),
+                                                fieldWithPath("user.email").type(
+                                                                JsonFieldType.STRING)
+                                                        .description("사용자 이메일"),
+                                                fieldWithPath("user.nickname").type(
+                                                                JsonFieldType.STRING).optional()
+                                                        .description("사용자 닉네임"),
+                                                fieldWithPath("user.address").type(
+                                                                JsonFieldType.STRING).optional()
+                                                        .description("사용자 주소"),
+                                                fieldWithPath("user.imageUrl").type(
+                                                                JsonFieldType.STRING).optional()
+                                                        .description("사용자 이미지 URL"),
+                                                fieldWithPath("user.emailVerified").type(
+                                                                JsonFieldType.BOOLEAN)
+                                                        .description("사용자 이메일 인증 여부"),
+                                                fieldWithPath("user.extraInfoInjected").type(
+                                                                JsonFieldType.BOOLEAN)
+                                                        .description("사용자 추가 정보 입력 여부"),
+                                                fieldWithPath("user.verified").type(
+                                                        JsonFieldType.BOOLEAN).description(
+                                                        "사용자 인증 여부 (emailVerified && extraInfoInjected)")
                                         )
                                         .build()
                         )
                 ))
                 .andReturn();
 
-        UserResponseDto userResponseDto = jsonMapper.fromMvcResult(mvcResult, UserResponseDto.class);
+        UserResponseDto userResponseDto = jsonMapper.fromMvcResult(mvcResult,
+                UserResponseDto.class);
 
-        assertThat(userResponseDto.isSuccess()).isTrue();
+        assertThat(userResponseDto.getIsSuccess()).isTrue();
         assertThat(userResponseDto.getUser()).isNotNull();
 
         assertThat(user.getName()).isEqualTo(userResponseDto.getUser().getName());
@@ -129,11 +154,13 @@ public class UserControllerTest {
                 .imageUrl(null)
                 .build();
 
-        MvcResult mvcResult = mockMvc.perform(RestDocumentationRequestBuilders.post("/users/me/extra-info")
-                        .header(HttpHeaders.AUTHORIZATION, "Bearer " + persistentToken.getId().toString())
-                        .content(jsonMapper.asJsonString(extraUserInfoRequestDto))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON))
+        MvcResult mvcResult = mockMvc.perform(
+                        RestDocumentationRequestBuilders.post("/users/me/extra-info")
+                                .header(HttpHeaders.AUTHORIZATION,
+                                        "Bearer " + persistentToken.getId().toString())
+                                .content(jsonMapper.asJsonString(extraUserInfoRequestDto))
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .accept(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andDo(MockMvcRestDocumentationWrapper.document("submit-extra-info",
@@ -144,28 +171,48 @@ public class UserControllerTest {
                                         .description("추가 정보를 입력합니다.")
                                         .summary("추가 정보 입력")
                                         .requestHeaders(
-                                                headerWithName(HttpHeaders.AUTHORIZATION).description("Bearer 사용자 토큰")
+                                                headerWithName(
+                                                        HttpHeaders.AUTHORIZATION).description(
+                                                        "Bearer 사용자 토큰")
                                         )
                                         .responseFields(
-                                                fieldWithPath("success").type(JsonFieldType.BOOLEAN).description("성공 여부"),
-                                                fieldWithPath("user.id").type(JsonFieldType.STRING).description("사용자 ID"),
-                                                fieldWithPath("user.name").type(JsonFieldType.STRING).description("사용자 이름"),
-                                                fieldWithPath("user.email").type(JsonFieldType.STRING).description("사용자 이메일"),
-                                                fieldWithPath("user.nickname").type(JsonFieldType.STRING).optional().description("사용자 닉네임"),
-                                                fieldWithPath("user.address").type(JsonFieldType.STRING).optional().description("사용자 주소"),
-                                                fieldWithPath("user.imageUrl").type(JsonFieldType.STRING).optional().description("사용자 이미지 URL"),
-                                                fieldWithPath("user.emailVerified").type(JsonFieldType.BOOLEAN).description("사용자 이메일 인증 여부"),
-                                                fieldWithPath("user.extraInfoInjected").type(JsonFieldType.BOOLEAN).description("사용자 추가 정보 입력 여부"),
-                                                fieldWithPath("user.verified").type(JsonFieldType.BOOLEAN).description("사용자 인증 여부 (emailVerified && extraInfoInjected)")
+                                                fieldWithPath("isSuccess").type(
+                                                        JsonFieldType.BOOLEAN).description("성공 여부"),
+                                                fieldWithPath("user.id").type(JsonFieldType.STRING)
+                                                        .description("사용자 ID"),
+                                                fieldWithPath("user.name").type(
+                                                        JsonFieldType.STRING).description("사용자 이름"),
+                                                fieldWithPath("user.email").type(
+                                                                JsonFieldType.STRING)
+                                                        .description("사용자 이메일"),
+                                                fieldWithPath("user.nickname").type(
+                                                                JsonFieldType.STRING).optional()
+                                                        .description("사용자 닉네임"),
+                                                fieldWithPath("user.address").type(
+                                                                JsonFieldType.STRING).optional()
+                                                        .description("사용자 주소"),
+                                                fieldWithPath("user.imageUrl").type(
+                                                                JsonFieldType.STRING).optional()
+                                                        .description("사용자 이미지 URL"),
+                                                fieldWithPath("user.emailVerified").type(
+                                                                JsonFieldType.BOOLEAN)
+                                                        .description("사용자 이메일 인증 여부"),
+                                                fieldWithPath("user.extraInfoInjected").type(
+                                                                JsonFieldType.BOOLEAN)
+                                                        .description("사용자 추가 정보 입력 여부"),
+                                                fieldWithPath("user.verified").type(
+                                                        JsonFieldType.BOOLEAN).description(
+                                                        "사용자 인증 여부 (emailVerified && extraInfoInjected)")
                                         )
                                         .build()
                         )
                 ))
                 .andReturn();
 
-        UserResponseDto userResponseDto = jsonMapper.fromMvcResult(mvcResult, UserResponseDto.class);
+        UserResponseDto userResponseDto = jsonMapper.fromMvcResult(mvcResult,
+                UserResponseDto.class);
 
-        assertThat(userResponseDto.isSuccess()).isTrue();
+        assertThat(userResponseDto.getIsSuccess()).isTrue();
         assertThat(userResponseDto.getUser()).isNotNull();
 
         assertThat(user.getName()).isEqualTo(userResponseDto.getUser().getName());

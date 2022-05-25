@@ -1,12 +1,14 @@
 package com.techeer.f5.jmtmonster.domain.friend.dto.response;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.techeer.f5.jmtmonster.domain.user.dto.BasicUserResponseDto;
 import com.techeer.f5.jmtmonster.global.domain.dto.BaseTimeEntityDto;
 import java.util.UUID;
 import javax.validation.constraints.NotNull;
-
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Getter
 @Builder
@@ -25,10 +27,5 @@ public class FriendResponseDto extends BaseTimeEntityDto {
     private BasicUserResponseDto toUser;
 
     @NotNull
-    @JsonProperty("isAccepted")
-    private boolean isAccepted;
-
-    @NotNull
-    @JsonProperty("isHangingOut")
-    private boolean isHangingOut;
+    private Boolean isHangingOut;
 }

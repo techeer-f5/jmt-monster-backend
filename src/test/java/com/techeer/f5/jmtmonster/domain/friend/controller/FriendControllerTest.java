@@ -144,7 +144,7 @@ class FriendControllerTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(content().string(objectMapper.writeValueAsString(responseDto)))
-                    .andDo(document("friend-request-get-one",
+                    .andDo(document("friend-get-one",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             resource(ResourceSnippetParameters.builder()
@@ -242,7 +242,7 @@ class FriendControllerTest {
                     .andDo(print())
                     .andExpect(status().isOk())
                     .andExpect(content().string(objectMapper.writeValueAsString(response)))
-                    .andDo(document("friend-request-get-one",
+                    .andDo(document("friend-get-list",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             resource(ResourceSnippetParameters.builder()

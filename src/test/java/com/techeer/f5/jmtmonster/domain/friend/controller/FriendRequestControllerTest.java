@@ -252,7 +252,7 @@ class FriendRequestControllerTest {
                     .andExpect(content().string(objectMapper.writeValueAsString(
                             pageResponse.map(friendRequestMapper::toResponseDto))))
                     .andDo(print())
-                    .andDo(document("friend-request-get-one",
+                    .andDo(document("friend-request-get-list",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             resource(ResourceSnippetParameters.builder()

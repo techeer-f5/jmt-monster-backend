@@ -31,6 +31,8 @@ import com.techeer.f5.jmtmonster.domain.friend.dto.response.FriendRequestRespons
 import com.techeer.f5.jmtmonster.domain.friend.service.FriendService;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.dto.UserMapper;
+import com.techeer.f5.jmtmonster.global.config.JacksonConfig;
+import com.techeer.f5.jmtmonster.global.config.JacksonModuleConfig;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
@@ -38,6 +40,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -59,7 +62,8 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc(addFilters = false)
 @AutoConfigureRestDocs
 @ActiveProfiles(profiles = {"secret", "test", "disable-auth"})
-@Import({FriendRequestMapper.class, UserMapper.class})
+@Import({JacksonConfig.class, JacksonModuleConfig.class, FriendRequestMapper.class,
+        UserMapper.class})
 @DisplayName("친구 요청 API")
 class FriendRequestControllerTest {
 
@@ -67,6 +71,7 @@ class FriendRequestControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
+    @Qualifier("camelObjectMapper")
     private ObjectMapper objectMapper;
 
     @Autowired

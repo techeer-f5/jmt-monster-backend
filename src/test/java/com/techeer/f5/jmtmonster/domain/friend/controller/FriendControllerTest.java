@@ -25,6 +25,8 @@ import com.techeer.f5.jmtmonster.domain.friend.dto.response.FriendResponseDto;
 import com.techeer.f5.jmtmonster.domain.friend.service.FriendService;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.dto.UserMapper;
+import com.techeer.f5.jmtmonster.global.config.JacksonConfig;
+import com.techeer.f5.jmtmonster.global.config.JacksonModuleConfig;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
@@ -32,6 +34,7 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -53,7 +56,7 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc(addFilters = false)
 @AutoConfigureRestDocs
 @ActiveProfiles(profiles = {"secret", "test", "disable-auth"})
-@Import({FriendMapper.class, UserMapper.class})
+@Import({JacksonConfig.class, JacksonModuleConfig.class, FriendMapper.class, UserMapper.class})
 @DisplayName("친구 API")
 class FriendControllerTest {
 
@@ -61,6 +64,7 @@ class FriendControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
+    @Qualifier("camelObjectMapper")
     private ObjectMapper objectMapper;
 
     @Autowired
@@ -261,7 +265,8 @@ class FriendControllerTest {
                                                     .type(SimpleType.BOOLEAN)
                                                     .description("놀러가기 여부")
                                                     .optional())
-                                    .responseFields(withPageDescriptorsIgnored(responseFieldDescriptors))
+                                    .responseFields(
+                                            withPageDescriptorsIgnored(responseFieldDescriptors))
                                     .build())));
         }
     }

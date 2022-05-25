@@ -31,16 +31,33 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.2'
     implementation 'org.flywaydb:flyway-core'
     implementation 'com.fasterxml.jackson.core:jackson-core:2.13.2'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.2'
+
     compileOnly 'org.projectlombok:lombok'
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
+
+    // Querydsl
+    implementation 'com.querydsl:querydsl-jpa'
+
+    // Querydsl JPAAnnotationProcessor 사용 지정
+    annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa"
+    // java.lang.NoClassDefFoundError(javax.annotation.Entity) 발생 대응
+    annotationProcessor "jakarta.persistence:jakarta.persistence-api"
+    // java.lang.NoClassDefFoundError(javax.annotation.Generated) 발생 대응
+    annotationProcessor "jakarta.annotation:jakarta.annotation-api"
+
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
     implementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     testImplementation 'org.springframework.security:spring-security-test'
@@ -64,10 +81,16 @@ tasks.named("bootBuildImage") {
     imageName = "jmt-monster-backend:latest"
 }
 
+// clean task 실행시 QClass 삭제
+tasks.clean {
+    // IntelliJ Annotation processor 생성물 생성 위치
+    delete file('src/main/generated')
+}
+
 // ./gradlew openapi3
 // See /src/main/resources/static/docs/openapi3.json
 openapi3 {
-    servers = [ { url = 'http://localhost:8000' }, { url = 'https://backend.jmtmonster.com' } ]
+    servers = [{ url = 'http://localhost:8000' }, { url = 'https://backend.jmtmonster.com' }]
     title = 'JMT Monster'
     description = 'Interactive Dining Review Game'
     version = '0.1.0'

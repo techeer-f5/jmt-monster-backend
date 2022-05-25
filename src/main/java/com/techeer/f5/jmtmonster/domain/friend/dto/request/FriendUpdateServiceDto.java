@@ -14,5 +14,5 @@ import lombok.NoArgsConstructor;
 public class FriendUpdateServiceDto {
 
     @NotNull
-    private boolean isHangingOut;
+    private Boolean isHangingOut;
 }

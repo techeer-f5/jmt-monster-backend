@@ -12,6 +12,118 @@
   } ],
   "tags" : [ ],
   "paths" : {
+    "/api/v1/friend-requests" : {
+      "get" : {
+        "tags" : [ "api" ],
+        "summary" : "친구 요청 조회",
+        "description" : "친구 요청 한 건을 조회합니다.",
+        "operationId" : "friend-request-get-list",
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/api-v1-friend-requests881476564"
+                },
+                "examples" : {
+                  "friend-request-get-list" : {
+                    "value" : "{\n  \"content\" : [ {\n    \"id\" : \"a733297d-3c5b-4c42-8c42-1d0479856de6\",\n    \"fromUser\" : {\n      \"id\" : \"6e004b14-1329-41d6-8c31-1c2fcfa2afc8\",\n      \"name\" : \"FromUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"FromUser\",\n      \"imageUrl\" : \"https://profile.example.com/from-user\"\n    },\n    \"toUser\" : {\n      \"id\" : \"736d6a3d-98c2-4dc6-8502-3a1e14926e19\",\n      \"name\" : \"ToUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"ToUser\",\n      \"imageUrl\" : \"https://profile.example.com/to-user\"\n    },\n    \"status\" : \"PENDING\"\n  } ],\n  \"pageable\" : {\n    \"sort\" : {\n      \"empty\" : true,\n      \"sorted\" : false,\n      \"unsorted\" : true\n    },\n    \"offset\" : 0,\n    \"pageNumber\" : 0,\n    \"pageSize\" : 10,\n    \"paged\" : true,\n    \"unpaged\" : false\n  },\n  \"totalPages\" : 1,\n  \"totalElements\" : 1,\n  \"last\" : true,\n  \"size\" : 10,\n  \"number\" : 0,\n  \"sort\" : {\n    \"empty\" : true,\n    \"sorted\" : false,\n    \"unsorted\" : true\n  },\n  \"numberOfElements\" : 1,\n  \"first\" : true,\n  \"empty\" : false\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "api" ],
+        "summary" : "친구 요청 생성",
+        "description" : "친구 요청 한 건을 생성합니다.",
+        "operationId" : "friend-request-create",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/api-v1-friend-requests390944723"
+              },
+              "examples" : {
+                "friend-request-create" : {
+                  "value" : "{\n  \"fromUserId\" : \"47ef4568-fc7b-4905-8053-01b53ac23a4a\",\n  \"toUserId\" : \"bc3434d5-4d37-4607-b39e-0de7ceee20ed\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "201" : {
+            "description" : "201",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/api-v1-friend-requests-id529653109"
+                },
+                "examples" : {
+                  "friend-request-create" : {
+                    "value" : "{\n  \"id\" : \"d5be49df-fd36-42d3-bd6f-a058509a712a\",\n  \"fromUser\" : {\n    \"id\" : \"47ef4568-fc7b-4905-8053-01b53ac23a4a\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"bc3434d5-4d37-4607-b39e-0de7ceee20ed\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"PENDING\",\n  \"_links\" : {\n    \"list\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests\"\n    },\n    \"self\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/d5be49df-fd36-42d3-bd6f-a058509a712a\"\n    },\n    \"update\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/d5be49df-fd36-42d3-bd6f-a058509a712a\"\n    },\n    \"delete\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/d5be49df-fd36-42d3-bd6f-a058509a712a\"\n    }\n  }\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/friends" : {
+      "get" : {
+        "tags" : [ "api" ],
+        "summary" : "친구 조회",
+        "description" : "친구 목록 전체를 조회합니다.",
+        "operationId" : "friend-get-list",
+        "parameters" : [ {
+          "name" : "from-user-id",
+          "in" : "query",
+          "description" : "사용자 ID",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "to-user-id",
+          "in" : "query",
+          "description" : "친구 ID",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        }, {
+          "name" : "is-hanging-out",
+          "in" : "query",
+          "description" : "놀러가기 여부",
+          "required" : false,
+          "schema" : {
+            "type" : "boolean"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/api-v1-friends-1521885839"
+                },
+                "examples" : {
+                  "friend-get-list" : {
+                    "value" : "{\n  \"content\" : [ {\n    \"id\" : \"11504ebc-efd2-46a2-bba5-5943a67b48e3\",\n    \"fromUser\" : {\n      \"id\" : \"cc97f3a0-cae9-4566-98e2-6a978f09bcda\",\n      \"name\" : \"FromUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"FromUser\",\n      \"imageUrl\" : \"https://profile.example.com/from-user\"\n    },\n    \"toUser\" : {\n      \"id\" : \"8be8538d-faa3-4878-aec8-fdebaa00e771\",\n      \"name\" : \"ToUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"ToUser\",\n      \"imageUrl\" : \"https://profile.example.com/to-user\"\n    },\n    \"isHangingOut\" : false\n  } ],\n  \"pageable\" : {\n    \"sort\" : {\n      \"empty\" : true,\n      \"sorted\" : false,\n      \"unsorted\" : true\n    },\n    \"offset\" : 0,\n    \"pageNumber\" : 0,\n    \"pageSize\" : 10,\n    \"paged\" : true,\n    \"unpaged\" : false\n  },\n  \"totalPages\" : 1,\n  \"totalElements\" : 1,\n  \"last\" : true,\n  \"size\" : 10,\n  \"number\" : 0,\n  \"sort\" : {\n    \"empty\" : true,\n    \"sorted\" : false,\n    \"unsorted\" : true\n  },\n  \"numberOfElements\" : 1,\n  \"first\" : true,\n  \"empty\" : false\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/hello" : {
       "get" : {
         "tags" : [ "api" ],
@@ -24,11 +136,11 @@
             "content" : {
               "application/json;charset=UTF-8" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/api-v1-hello527089244"
+                  "$ref" : "#/components/schemas/api-v1-hello913429618"
                 },
                 "examples" : {
                   "hello-get" : {
-                    "value" : "{\n  \"value\" : \"hello\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-05-13T02:42:46.386589\"\n}"
+                    "value" : "{\n  \"value\" : \"hello\",\n  \"isSuccess\" : true,\n  \"createdOn\" : \"2022-05-25T13:02:00.439411\"\n}"
                   }
                 }
               }
@@ -61,11 +173,125 @@
             "content" : {
               "application/json;charset=UTF-8" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/api-v1-hello527089244"
+                  "$ref" : "#/components/schemas/api-v1-hello913429618"
                 },
                 "examples" : {
                   "hello-create" : {
-                    "value" : "{\n  \"value\" : \"hello example1\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-05-13T02:42:46.125211\"\n}"
+                    "value" : "{\n  \"value\" : \"hello example1\",\n  \"isSuccess\" : true,\n  \"createdOn\" : \"2022-05-25T13:02:00.381399\"\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/friend-requests/{id}" : {
+      "get" : {
+        "tags" : [ "api" ],
+        "summary" : "친구 요청 조회",
+        "description" : "친구 요청 한 건을 조회합니다.",
+        "operationId" : "friend-request-get-one",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/api-v1-friend-requests-id529653109"
+                },
+                "examples" : {
+                  "friend-request-get-one" : {
+                    "value" : "{\n  \"id\" : \"f49f5f99-a465-45eb-99e3-7c30386778f2\",\n  \"fromUser\" : {\n    \"id\" : \"44a2f618-8015-460d-9d23-7fa48a33fd1a\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"d9dc67d2-bbb7-4603-a529-c7255fe237e1\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"PENDING\"\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "api" ],
+        "summary" : "친구 요청으로부터 친구 생성",
+        "description" : "친구 요청을 수정해 친구를 생성합니다.",
+        "operationId" : "friend-request-update-to-create-friend",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/api-v1-friend-requests-id-989932600"
+              },
+              "examples" : {
+                "friend-request-update-to-create-friend" : {
+                  "value" : "{\n  \"status\" : \"ACCEPTED\"\n}"
+                }
+              }
+            }
+          }
+        },
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/api-v1-friend-requests-id529653109"
+                },
+                "examples" : {
+                  "friend-request-update-to-create-friend" : {
+                    "value" : "{\n  \"id\" : \"2b59e13e-17a0-42ff-a6bd-e693b201d7a3\",\n  \"fromUser\" : {\n    \"id\" : \"98d5d8f0-671d-4bed-b5b7-feff9ab28948\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"4efcd4f3-738e-43c2-9bcb-3befc2929457\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"ACCEPTED\"\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/friends/{id}" : {
+      "get" : {
+        "tags" : [ "api" ],
+        "summary" : "친구 조회",
+        "description" : "친구 한 건을 조회합니다.",
+        "operationId" : "friend-get-one",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/api-v1-friends-id-491435824"
+                },
+                "examples" : {
+                  "friend-get-one" : {
+                    "value" : "{\n  \"id\" : \"3c40205c-7f06-4297-9c84-239e3ea9f4e8\",\n  \"fromUser\" : {\n    \"id\" : \"fd89ef7d-789d-4b9a-a8fe-541189ea1b66\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"08137c8f-eea5-4e45-ae08-c17393a2d37f\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"isHangingOut\" : false\n}"
                   }
                 }
               }
@@ -88,7 +314,7 @@
           "schema" : {
             "type" : "string"
           },
-          "example" : "Bearer 8febb371-2d00-47bc-9e5a-017789f7c3df"
+          "example" : "Bearer 2031db6a-4b74-4258-80c5-cf4aecce703c"
         } ],
         "responses" : {
           "200" : {
@@ -96,11 +322,11 @@
             "content" : {
               "application/json;charset=UTF-8" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/users-me-769911594"
+                  "$ref" : "#/components/schemas/users-me-extra-info-1863268708"
                 },
                 "examples" : {
                   "my-user" : {
-                    "value" : "{\n  \"success\" : true,\n  \"user\" : {\n    \"id\" : \"520ed0cf-8f94-4597-a105-21218052439d\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : null,\n    \"address\" : null,\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : false,\n    \"verified\" : false\n  }\n}"
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"user\" : {\n    \"id\" : \"6f241a7f-0e27-47d3-8f6f-bbd06e589bda\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : null,\n    \"address\" : null,\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : false,\n    \"verified\" : false\n  }\n}"
                   }
                 }
               }
@@ -123,7 +349,7 @@
           "schema" : {
             "type" : "string"
           },
-          "example" : "Bearer 976a4327-91b5-433b-b38a-ac1faf388352"
+          "example" : "Bearer b05490b7-2605-480b-bd10-58a6ff577555"
         } ],
         "requestBody" : {
           "content" : {
@@ -145,11 +371,11 @@
             "content" : {
               "application/json;charset=UTF-8" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/users-me-769911594"
+                  "$ref" : "#/components/schemas/users-me-extra-info-1863268708"
                 },
                 "examples" : {
                   "submit-extra-info" : {
-                    "value" : "{\n  \"success\" : true,\n  \"user\" : {\n    \"id\" : \"a8e64992-98db-460e-91a3-f00c86fb1214\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : \"DPS0340\",\n    \"address\" : \"경기도 시흥시 서울대학로278번길 19-13\",\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : true,\n    \"verified\" : false\n  }\n}"
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"user\" : {\n    \"id\" : \"b4f18367-42af-4201-9731-617539733181\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : \"DPS0340\",\n    \"address\" : \"경기도 시흥시 서울대학로278번길 19-13\",\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : true,\n    \"verified\" : false\n  }\n}"
                   }
                 }
               }
@@ -161,13 +387,9 @@
   },
   "components" : {
     "schemas" : {
-      "api-v1-hello527089244" : {
+      "api-v1-hello913429618" : {
         "type" : "object",
         "properties" : {
-          "success" : {
-            "type" : "boolean",
-            "description" : "성공 여부를 나타내는 불린 변수"
-          },
           "createdOn" : {
             "type" : "string",
             "description" : "객체 생성 시각"
@@ -175,6 +397,216 @@
           "value" : {
             "type" : "string",
             "description" : "리스폰스 메시지"
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부를 나타내는 불린 변수"
+          }
+        }
+      },
+      "api-v1-friend-requests-id529653109" : {
+        "type" : "object",
+        "properties" : {
+          "toUser" : {
+            "type" : "object",
+            "properties" : {
+              "imageUrl" : {
+                "type" : "string",
+                "description" : "친구 요청을 받은 사용자 프로필 사진 주소"
+              },
+              "nickname" : {
+                "type" : "string",
+                "description" : "친구 요청을 받은 사용자 닉네임"
+              },
+              "name" : {
+                "type" : "string",
+                "description" : "친구 요청을 받은 사용자 이름"
+              },
+              "id" : {
+                "type" : "string",
+                "description" : "친구 요청을 받은 사용자"
+              },
+              "email" : {
+                "type" : "string",
+                "description" : "친구 요청을 받은 사용자 이메일"
+              }
+            }
+          },
+          "fromUser" : {
+            "type" : "object",
+            "properties" : {
+              "imageUrl" : {
+                "type" : "string",
+                "description" : "친구 요청을 보낸 사용자 프로필 사진 주소"
+              },
+              "nickname" : {
+                "type" : "string",
+                "description" : "친구 요청을 보낸 사용자 닉네임"
+              },
+              "name" : {
+                "type" : "string",
+                "description" : "친구 요청을 보낸 사용자 이름"
+              },
+              "id" : {
+                "type" : "string",
+                "description" : "친구 요청을 보낸 사용자 ID"
+              },
+              "email" : {
+                "type" : "string",
+                "description" : "친구 요청을 보낸 사용자 이메일"
+              }
+            }
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "ID"
+          },
+          "status" : {
+            "type" : "string",
+            "description" : "상태"
+          }
+        }
+      },
+      "api-v1-friends-id-491435824" : {
+        "type" : "object",
+        "properties" : {
+          "toUser" : {
+            "type" : "object",
+            "properties" : {
+              "imageUrl" : {
+                "type" : "string",
+                "description" : "친구 프로필 사진 주소"
+              },
+              "nickname" : {
+                "type" : "string",
+                "description" : "친구 닉네임"
+              },
+              "name" : {
+                "type" : "string",
+                "description" : "친구 이름"
+              },
+              "id" : {
+                "type" : "string",
+                "description" : "친구 ID"
+              },
+              "email" : {
+                "type" : "string",
+                "description" : "친구 이메일"
+              }
+            }
+          },
+          "isHangingOut" : {
+            "type" : "boolean",
+            "description" : "놀러가기 여부"
+          },
+          "fromUser" : {
+            "type" : "object",
+            "properties" : {
+              "imageUrl" : {
+                "type" : "string",
+                "description" : "사용자 프로필 사진 주소"
+              },
+              "nickname" : {
+                "type" : "string",
+                "description" : "사용자 닉네임"
+              },
+              "name" : {
+                "type" : "string",
+                "description" : "사용자 이름"
+              },
+              "id" : {
+                "type" : "string",
+                "description" : "사용자 ID"
+              },
+              "email" : {
+                "type" : "string",
+                "description" : "사용자 이메일"
+              }
+            }
+          },
+          "id" : {
+            "type" : "string",
+            "description" : "ID"
+          }
+        }
+      },
+      "api-v1-friend-requests-id-989932600" : {
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string",
+            "description" : "친구 요청 상태 (ACCEPTED)"
+          }
+        }
+      },
+      "api-v1-friends-1521885839" : {
+        "type" : "object",
+        "properties" : {
+          "content" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "toUser" : {
+                  "type" : "object",
+                  "properties" : {
+                    "imageUrl" : {
+                      "type" : "string",
+                      "description" : "친구 프로필 사진 주소"
+                    },
+                    "nickname" : {
+                      "type" : "string",
+                      "description" : "친구 닉네임"
+                    },
+                    "name" : {
+                      "type" : "string",
+                      "description" : "친구 이름"
+                    },
+                    "id" : {
+                      "type" : "string",
+                      "description" : "친구 ID"
+                    },
+                    "email" : {
+                      "type" : "string",
+                      "description" : "친구 이메일"
+                    }
+                  }
+                },
+                "isHangingOut" : {
+                  "type" : "boolean",
+                  "description" : "놀러가기 여부"
+                },
+                "fromUser" : {
+                  "type" : "object",
+                  "properties" : {
+                    "imageUrl" : {
+                      "type" : "string",
+                      "description" : "사용자 프로필 사진 주소"
+                    },
+                    "nickname" : {
+                      "type" : "string",
+                      "description" : "사용자 닉네임"
+                    },
+                    "name" : {
+                      "type" : "string",
+                      "description" : "사용자 이름"
+                    },
+                    "id" : {
+                      "type" : "string",
+                      "description" : "사용자 ID"
+                    },
+                    "email" : {
+                      "type" : "string",
+                      "description" : "사용자 이메일"
+                    }
+                  }
+                },
+                "id" : {
+                  "type" : "string",
+                  "description" : "ID"
+                }
+              }
+            }
           }
         }
       },
@@ -191,13 +623,9 @@
           }
         }
       },
-      "users-me-769911594" : {
+      "users-me-extra-info-1863268708" : {
         "type" : "object",
         "properties" : {
-          "success" : {
-            "type" : "boolean",
-            "description" : "성공 여부"
-          },
           "user" : {
             "type" : "object",
             "properties" : {
@@ -238,6 +666,94 @@
                 "description" : "사용자 이메일"
               }
             }
+          },
+          "isSuccess" : {
+            "type" : "boolean",
+            "description" : "성공 여부"
+          }
+        }
+      },
+      "api-v1-friend-requests881476564" : {
+        "type" : "object",
+        "properties" : {
+          "content" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "toUser" : {
+                  "type" : "object",
+                  "properties" : {
+                    "imageUrl" : {
+                      "type" : "string",
+                      "description" : "친구 요청을 받은 사용자 프로필 사진 주소"
+                    },
+                    "nickname" : {
+                      "type" : "string",
+                      "description" : "친구 요청을 받은 사용자 닉네임"
+                    },
+                    "name" : {
+                      "type" : "string",
+                      "description" : "친구 요청을 받은 사용자 이름"
+                    },
+                    "id" : {
+                      "type" : "string",
+                      "description" : "친구 요청을 받은 사용자"
+                    },
+                    "email" : {
+                      "type" : "string",
+                      "description" : "친구 요청을 받은 사용자 이메일"
+                    }
+                  }
+                },
+                "fromUser" : {
+                  "type" : "object",
+                  "properties" : {
+                    "imageUrl" : {
+                      "type" : "string",
+                      "description" : "친구 요청을 보낸 사용자 프로필 사진 주소"
+                    },
+                    "nickname" : {
+                      "type" : "string",
+                      "description" : "친구 요청을 보낸 사용자 닉네임"
+                    },
+                    "name" : {
+                      "type" : "string",
+                      "description" : "친구 요청을 보낸 사용자 이름"
+                    },
+                    "id" : {
+                      "type" : "string",
+                      "description" : "친구 요청을 보낸 사용자 ID"
+                    },
+                    "email" : {
+                      "type" : "string",
+                      "description" : "친구 요청을 보낸 사용자 이메일"
+                    }
+                  }
+                },
+                "id" : {
+                  "type" : "string",
+                  "description" : "ID"
+                },
+                "status" : {
+                  "type" : "string",
+                  "description" : "상태"
+                }
+              }
+            }
+          }
+        }
+      },
+      "api-v1-friend-requests390944723" : {
+        "type" : "object",
+        "properties" : {
+          "fromUserId" : {
+            "type" : "string",
+            "description" : "친구 요청을 보낸 사용자 ID"
+          },
+          "toUserId" : {
+            "type" : "string",
+            "description" : "친구 요청을 받은 사용자 ID"
           }
         }
       },

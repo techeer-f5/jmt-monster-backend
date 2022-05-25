@@ -13,7 +13,7 @@ import com.techeer.f5.jmtmonster.global.error.exception.DuplicateResourceExcepti
 import com.techeer.f5.jmtmonster.global.error.exception.FieldErrorWrapper;
 import com.techeer.f5.jmtmonster.global.error.exception.InnerResourceNotFoundException;
 import com.techeer.f5.jmtmonster.global.error.exception.ResourceNotFoundException;
-import com.techeer.f5.jmtmonster.s3.util.S3Uploader;
+import com.techeer.f5.jmtmonster.s3.util.S3Manager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -34,13 +34,6 @@ public class ReviewRequestService  {
     private final ReviewFoodRepository reviewFoodRepository;
     private final ReviewImageRepository reviewImageRepository;
     private final UserRepository userRepository;
-    private final S3Uploader s3Uploader;
-
-    public String uploadImage(MultipartFile image) throws IOException {
-        // Upload Images to S3 Bucket
-        String url = s3Uploader.upload(image, s3Uploader.getDIR_NAME());
-        return url;
-    }
 
     public ReviewRequest create(ReviewRequestCreateServiceDto dto){
         // Check user information

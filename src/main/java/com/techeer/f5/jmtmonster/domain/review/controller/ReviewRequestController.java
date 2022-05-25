@@ -26,7 +26,7 @@ import java.util.UUID;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
-@RequestMapping("/api/v1/review-requests")
+@RequestMapping("/api/v1/reviews")
 @RequiredArgsConstructor
 public class ReviewRequestController {
 
@@ -81,12 +81,5 @@ public class ReviewRequestController {
         return ResponseEntity
                 .noContent()
                 .build();
-    }
-
-    @PostMapping("/images")
-    public String uploadImages(
-            @RequestBody MultipartFile image
-    ) throws IOException {
-        return service.uploadImage(image);
     }
 }

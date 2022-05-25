@@ -18,6 +18,8 @@ import com.techeer.f5.jmtmonster.domain.oauth.domain.PersistentToken;
 import com.techeer.f5.jmtmonster.domain.oauth.repository.PersistentTokenRepository;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
+import com.techeer.f5.jmtmonster.global.config.JacksonConfig;
+import com.techeer.f5.jmtmonster.global.config.JacksonModuleConfig;
 import com.techeer.f5.jmtmonster.global.utils.JsonMapper;
 import java.util.Map;
 import java.util.UUID;
@@ -25,9 +27,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -42,6 +46,7 @@ import org.springframework.transaction.annotation.Transactional;
 @AutoConfigureMockMvc
 // For use test db
 @ActiveProfiles(profiles = {"test"})
+@Import({JacksonConfig.class, JacksonModuleConfig.class})
 @Slf4j
 public class FriendControllerTest {
     // See https://spring.io/guides/gs/testing-restdocs/
@@ -49,6 +54,7 @@ public class FriendControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
+    @Qualifier("camelObjectMapper")
     private ObjectMapper objectMapper;
 
     @Autowired

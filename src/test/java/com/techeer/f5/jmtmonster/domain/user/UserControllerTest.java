@@ -11,12 +11,16 @@ import com.techeer.f5.jmtmonster.domain.user.dto.ExtraUserInfoRequestDto;
 import com.techeer.f5.jmtmonster.domain.user.dto.UserResponseDto;
 import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
 import com.techeer.f5.jmtmonster.domain.user.service.UserService;
+import com.techeer.f5.jmtmonster.global.config.JacksonConfig;
+import com.techeer.f5.jmtmonster.global.config.JacksonModuleConfig;
 import com.techeer.f5.jmtmonster.global.utils.JsonMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
@@ -39,12 +43,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 @AutoConfigureMockMvc
 // For use test db
 @ActiveProfiles(profiles = {"test"})
+@Import({JacksonConfig.class, JacksonModuleConfig.class})
 public class UserControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @Autowired
+    @Qualifier("camelObjectMapper")
     private ObjectMapper objectMapper;
 
     @Autowired

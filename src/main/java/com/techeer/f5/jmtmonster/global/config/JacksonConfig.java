@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.cfg.MapperConfig;
 import com.fasterxml.jackson.databind.introspect.AnnotatedMethod;
-import com.techeer.f5.jmtmonster.global.builder.ObjectMapperBuilder;
+import com.techeer.f5.jmtmonster.global.utils.ObjectMapperFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.openfeign.support.PageJacksonModule;
@@ -25,14 +25,14 @@ public class JacksonConfig {
     @Primary
     @Qualifier("camelObjectMapper")
     public ObjectMapper camelObjectMapper() {
-        return ObjectMapperBuilder.simpleBuild(camelNamingStrategy(), pageJacksonModule,
+        return ObjectMapperFactory.create(camelNamingStrategy(), pageJacksonModule,
                 sortJacksonModule);
     }
 
     @Bean
     @Qualifier("snakeObjectMapper")
     public ObjectMapper snakeObjectMapper() {
-        return ObjectMapperBuilder.simpleBuild(snakeNamingStrategy(), pageJacksonModule,
+        return ObjectMapperFactory.create(snakeNamingStrategy(), pageJacksonModule,
                 sortJacksonModule);
     }
 

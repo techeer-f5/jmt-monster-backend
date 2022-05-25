@@ -32,7 +32,7 @@ public class UserMapper {
 
     public UserResponseDto toUserResponseDto(User entity) {
         return UserResponseDto.builder()
-                .success(true)
+                .isSuccess(true)
                 .user(toUserDto(entity))
                 .build();
     }

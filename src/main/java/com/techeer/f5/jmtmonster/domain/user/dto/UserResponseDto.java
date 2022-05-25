@@ -1,6 +1,5 @@
 package com.techeer.f5.jmtmonster.domain.user.dto;
 
-import com.techeer.f5.jmtmonster.domain.user.dto.UserDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,7 +11,8 @@ import org.springframework.lang.Nullable;
 @NoArgsConstructor
 @Builder
 public class UserResponseDto {
-    private boolean success;
+
+    private Boolean isSuccess;
 
     @Nullable
     private UserDto user;

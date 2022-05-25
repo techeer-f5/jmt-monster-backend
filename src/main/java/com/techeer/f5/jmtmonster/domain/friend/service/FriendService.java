@@ -66,22 +66,25 @@ public class FriendService {
                 .status(dto.getStatus())
                 .build();
 
-        return friendRequestRepository.save(entity);
+        return friendRequestRepository.saveAndFlush(entity);
     }
 
     @Transactional
     public FriendRequest updateRequest(UUID id, FriendRequestUpdateServiceDto dto) {
         FriendRequest entity = findRequestById(id);
 
-        // If accepted, create a friend
+        // If accepted, create a friend for both
         if (dto.getStatus() == FriendRequestStatus.ACCEPTED) {
-            Friend friend = Friend.builder()
+            friendRepository.saveAndFlush(Friend.builder()
                     .fromUser(entity.getFromUser())
                     .toUser(entity.getToUser())
                     .isHangingOut(false)
-                    .build();
-
-            friendRepository.save(friend);
+                    .build());
+            friendRepository.saveAndFlush(Friend.builder()
+                    .fromUser(entity.getToUser())
+                    .toUser(entity.getFromUser())
+                    .isHangingOut(false)
+                    .build());
         }
 
         entity.update(
@@ -90,7 +93,7 @@ public class FriendService {
                 dto.getStatus()
         );
 
-        return friendRequestRepository.save(entity);
+        return friendRequestRepository.saveAndFlush(entity);
     }
 
     @Transactional
@@ -109,8 +112,9 @@ public class FriendService {
     }
 
     @Transactional(readOnly = true)
-    public Page<FriendRequest> findAllRequests(Pageable pageable) {
-        return friendRequestRepository.findAll(pageable);
+    public Page<FriendRequest> findAllRequests(Pageable pageable, UUID fromUserId, UUID toUserId,
+            FriendRequestStatus status) {
+        return friendRequestRepository.searchFriendRequests(pageable, fromUserId, toUserId, status);
     }
 
     @Transactional
@@ -120,7 +124,7 @@ public class FriendService {
                 .orElseThrow(() -> new ResourceNotFoundException(Friend.class.getSimpleName(), "id",
                         id));
 
-        entity.update(entity.getFromUser(), entity.getToUser(), dto.isHangingOut());
+        entity.update(entity.getFromUser(), entity.getToUser(), dto.getIsHangingOut());
         return friendRepository.save(entity);
     }
 
@@ -140,7 +144,8 @@ public class FriendService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Friend> findAllFriends(Pageable pageable) {
-        return friendRepository.findAll(pageable);
+    public Page<Friend> findAllFriends(Pageable pageable, UUID fromUserId, UUID toUserId,
+            Boolean isHangingOut) {
+        return friendRepository.searchFriends(pageable, fromUserId, toUserId, isHangingOut);
     }
 }

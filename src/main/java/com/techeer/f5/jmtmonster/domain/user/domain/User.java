@@ -1,24 +1,37 @@
 package com.techeer.f5.jmtmonster.domain.user.domain;
 
 import com.techeer.f5.jmtmonster.domain.oauth.domain.PersistentToken;
-import com.techeer.f5.jmtmonster.domain.user.dto.UserDto;
-import lombok.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-@Getter
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
+@Getter
+@ToString(of = {"id", "email"})
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
+
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
@@ -26,12 +39,10 @@ public class User {
     @Builder.Default
     private UUID id = UUID.randomUUID();
 
-
     @Size(min = 1, max = 30, message = "이름 길이는 1자부터 30자까지 가능합니다.")
     @NotBlank
     @Column(unique = true)
     private String name;
-
 
     @Size(min = 1, max = 100, message = "이메일 길이는 1자부터 30자까지 가능합니다.")
     @Email
@@ -39,13 +50,11 @@ public class User {
     @Column(unique = true)
     private String email;
 
-
-    @Size(min = 1, max = 3, message = "이메일 길이는 1자부터 30자까지 가능합니다.")
+    @Size(min = 1, max = 30, message = "닉네임 길이는 1자부터 30자까지 가능합니다.")
     @Nullable
     @Builder.Default
     @Setter
     private String nickname = null;
-
 
     @Size(min = 1, max = 1024, message = "주소 길이는 1자부터 1024자까지 가능합니다.")
     @Nullable
@@ -80,13 +89,13 @@ public class User {
     @Builder.Default
     private List<PersistentToken> tokens = new ArrayList<>();
 
-
     @Transactional
     public void addToken(PersistentToken persistentToken) {
         tokens.add(persistentToken);
     }
 
-    public boolean addExtraInfo(String nickname, String address, String imageUrl) throws IllegalStateException {
+    public boolean addExtraInfo(String nickname, String address, String imageUrl)
+            throws IllegalStateException {
         this.nickname = nickname;
         this.address = address;
         this.imageUrl = imageUrl;
@@ -117,5 +126,4 @@ public class User {
 
         return verified;
     }
-
 }

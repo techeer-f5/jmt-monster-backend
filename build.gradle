@@ -35,7 +35,7 @@ dependencies {
     implementation 'com.fasterxml.jackson.core:jackson-core:2.13.2'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.2'
     compileOnly 'org.projectlombok:lombok'
-    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
+    implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
@@ -47,6 +47,7 @@ dependencies {
     testImplementation 'com.epages:restdocs-api-spec-mockmvc:0.16.2'
     testCompileOnly 'org.projectlombok:lombok:1.18.22'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
+    implementation 'com.aventrix.jnanoid:jnanoid:2.0.0'
 }
 
 tasks.named('test') {

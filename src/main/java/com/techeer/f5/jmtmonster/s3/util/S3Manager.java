@@ -77,7 +77,7 @@ public class S3Manager {
     }
 
     // 파일 삭제
-    public void deleteFile(String fileName){
+    public void delete(String fileName){
         DeleteObjectRequest request = new DeleteObjectRequest(bucket, fileName);
         amazonS3Client.deleteObject(request);
     }

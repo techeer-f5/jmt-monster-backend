@@ -64,6 +64,7 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.22'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
     implementation 'com.aventrix.jnanoid:jnanoid:2.0.0'
+    testImplementation 'io.findify:s3mock_2.13:0.2.6'
 }
 
 tasks.named('test') {

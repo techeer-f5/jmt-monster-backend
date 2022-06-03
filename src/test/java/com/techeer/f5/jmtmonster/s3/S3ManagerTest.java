@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles(profiles = {"test"})
+@ActiveProfiles(profiles = {"test", "secret"})
 @Import(S3MockConfig.class)
 public class S3ManagerTest {
 

@@ -24,10 +24,10 @@ oauth:
 cloud:
   aws:
     credentials:
-      accessKey: ''
-      secretKey: ''
+      accessKey: ${aws-s3-access-key}
+      secretKey: ${aws-s3-secret-key}
     s3:
-      bucket: ''
+      bucket: ${aws-s3-bucket-name}
     region:
       static: ap-northeast-2
     stack:

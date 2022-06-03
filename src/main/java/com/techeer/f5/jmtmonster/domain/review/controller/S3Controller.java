@@ -17,7 +17,7 @@ public class S3Controller {
     private final S3Service service;
 
     @PostMapping
-    public String uploadImages(
+    public String uploadImage(
             @RequestBody MultipartFile image
     ) throws IOException {
         return service.uploadImage(image);

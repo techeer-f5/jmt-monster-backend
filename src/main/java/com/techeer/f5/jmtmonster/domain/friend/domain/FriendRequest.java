@@ -23,7 +23,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(uniqueConstraints = {
-        @UniqueConstraint(name = "UniqueFromUserAndToUser",
+        @UniqueConstraint(name = "UniqueFriendRequestFromUserAndToUser",
                 columnNames = {"from_user_id", "to_user_id"})})
 public class FriendRequest extends BaseTimeEntity {
 

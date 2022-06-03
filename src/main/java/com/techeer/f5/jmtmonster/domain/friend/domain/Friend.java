@@ -9,6 +9,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -19,6 +21,9 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(uniqueConstraints = {
+        @UniqueConstraint(name = "UniqueFriendFromUserAndToUser",
+                columnNames = {"from_user_id", "to_user_id"})})
 public class Friend extends BaseTimeEntity {
 
     @Id

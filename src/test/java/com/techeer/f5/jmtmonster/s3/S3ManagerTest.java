@@ -56,7 +56,23 @@ public class S3ManagerTest {
         assertThat(actualURL).contains("mock1.png");
 
     }
-    
+
+    @Test
+    @DisplayName("이미지 삭제 테스트")
+    void S3ManagerTest() throws IOException {
+        // given
+        String file2 = "mock2.png";
+        MockMultipartFile mockMultipartFile2 = new MockMultipartFile("file", file,
+                "image/png", "test data".getBytes());
+
+        // when
+        String actualURL = s3Manager.upload(mockMultipartFile, s3Manager.getDIR_NAME());
+        String actualFilename = actualURL.substring(actualURL.length()-20,actualURL.length());
+
+        // then
+        s3Manager.delete(actualFilename);
+    }
+
 
 
 }

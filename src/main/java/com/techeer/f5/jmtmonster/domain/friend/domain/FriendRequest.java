@@ -6,6 +6,7 @@ import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Convert;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -16,12 +17,10 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Getter
-@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(uniqueConstraints = {
         @UniqueConstraint(name = "UniqueFromUserAndToUser",
@@ -34,11 +33,11 @@ public class FriendRequest extends BaseTimeEntity {
     @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @NotNull
     private User fromUser;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @NotNull
     private User toUser;
 
@@ -58,5 +57,15 @@ public class FriendRequest extends BaseTimeEntity {
         this.fromUser = fromUser;
         this.toUser = toUser;
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "FriendRequest{" +
+                "id=" + id +
+                ", fromUser.email=" + fromUser.getEmail() +
+                ", toUser.email=" + toUser.getEmail() +
+                ", status=" + status +
+                '}';
     }
 }

@@ -5,6 +5,7 @@ import com.techeer.f5.jmtmonster.global.domain.domain.BaseTimeEntity;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -13,12 +14,10 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Getter
-@ToString
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Friend extends BaseTimeEntity {
 
@@ -28,11 +27,11 @@ public class Friend extends BaseTimeEntity {
     @Column(columnDefinition = "BINARY(16)")
     private UUID id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @NotNull
     private User fromUser;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @NotNull
     private User toUser;
 
@@ -50,5 +49,15 @@ public class Friend extends BaseTimeEntity {
         this.fromUser = fromUser;
         this.toUser = toUser;
         this.isHangingOut = isHangingOut;
+    }
+
+    @Override
+    public String toString() {
+        return "Friend{" +
+                "id=" + id +
+                ", fromUser.email=" + fromUser.getEmail() +
+                ", toUser.email=" + toUser.getEmail() +
+                ", isHangingOut=" + isHangingOut +
+                '}';
     }
 }

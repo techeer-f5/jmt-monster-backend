@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +19,6 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Getter
 @ToString
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Friend extends BaseTimeEntity {
 
@@ -29,8 +26,7 @@ public class Friend extends BaseTimeEntity {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "BINARY(16)")
-    @Builder.Default
-    private UUID id = UUID.randomUUID();
+    private UUID id;
 
     @ManyToOne
     @NotNull
@@ -42,6 +38,13 @@ public class Friend extends BaseTimeEntity {
 
     @NotNull
     private boolean isHangingOut;
+
+    @Builder
+    public Friend(User fromUser, User toUser, boolean isHangingOut) {
+        this.fromUser = fromUser;
+        this.toUser = toUser;
+        this.isHangingOut = isHangingOut;
+    }
 
     public void update(User fromUser, User toUser, boolean isHangingOut) {
         this.fromUser = fromUser;

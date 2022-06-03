@@ -13,7 +13,6 @@ import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +22,6 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 @Getter
 @ToString
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(uniqueConstraints = {
         @UniqueConstraint(name = "UniqueFromUserAndToUser",
@@ -35,8 +32,7 @@ public class FriendRequest extends BaseTimeEntity {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "BINARY(16)")
-    @Builder.Default
-    private UUID id = UUID.randomUUID();
+    private UUID id;
 
     @ManyToOne(optional = false)
     @NotNull
@@ -50,6 +46,13 @@ public class FriendRequest extends BaseTimeEntity {
     @Column(length = 16)
     @Convert(converter = FriendRequestStatusConverter.class)
     private FriendRequestStatus status;
+
+    @Builder
+    public FriendRequest(User fromUser, User toUser, FriendRequestStatus status) {
+        this.fromUser = fromUser;
+        this.toUser = toUser;
+        this.status = status;
+    }
 
     public void update(User fromUser, User toUser, FriendRequestStatus status) {
         this.fromUser = fromUser;

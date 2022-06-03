@@ -25,6 +25,7 @@ import com.techeer.f5.jmtmonster.domain.friend.dto.response.FriendResponseDto;
 import com.techeer.f5.jmtmonster.domain.friend.service.FriendService;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.dto.UserMapper;
+import com.techeer.f5.jmtmonster.util.FieldUtil;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
@@ -77,7 +78,6 @@ class FriendControllerTest {
         @DisplayName("성공")
         void getFriend_ok() throws Exception {
             Friend friend = Friend.builder()
-                    .id(UUID.randomUUID())
                     .fromUser(User.builder()
                             .id(UUID.randomUUID())
                             .name("FromUser")
@@ -94,6 +94,8 @@ class FriendControllerTest {
                             .build())
                     .isHangingOut(false)
                     .build();
+
+            FieldUtil.writeField(friend, "id", UUID.randomUUID());
 
             FriendResponseDto responseDto = friendMapper.toResponseDto(friend);
 
@@ -163,7 +165,6 @@ class FriendControllerTest {
         @DisplayName("전체 쿼리 사용 - 성공")
         void getFriendList_ok() throws Exception {
             Friend friend = Friend.builder()
-                    .id(UUID.randomUUID())
                     .fromUser(User.builder()
                             .id(UUID.randomUUID())
                             .name("FromUser")
@@ -180,6 +181,8 @@ class FriendControllerTest {
                             .build())
                     .isHangingOut(false)
                     .build();
+
+            FieldUtil.writeField(friend, "id", UUID.randomUUID());
 
             List<Friend> content = List.of(friend);
 

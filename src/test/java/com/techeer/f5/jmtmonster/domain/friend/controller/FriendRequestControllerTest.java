@@ -31,6 +31,8 @@ import com.techeer.f5.jmtmonster.domain.friend.dto.response.FriendRequestRespons
 import com.techeer.f5.jmtmonster.domain.friend.service.FriendService;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.dto.UserMapper;
+import com.techeer.f5.jmtmonster.util.FieldUtil;
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
@@ -49,6 +51,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
+import org.springframework.security.util.FieldUtils;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -82,7 +85,6 @@ class FriendRequestControllerTest {
         @DisplayName("성공")
         void getFriendRequest_ok() throws Exception {
             FriendRequest friendRequest = FriendRequest.builder()
-                    .id(UUID.randomUUID())
                     .fromUser(User.builder()
                             .id(UUID.randomUUID())
                             .name("FromUser")
@@ -99,6 +101,9 @@ class FriendRequestControllerTest {
                             .build())
                     .status(FriendRequestStatus.PENDING)
                     .build();
+
+            // Set ID
+            FieldUtil.writeField(friendRequest, "id", UUID.randomUUID());
 
             FriendRequestResponseDto responseDto = friendRequestMapper.toResponseDto(friendRequest);
 
@@ -170,7 +175,6 @@ class FriendRequestControllerTest {
         @DisplayName("전체 쿼리 사용 - 성공")
         void getFriendRequestList_ok() throws Exception {
             FriendRequest friendRequest = FriendRequest.builder()
-                    .id(UUID.randomUUID())
                     .fromUser(User.builder()
                             .id(UUID.randomUUID())
                             .name("FromUser")
@@ -187,6 +191,9 @@ class FriendRequestControllerTest {
                             .build())
                     .status(FriendRequestStatus.PENDING)
                     .build();
+
+            // Set ID
+            FieldUtil.writeField(friendRequest, "id", UUID.randomUUID());
 
             List<FriendRequest> content = List.of(friendRequest);
 
@@ -275,7 +282,6 @@ class FriendRequestControllerTest {
                     .build();
 
             FriendRequest actual = FriendRequest.builder()
-                    .id(UUID.randomUUID())
                     .fromUser(User.builder()
                             .id(requestDto.getFromUserId())
                             .name("FromUser")
@@ -292,6 +298,9 @@ class FriendRequestControllerTest {
                             .build())
                     .status(FriendRequestStatus.PENDING)
                     .build();
+
+            // Set ID
+            FieldUtil.writeField(actual, "id", UUID.randomUUID());
 
             given(friendService.createRequest(any(FriendRequestCreateServiceDto.class)))
                     .willReturn(actual);
@@ -371,7 +380,6 @@ class FriendRequestControllerTest {
 
             UUID frId = UUID.randomUUID();
             FriendRequest actual = FriendRequest.builder()
-                    .id(frId)
                     .fromUser(User.builder()
                             .id(UUID.randomUUID())
                             .name("FromUser")
@@ -388,6 +396,9 @@ class FriendRequestControllerTest {
                             .build())
                     .status(FriendRequestStatus.ACCEPTED)
                     .build();
+
+            // Set ID
+            FieldUtil.writeField(actual, "id", UUID.randomUUID());
 
             given(friendService.updateRequest(any(UUID.class),
                     any(FriendRequestUpdateServiceDto.class)))

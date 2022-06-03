@@ -41,6 +41,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
     runtimeOnly 'com.h2database:h2'
     runtimeOnly 'mysql:mysql-connector-java'
 
@@ -64,7 +65,6 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.22'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
     implementation 'com.aventrix.jnanoid:jnanoid:2.0.0'
-    testImplementation 'io.findify:s3mock_2.13:0.2.6'
 }
 
 tasks.named('test') {
@@ -81,10 +81,16 @@ tasks.named("bootBuildImage") {
     imageName = "jmt-monster-backend:latest"
 }
 
+// clean task 실행시 QClass 삭제
+tasks.clean {
+    // IntelliJ Annotation processor 생성물 생성 위치
+    delete file('src/main/generated')
+}
+
 // ./gradlew openapi3
 // See /src/main/resources/static/docs/openapi3.json
 openapi3 {
-    servers = [ { url = 'http://localhost:8000' }, { url = 'https://backend.jmtmonster.com' } ]
+    servers = [{ url = 'http://localhost:8000' }, { url = 'https://backend.jmtmonster.com' }]
     title = 'JMT Monster'
     description = 'Interactive Dining Review Game'
     version = '0.1.0'

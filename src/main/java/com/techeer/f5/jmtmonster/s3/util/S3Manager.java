@@ -81,4 +81,6 @@ public class S3Manager {
         DeleteObjectRequest request = new DeleteObjectRequest(bucket, fileName);
         amazonS3Client.deleteObject(request);
     }
+
+
 }

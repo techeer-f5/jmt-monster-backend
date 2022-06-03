@@ -45,7 +45,7 @@ public class S3ManagerTest {
     }
     
     @Test
-    @DisplayName("이미지 업로드 테스트")
+    @DisplayName("S3 이미지 업로드 테스트")
     void uploadTest() throws IOException {
         // given
 
@@ -58,7 +58,7 @@ public class S3ManagerTest {
     }
 
     @Test
-    @DisplayName("이미지 삭제 테스트")
+    @DisplayName("S3 이미지 삭제 테스트")
     void S3ManagerTest() throws IOException {
         // given
         String file2 = "mock2.png";

@@ -7,7 +7,6 @@ import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequest;
 import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequestStatus;
 import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestCreateServiceDto;
 import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestUpdateServiceDto;
-import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendUpdateServiceDto;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
 import com.techeer.f5.jmtmonster.global.error.exception.DuplicateResourceException;
@@ -118,13 +117,17 @@ public class FriendService {
     }
 
     @Transactional
-    public Friend updateFriend(UUID id, FriendUpdateServiceDto dto) {
-
+    public Friend hangOutWithFriend(UUID id, boolean isHangingOut) {
         Friend entity = friendRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(Friend.class.getSimpleName(), "id",
-                        id));
+                .orElseThrow(() ->
+                        new ResourceNotFoundException(Friend.class.getSimpleName(), "id", id));
 
-        entity.update(entity.getFromUser(), entity.getToUser(), dto.getIsHangingOut());
+        if (isHangingOut) {
+            // 해당 사용자의 친구들 모두의 isHangingOut을 false로 만든다
+            friendRepository.hangOutOffForAllFriendsOfFromUser(entity.getFromUser().getId());
+        }
+
+        entity.update(entity.getFromUser(), entity.getToUser(), isHangingOut);
         return friendRepository.save(entity);
     }
 

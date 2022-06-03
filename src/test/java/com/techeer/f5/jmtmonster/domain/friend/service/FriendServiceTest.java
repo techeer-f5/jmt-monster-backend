@@ -11,7 +11,6 @@ import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequest;
 import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequestStatus;
 import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestCreateServiceDto;
 import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestUpdateServiceDto;
-import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendUpdateServiceDto;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
 import com.techeer.f5.jmtmonster.util.FieldUtil;
@@ -252,12 +251,12 @@ class FriendServiceTest {
         }
 
         @Nested
-        @DisplayName("친구 수정")
-        class UpdateFriendTests {
+        @DisplayName("놀러가기")
+        class HangOutWithFriendTests {
 
             @Test
             @DisplayName("성공")
-            void updateFriend_ok() {
+            void hangOutWithFriend_ok() {
 
                 // given
                 UUID fId = UUID.randomUUID();
@@ -302,10 +301,7 @@ class FriendServiceTest {
                         .willReturn(updated);
 
                 // when
-                updated = friendService.updateFriend(existing.getId(),
-                        FriendUpdateServiceDto.builder()
-                                .isHangingOut(true)
-                                .build());
+                updated = friendService.hangOutWithFriend(existing.getId(), true);
 
                 Friend actual = friendRepository.getById(updated.getId());
 

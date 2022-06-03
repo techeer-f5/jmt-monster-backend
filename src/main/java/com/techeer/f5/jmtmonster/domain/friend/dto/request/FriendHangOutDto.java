@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class FriendUpdateServiceDto {
+public class FriendHangOutDto {
 
     @NotNull
     private Boolean isHangingOut;

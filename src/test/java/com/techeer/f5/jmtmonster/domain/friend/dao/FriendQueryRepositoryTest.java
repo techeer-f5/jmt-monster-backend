@@ -6,11 +6,14 @@ import com.techeer.f5.jmtmonster.domain.friend.domain.Friend;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
 import com.techeer.f5.jmtmonster.global.config.QuerydslConfig;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Stream;
+import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -30,6 +33,9 @@ class FriendQueryRepositoryTest {
 
     @Autowired
     private FriendRepository friendRepository;
+
+    @Autowired
+    private EntityManager em;
 
     @Nested
     @DisplayName("친구 검색")
@@ -127,6 +133,131 @@ class FriendQueryRepositoryTest {
                     Arguments.of(false, true, true),
                     Arguments.of(false, false, true)
             );
+        }
+    }
+
+    @Nested
+    @DisplayName("사용자의 친구 놀러가기 전체 해제")
+    class HangOutOffForAllFriendsOfFromUserTest {
+
+        @BeforeEach
+        void setUp() {
+            for (int i = 1; i <= 4; i += 3) {
+                User fromUser = userRepository.save(User.builder()
+                        .email("tester" + i + "@example.com")
+                        .name("Tester" + i)
+                        .nickname("Tester" + i)
+                        .build());
+
+                User toUser1 = userRepository.save(User.builder()
+                        .email("tester" + (i + 1) + "@example.com")
+                        .name("Tester" + (i + 1))
+                        .nickname("Tester" + (i + 1))
+                        .build());
+
+                User toUser2 = userRepository.save(User.builder()
+                        .email("tester" + (i + 2) + "@example.com")
+                        .name("Tester" + (i + 2))
+                        .nickname("Tester" + (i + 2))
+                        .build());
+
+                friendRepository.save(Friend.builder()
+                        .fromUser(fromUser)
+                        .toUser(toUser1)
+                        .isHangingOut(false)
+                        .build());
+
+                friendRepository.save(Friend.builder()
+                        .fromUser(toUser1)
+                        .toUser(fromUser)
+                        .isHangingOut(false)
+                        .build());
+
+                friendRepository.save(Friend.builder()
+                        .fromUser(fromUser)
+                        .toUser(toUser2)
+                        .isHangingOut(false)
+                        .build());
+
+                friendRepository.save(Friend.builder()
+                        .fromUser(toUser2)
+                        .toUser(fromUser)
+                        .isHangingOut(false)
+                        .build());
+            }
+        }
+
+        @Test
+        @DisplayName("사용자의 친구 모두가 놀러가기 상태가 아닐 때 - 상태 유지")
+        void hangOutOffForAllFriendsOfFromUser_noFriendOfFromUserHangingOut_shouldHaveNoEffect() {
+            // given
+            List<Friend> friends = friendRepository.findAll();
+            Friend friend = friends.get(0);
+            User fromUser = friend.getFromUser();
+            System.out.println("friends = " + friends);
+
+            // when
+            friendRepository.hangOutOffForAllFriendsOfFromUser(fromUser.getId());
+
+            // then
+            assertThat(friendRepository.findAllByIsHangingOut(false)).hasSize(8);
+        }
+
+        @Test
+        @DisplayName("사용자의 친구 중 한 명이 놀러가기 상태일 때 - 해당 친구 놀러가기 해제")
+        void hangOutOffForAllFriendsOfFromUser_oneFriendOfFromUserHangingOut_shouldHaveHangOutOff() {
+            // given
+            List<Friend> friends = friendRepository.findAll();
+            Friend friend = friends.get(0);
+
+            // 해당 친구에 대해 놀러가기 상태
+            friend.update(friend.getFromUser(), friend.getToUser(), true);
+
+            // when
+            friendRepository.hangOutOffForAllFriendsOfFromUser(friend.getFromUser().getId());
+
+            // then
+            assertThat(friendRepository.findAllByIsHangingOut(false)).hasSize(8);
+        }
+
+        @Test
+        @DisplayName("사용자의 친구 중 한 명이 사용자에 대해 놀러가기 상태일 때 - 상태 유지")
+        void hangOutOffForAllFriendsOfFromUser_noFriendOfFromUserHangingOut_oneFriendOfOtherUserHangingOut_shouldHaveNoEffect() {
+            // given
+            List<Friend> friends = friendRepository.findAll();
+            Friend friend = friends.get(0);
+            User fromUser = friend.getFromUser();
+
+            // 친구인 다른 사용자가 사용자에 대해 놀러가기 상태
+            Friend otherFriend = friends.get(1);
+            otherFriend.update(otherFriend.getFromUser(), otherFriend.getToUser(),
+                    true);
+
+            // when
+            friendRepository.hangOutOffForAllFriendsOfFromUser(fromUser.getId());
+
+            // then
+            assertThat(friendRepository.findAllByIsHangingOut(false)).hasSize(7);
+        }
+
+        @Test
+        @DisplayName("친구가 아닌 다른 사용자의 친구 한 명이 놀러가기 상태일 때 - 상태 유지")
+        void hangOutOffForAllFriendsOfFromUser_noFriendOfFromUserHangingOut_oneFriendOfOtherNonFriendUserHangingOut_shouldHaveNoEffect() {
+            // given
+            List<Friend> friends = friendRepository.findAll();
+            Friend friend = friends.get(0);
+            User fromUser = friend.getFromUser();
+
+            // 친구가 아닌 다른 사용자의 친구 한 명이 놀러가기 상태
+            Friend prevHangOutFriend = friends.get(4);
+            prevHangOutFriend.update(prevHangOutFriend.getFromUser(), prevHangOutFriend.getToUser(),
+                    true);
+
+            // when
+            friendRepository.hangOutOffForAllFriendsOfFromUser(fromUser.getId());
+
+            // then
+            assertThat(friendRepository.findAllByIsHangingOut(false)).hasSize(7);
         }
     }
 }

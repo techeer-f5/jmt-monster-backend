@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Builder
 @AllArgsConstructor
-public class S3ResponseDto extends BaseTimeEntityDto {
+public class S3UploadResponseDto extends BaseTimeEntityDto {
 
     @NotNull
     private String url;

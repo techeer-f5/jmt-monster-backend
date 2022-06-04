@@ -138,7 +138,7 @@ public class S3ControllerTest {
                         requestParts(
                                 partWithName("image").description("The image to upload to s3")),
                         resource(ResourceSnippetParameters.builder()
-                                .description("이미지를 하나 S3에서 삭제 합니다..")
+                                .description("이미지를 하나 S3에서 삭제 합니다. 파일을 삭제할 땐 '폴더명/나노아이디-파일이름.확장자' 형식의 이름을 사용할 것.")
                                 .summary("S3 이미지 삭제")
                                 .responseFields(responseFieldDescriptors)
                                 .build())));

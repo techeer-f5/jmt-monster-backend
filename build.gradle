@@ -66,6 +66,7 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.22'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
     implementation 'com.aventrix.jnanoid:jnanoid:2.0.0'
+    implementation 'com.google.code.gson:gson:2.9.0'
 }
 
 tasks.named('test') {

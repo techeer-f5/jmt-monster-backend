@@ -21,8 +21,8 @@ public class RestaurantController {
     private final RestaurantService restaurantService;
     private final RestaurantRepository restaurantRepository;
 
-    @PostMapping("/{cid}")
-    public ResponseEntity getRestaurantInformation(@PathVariable Long cid) {
+    @GetMapping("/{cid}")
+    public ResponseEntity<RestaurantResponseDto> getRestaurantInformation(@PathVariable Long cid) {
         RestaurantResponseDto responseDto;
         if (restaurantRepository.existsByCid(cid)) {  // 정보가 있으면
             responseDto = restaurantService.getRestaurantInfo(cid);

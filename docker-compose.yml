@@ -9,3 +9,12 @@ services:
       # 프론트엔드에서만 다루는 URL이기 때문에 host.docker.internal이 아닌 localhost 사용
       - API_URL=http://localhost:8000/docs/openapi3.json
     tty: true
+
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: mongo
+      MONGO_INITDB_ROOT_PASSWORD: mongo

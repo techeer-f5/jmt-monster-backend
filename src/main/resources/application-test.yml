@@ -11,6 +11,11 @@ spring:
     hibernate.dialect: org.hibernate.dialect.MariaDBDialect
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate.ddl-auto: create-drop
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      database: jmtmonster
 
 oauth:
   back-end-base-url: http://localhost:8000

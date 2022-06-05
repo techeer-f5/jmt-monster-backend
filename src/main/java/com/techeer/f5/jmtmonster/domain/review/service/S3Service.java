@@ -21,13 +21,13 @@ public class S3Service {
 
     public String deleteImage(String filename) {
         // Upload Images to S3 Bucket
-        s3Uploader.deleteFile(filename);
+        s3Uploader.delete(filename);
         return filename;
     }
 
     public String deleteAndCreateImage(MultipartFile image,String filename) throws IOException {
         String url = s3Uploader.upload(image, s3Uploader.getDIR_NAME());
-        s3Uploader.deleteFile(filename);
+        s3Uploader.delete(filename);
         return url;
     }
 }

@@ -34,23 +34,15 @@ jobs:
         run: |
           sudo apt update -y
           sudo apt install openjdk-17-jdk -y
-      - name: Set up AWS Cli
-        run: |
-          sudo apt update -y
-          sudo apt install awscli -y
-          aws --version
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v1
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ECR_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_ECR_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-      - name: Login to Amazon ECR
-        run: |
-          docker login -u AWS -p $(aws ecr-public get-login-password --region us-east-1) public.ecr.aws/w1d0u6d8
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.CR_PAT }}
       - name: Build and push images & upload to ECR
         id: build_images
         run: |
           ./gradlew bootBuildImage
-          docker tag jmt-monster-backend:latest public.ecr.aws/w1d0u6d8/jmt-monster-backend:latest
-          docker push public.ecr.aws/w1d0u6d8/jmt-monster-backend:latest
+          docker tag jmt-monster-backend:latest ghcr.io/${{ github.repository_owner }}/jmt-monster-backend:latest
+          docker push ghcr.io/${{ github.repository_owner }}/jmt-monster-backend:latest

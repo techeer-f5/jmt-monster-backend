@@ -1,7 +1,7 @@
 package com.techeer.f5.jmtmonster.domain.review.controller;
 
 
-import com.techeer.f5.jmtmonster.domain.friend.dto.mapper.S3Mapper;
+import com.techeer.f5.jmtmonster.domain.review.dto.mapper.S3Mapper;
 import com.techeer.f5.jmtmonster.domain.review.dto.response.S3DeleteResponseDto;
 import com.techeer.f5.jmtmonster.domain.review.dto.response.S3UploadResponseDto;
 import com.techeer.f5.jmtmonster.domain.review.service.S3Service;

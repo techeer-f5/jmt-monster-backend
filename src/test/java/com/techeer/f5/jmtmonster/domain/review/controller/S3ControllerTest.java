@@ -2,7 +2,7 @@ package com.techeer.f5.jmtmonster.domain.review.controller;
 
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.techeer.f5.jmtmonster.domain.friend.dto.mapper.S3Mapper;
+import com.techeer.f5.jmtmonster.domain.review.dto.mapper.S3Mapper;
 import com.techeer.f5.jmtmonster.domain.review.dto.response.S3UploadResponseDto;
 import com.techeer.f5.jmtmonster.domain.review.service.S3Service;
 import com.techeer.f5.jmtmonster.domain.user.dto.UserMapper;
@@ -23,7 +23,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.web.context.WebApplicationContext;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 

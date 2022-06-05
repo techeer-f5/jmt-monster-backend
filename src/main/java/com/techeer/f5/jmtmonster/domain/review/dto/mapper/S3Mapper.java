@@ -1,4 +1,4 @@
-package com.techeer.f5.jmtmonster.domain.friend.dto.mapper;
+package com.techeer.f5.jmtmonster.domain.review.dto.mapper;
 
 import com.techeer.f5.jmtmonster.domain.review.dto.response.S3DeleteResponseDto;
 import com.techeer.f5.jmtmonster.domain.review.dto.response.S3UploadResponseDto;

@@ -6,7 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component
-@RequiredArgsConstructor
 public class S3Mapper {
 
     public S3UploadResponseDto toUploadResponseDto(String url){

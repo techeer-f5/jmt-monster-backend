@@ -1,7 +1,7 @@
 package com.techeer.f5.jmtmonster.domain.friend.controller;
 
 import com.techeer.f5.jmtmonster.domain.friend.dto.mapper.FriendMapper;
-import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendUpdateRequestDto;
+import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendHangOutDto;
 import com.techeer.f5.jmtmonster.domain.friend.dto.response.FriendResponseDto;
 import com.techeer.f5.jmtmonster.domain.friend.service.FriendService;
 import java.util.UUID;
@@ -48,12 +48,12 @@ public class FriendController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<FriendResponseDto> update(
+    public ResponseEntity<FriendResponseDto> hangOut(
             @PathVariable UUID id,
-            @Valid @RequestBody FriendUpdateRequestDto dto
+            @Valid @RequestBody FriendHangOutDto dto
     ) {
         return ResponseEntity
-                .ok(mapper.toResponseDto(service.updateFriend(id, mapper.toServiceDto(dto))));
+                .ok(mapper.toResponseDto(service.hangOutWithFriend(id, dto.getIsHangingOut())));
     }
 
     @DeleteMapping("/{id}")

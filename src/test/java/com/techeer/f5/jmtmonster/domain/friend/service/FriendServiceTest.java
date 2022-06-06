@@ -11,9 +11,9 @@ import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequest;
 import com.techeer.f5.jmtmonster.domain.friend.domain.FriendRequestStatus;
 import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestCreateServiceDto;
 import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendRequestUpdateServiceDto;
-import com.techeer.f5.jmtmonster.domain.friend.dto.request.FriendUpdateServiceDto;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
+import com.techeer.f5.jmtmonster.util.FieldUtil;
 import java.util.Optional;
 import java.util.UUID;
 import org.junit.jupiter.api.DisplayName;
@@ -56,7 +56,6 @@ class FriendServiceTest {
 
                 // given
                 FriendRequest friendRequest = FriendRequest.builder()
-                        .id(UUID.randomUUID())
                         .fromUser(User.builder()
                                 .id(UUID.randomUUID())
                                 .name("FromUser")
@@ -69,6 +68,8 @@ class FriendServiceTest {
                                 .build())
                         .status(FriendRequestStatus.PENDING)
                         .build();
+
+                FieldUtil.writeField(friendRequest, "id", UUID.randomUUID());
 
                 given(friendRequestRepository.saveAndFlush(any()))
                         .willReturn(friendRequest);
@@ -111,7 +112,6 @@ class FriendServiceTest {
 
                 // given
                 FriendRequest friendRequest = FriendRequest.builder()
-                        .id(UUID.randomUUID())
                         .fromUser(User.builder()
                                 .id(UUID.randomUUID())
                                 .name("FromUser")
@@ -124,6 +124,8 @@ class FriendServiceTest {
                                 .build())
                         .status(FriendRequestStatus.PENDING)
                         .build();
+
+                FieldUtil.writeField(friendRequest, "id", UUID.randomUUID());
 
                 // when
                 given(friendRequestRepository.findById(friendRequest.getId()))
@@ -163,18 +165,22 @@ class FriendServiceTest {
                         .build();
 
                 FriendRequest existing = FriendRequest.builder()
-                        .id(frId)
                         .fromUser(fromUser)
                         .toUser(toUser)
                         .status(FriendRequestStatus.PENDING)
                         .build();
 
+                // Set ID
+                FieldUtil.writeField(existing, "id", frId);
+
                 FriendRequest updated = FriendRequest.builder()
-                        .id(frId)
                         .fromUser(fromUser)
                         .toUser(toUser)
                         .status(FriendRequestStatus.ACCEPTED)
                         .build();
+
+                // Set ID
+                FieldUtil.writeField(updated, "id", frId);
 
                 given(friendRequestRepository.findById(existing.getId()))
                         .willReturn(Optional.of(existing));
@@ -215,7 +221,6 @@ class FriendServiceTest {
 
                 // given
                 Friend friend = Friend.builder()
-                        .id(UUID.randomUUID())
                         .fromUser(User.builder()
                                 .id(UUID.randomUUID())
                                 .name("FromUser")
@@ -228,6 +233,9 @@ class FriendServiceTest {
                                 .build())
                         .isHangingOut(false)
                         .build();
+
+                // Set ID
+                FieldUtil.writeField(friend, "id", UUID.randomUUID());
 
                 // when
                 given(friendRepository.findById(friend.getId()))
@@ -243,12 +251,12 @@ class FriendServiceTest {
         }
 
         @Nested
-        @DisplayName("친구 수정")
-        class UpdateFriendTests {
+        @DisplayName("놀러가기")
+        class HangOutWithFriendTests {
 
             @Test
             @DisplayName("성공")
-            void updateFriend_ok() {
+            void hangOutWithFriend_ok() {
 
                 // given
                 UUID fId = UUID.randomUUID();
@@ -266,18 +274,22 @@ class FriendServiceTest {
                         .build();
 
                 Friend existing = Friend.builder()
-                        .id(fId)
                         .fromUser(fromUser)
                         .toUser(toUser)
                         .isHangingOut(false)
                         .build();
 
+                // Set ID
+                FieldUtil.writeField(existing, "id", fId);
+
                 Friend updated = Friend.builder()
-                        .id(fId)
                         .fromUser(fromUser)
                         .toUser(toUser)
                         .isHangingOut(true)
                         .build();
+
+                // Set ID
+                FieldUtil.writeField(updated, "id", fId);
 
                 given(friendRepository.findById(existing.getId()))
                         .willReturn(Optional.of(existing));
@@ -289,10 +301,7 @@ class FriendServiceTest {
                         .willReturn(updated);
 
                 // when
-                updated = friendService.updateFriend(existing.getId(),
-                        FriendUpdateServiceDto.builder()
-                                .isHangingOut(true)
-                                .build());
+                updated = friendService.hangOutWithFriend(existing.getId(), true);
 
                 Friend actual = friendRepository.getById(updated.getId());
 

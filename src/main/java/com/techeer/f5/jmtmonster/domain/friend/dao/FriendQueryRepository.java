@@ -7,8 +7,5 @@ import org.springframework.data.domain.Pageable;
 
 public interface FriendQueryRepository {
 
-    Page<Friend> searchFriends(Pageable pageable, UUID fromUserIdCond, UUID toUserIdCond,
-            Boolean isHangingOutCond);
-
-    long hangOutOffForAllFriendsOfFromUser(UUID fromUserIdCond);
+    Page<Friend> searchFriends(Pageable pageable, UUID fromUserIdCond, UUID toUserIdCond);
 }

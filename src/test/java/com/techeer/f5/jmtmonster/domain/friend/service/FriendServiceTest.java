@@ -231,7 +231,6 @@ class FriendServiceTest {
                                 .name("ToUser")
                                 .email("test@jmt-monster.com")
                                 .build())
-                        .isHangingOut(false)
                         .build();
 
                 // Set ID
@@ -246,69 +245,6 @@ class FriendServiceTest {
 
                 assertThat(friend.getFromUser().getId()).isEqualTo(actual.getFromUser().getId());
                 assertThat(friend.getToUser().getId()).isEqualTo(actual.getToUser().getId());
-                assertThat(friend.isHangingOut()).isEqualTo(actual.isHangingOut());
-            }
-        }
-
-        @Nested
-        @DisplayName("놀러가기")
-        class HangOutWithFriendTests {
-
-            @Test
-            @DisplayName("성공")
-            void hangOutWithFriend_ok() {
-
-                // given
-                UUID fId = UUID.randomUUID();
-
-                User fromUser = User.builder()
-                        .id(UUID.randomUUID())
-                        .name("FromUser")
-                        .email("test@jmt-monster.com")
-                        .build();
-
-                User toUser = User.builder()
-                        .id(UUID.randomUUID())
-                        .name("ToUser")
-                        .email("test@jmt-monster.com")
-                        .build();
-
-                Friend existing = Friend.builder()
-                        .fromUser(fromUser)
-                        .toUser(toUser)
-                        .isHangingOut(false)
-                        .build();
-
-                // Set ID
-                FieldUtil.writeField(existing, "id", fId);
-
-                Friend updated = Friend.builder()
-                        .fromUser(fromUser)
-                        .toUser(toUser)
-                        .isHangingOut(true)
-                        .build();
-
-                // Set ID
-                FieldUtil.writeField(updated, "id", fId);
-
-                given(friendRepository.findById(existing.getId()))
-                        .willReturn(Optional.of(existing));
-
-                given(friendRepository.save(existing))
-                        .willReturn(updated);
-
-                given(friendRepository.getById(updated.getId()))
-                        .willReturn(updated);
-
-                // when
-                updated = friendService.hangOutWithFriend(existing.getId(), true);
-
-                Friend actual = friendRepository.getById(updated.getId());
-
-                // then
-                assertThat(updated.getFromUser().getId()).isEqualTo(actual.getFromUser().getId());
-                assertThat(updated.getToUser().getId()).isEqualTo(actual.getToUser().getId());
-                assertThat(updated.isHangingOut()).isEqualTo(actual.isHangingOut());
             }
         }
     }

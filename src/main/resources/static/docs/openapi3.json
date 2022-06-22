@@ -28,7 +28,7 @@
                 },
                 "examples" : {
                   "friend-request-get-list" : {
-                    "value" : "{\n  \"content\" : [ {\n    \"id\" : \"f74a5320-e9d7-4ac1-9f73-14af4c59c87a\",\n    \"fromUser\" : {\n      \"id\" : \"cc360963-d644-4252-a940-6cd5bb31d244\",\n      \"name\" : \"FromUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"FromUser\",\n      \"imageUrl\" : \"https://profile.example.com/from-user\"\n    },\n    \"toUser\" : {\n      \"id\" : \"77ff735d-78ba-4864-adf9-4e52b9ddff64\",\n      \"name\" : \"ToUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"ToUser\",\n      \"imageUrl\" : \"https://profile.example.com/to-user\"\n    },\n    \"status\" : \"PENDING\"\n  } ],\n  \"pageable\" : {\n    \"sort\" : {\n      \"empty\" : true,\n      \"sorted\" : false,\n      \"unsorted\" : true\n    },\n    \"offset\" : 0,\n    \"pageNumber\" : 0,\n    \"pageSize\" : 10,\n    \"paged\" : true,\n    \"unpaged\" : false\n  },\n  \"last\" : true,\n  \"totalPages\" : 1,\n  \"totalElements\" : 1,\n  \"number\" : 0,\n  \"sort\" : {\n    \"empty\" : true,\n    \"sorted\" : false,\n    \"unsorted\" : true\n  },\n  \"size\" : 10,\n  \"first\" : true,\n  \"numberOfElements\" : 1,\n  \"empty\" : false\n}"
+                    "value" : "{\n  \"content\" : [ {\n    \"id\" : \"acfe4cd7-8996-456f-84c0-6f72294a3a30\",\n    \"fromUser\" : {\n      \"id\" : \"37b7b8e0-1b85-4d34-85d7-bfa8eb0f66a7\",\n      \"name\" : \"FromUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"FromUser\",\n      \"imageUrl\" : \"https://profile.example.com/from-user\"\n    },\n    \"toUser\" : {\n      \"id\" : \"e835b71c-3b38-4b93-96ac-ef70be7cd354\",\n      \"name\" : \"ToUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"ToUser\",\n      \"imageUrl\" : \"https://profile.example.com/to-user\"\n    },\n    \"status\" : \"PENDING\"\n  } ],\n  \"pageable\" : {\n    \"sort\" : {\n      \"empty\" : true,\n      \"sorted\" : false,\n      \"unsorted\" : true\n    },\n    \"offset\" : 0,\n    \"pageNumber\" : 0,\n    \"pageSize\" : 10,\n    \"paged\" : true,\n    \"unpaged\" : false\n  },\n  \"totalPages\" : 1,\n  \"totalElements\" : 1,\n  \"last\" : true,\n  \"number\" : 0,\n  \"sort\" : {\n    \"empty\" : true,\n    \"sorted\" : false,\n    \"unsorted\" : true\n  },\n  \"size\" : 10,\n  \"numberOfElements\" : 1,\n  \"first\" : true,\n  \"empty\" : false\n}"
                   }
                 }
               }
@@ -49,7 +49,7 @@
               },
               "examples" : {
                 "friend-request-create" : {
-                  "value" : "{\n  \"fromUserId\" : \"ff090442-bc23-4b7b-89c8-36303c481299\",\n  \"toUserId\" : \"9feaed0f-a24a-4a7b-b317-9d5bfe7d593f\"\n}"
+                  "value" : "{\n  \"fromUserId\" : \"e9ee5360-8478-4c9b-b6d2-9ee86b83fb83\",\n  \"toUserId\" : \"f365b7db-3118-44ab-8476-5c76b5021736\"\n}"
                 }
               }
             }
@@ -65,7 +65,7 @@
                 },
                 "examples" : {
                   "friend-request-create" : {
-                    "value" : "{\n  \"id\" : \"025d93ea-354c-4ece-9b84-d13f56fc2281\",\n  \"fromUser\" : {\n    \"id\" : \"ff090442-bc23-4b7b-89c8-36303c481299\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"9feaed0f-a24a-4a7b-b317-9d5bfe7d593f\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"PENDING\",\n  \"_links\" : {\n    \"list\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests\"\n    },\n    \"self\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/025d93ea-354c-4ece-9b84-d13f56fc2281\"\n    },\n    \"update\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/025d93ea-354c-4ece-9b84-d13f56fc2281\"\n    },\n    \"delete\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/025d93ea-354c-4ece-9b84-d13f56fc2281\"\n    }\n  }\n}"
+                    "value" : "{\n  \"id\" : \"1a3fc148-e3f0-4569-9c17-1c39fe1750d1\",\n  \"fromUser\" : {\n    \"id\" : \"e9ee5360-8478-4c9b-b6d2-9ee86b83fb83\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"f365b7db-3118-44ab-8476-5c76b5021736\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"PENDING\",\n  \"_links\" : {\n    \"list\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests\"\n    },\n    \"self\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/1a3fc148-e3f0-4569-9c17-1c39fe1750d1\"\n    },\n    \"update\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/1a3fc148-e3f0-4569-9c17-1c39fe1750d1\"\n    },\n    \"delete\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/1a3fc148-e3f0-4569-9c17-1c39fe1750d1\"\n    }\n  }\n}"
                   }
                 }
               }
@@ -111,11 +111,11 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/api-v1-friends-1521885839"
+                  "$ref" : "#/components/schemas/api-v1-friends1746498055"
                 },
                 "examples" : {
                   "friend-get-list" : {
-                    "value" : "{\n  \"content\" : [ {\n    \"id\" : \"bdb6c5b2-f211-42ff-9242-8f1840efb484\",\n    \"fromUser\" : {\n      \"id\" : \"135ab1b8-520a-40fb-8423-83d927aefa80\",\n      \"name\" : \"FromUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"FromUser\",\n      \"imageUrl\" : \"https://profile.example.com/from-user\"\n    },\n    \"toUser\" : {\n      \"id\" : \"3d60987e-b8a4-4ec3-ad9c-f21fa17a64b2\",\n      \"name\" : \"ToUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"ToUser\",\n      \"imageUrl\" : \"https://profile.example.com/to-user\"\n    },\n    \"isHangingOut\" : false\n  } ],\n  \"pageable\" : {\n    \"sort\" : {\n      \"empty\" : true,\n      \"sorted\" : false,\n      \"unsorted\" : true\n    },\n    \"offset\" : 0,\n    \"pageNumber\" : 0,\n    \"pageSize\" : 10,\n    \"paged\" : true,\n    \"unpaged\" : false\n  },\n  \"last\" : true,\n  \"totalPages\" : 1,\n  \"totalElements\" : 1,\n  \"number\" : 0,\n  \"sort\" : {\n    \"empty\" : true,\n    \"sorted\" : false,\n    \"unsorted\" : true\n  },\n  \"size\" : 10,\n  \"first\" : true,\n  \"numberOfElements\" : 1,\n  \"empty\" : false\n}"
+                    "value" : "{\n  \"content\" : [ {\n    \"id\" : \"dc69c12a-425c-4dd6-9447-8b7a9e49d15b\",\n    \"fromUser\" : {\n      \"id\" : \"2ea691d3-7e92-44cb-ba57-cf4748cdd839\",\n      \"name\" : \"FromUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"FromUser\",\n      \"imageUrl\" : \"https://profile.example.com/from-user\"\n    },\n    \"toUser\" : {\n      \"id\" : \"1cb01781-5323-448a-96ce-cdcbb35f94fb\",\n      \"name\" : \"ToUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"ToUser\",\n      \"imageUrl\" : \"https://profile.example.com/to-user\"\n    }\n  } ],\n  \"pageable\" : {\n    \"sort\" : {\n      \"empty\" : true,\n      \"sorted\" : false,\n      \"unsorted\" : true\n    },\n    \"offset\" : 0,\n    \"pageNumber\" : 0,\n    \"pageSize\" : 10,\n    \"paged\" : true,\n    \"unpaged\" : false\n  },\n  \"totalPages\" : 1,\n  \"totalElements\" : 1,\n  \"last\" : true,\n  \"number\" : 0,\n  \"sort\" : {\n    \"empty\" : true,\n    \"sorted\" : false,\n    \"unsorted\" : true\n  },\n  \"size\" : 10,\n  \"numberOfElements\" : 1,\n  \"first\" : true,\n  \"empty\" : false\n}"
                   }
                 }
               }
@@ -140,7 +140,7 @@
                 },
                 "examples" : {
                   "hello-get" : {
-                    "value" : "{\n  \"value\" : \"hello\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-06-03T17:19:56.574479\"\n}"
+                    "value" : "{\n  \"value\" : \"hello\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-06-22T22:59:29.99012\"\n}"
                   }
                 }
               }
@@ -177,7 +177,55 @@
                 },
                 "examples" : {
                   "hello-create" : {
-                    "value" : "{\n  \"value\" : \"hello example1\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-06-03T17:19:56.560657\"\n}"
+                    "value" : "{\n  \"value\" : \"hello example1\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-06-22T22:59:29.944766\"\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/images" : {
+      "get" : {
+        "tags" : [ "api" ],
+        "summary" : "S3 이미지 삭제",
+        "description" : "이미지를 하나 S3에서 삭제 합니다. 파일을 삭제할 땐 '폴더명/나노아이디-파일이름.확장자' 형식의 이름을 사용할 것.",
+        "operationId" : "delete image",
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/api-v1-images-1687754793"
+                },
+                "examples" : {
+                  "delete image" : {
+                    "value" : "{\n  \"filename\" : \"nanoidabcd-mock1.png\"\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "api" ],
+        "summary" : "S3 이미지 업로드",
+        "description" : "이미지를 하나 S3에 업로드합니다..",
+        "operationId" : "upload image",
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/api-v1-images894266175"
+                },
+                "examples" : {
+                  "upload image" : {
+                    "value" : "{\n  \"url\" : \"Test URL\"\n}"
                   }
                 }
               }
@@ -211,7 +259,7 @@
                 },
                 "examples" : {
                   "friend-request-get-one" : {
-                    "value" : "{\n  \"id\" : \"0d52fb01-45a9-4453-b723-bbf1a35aa50c\",\n  \"fromUser\" : {\n    \"id\" : \"e5414c6e-08be-4f3f-8bc7-c40878b533b5\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"e4ce455d-6787-49da-bf14-63eff0f0bd99\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"PENDING\"\n}"
+                    "value" : "{\n  \"id\" : \"61cbd5b1-030d-44e3-b093-8226c4c756a0\",\n  \"fromUser\" : {\n    \"id\" : \"8cf952ba-888a-4d09-94fd-04616743fe3b\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"955474c3-1870-45c6-a2d7-87f584d3e0ec\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"PENDING\"\n}"
                   }
                 }
               }
@@ -257,7 +305,7 @@
                 },
                 "examples" : {
                   "friend-request-update-to-create-friend" : {
-                    "value" : "{\n  \"id\" : \"4f3970c3-482e-4d9a-824d-29698a19d20f\",\n  \"fromUser\" : {\n    \"id\" : \"1e8c4b9a-4cdf-4ca7-b660-335a827692ea\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"7ad17548-4732-4fdc-ad9b-7a0da77b301b\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"ACCEPTED\"\n}"
+                    "value" : "{\n  \"id\" : \"b86fe300-a75d-43b5-8b4a-762d50ef2aa1\",\n  \"fromUser\" : {\n    \"id\" : \"fb7627fb-4200-4fa2-a592-ed0ca2cb5eb6\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"7cb5e091-07ff-4de5-a052-87665fc8f2f5\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"ACCEPTED\"\n}"
                   }
                 }
               }
@@ -287,11 +335,11 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/api-v1-friends-id-491435824"
+                  "$ref" : "#/components/schemas/api-v1-friends-id1757474246"
                 },
                 "examples" : {
                   "friend-get-one" : {
-                    "value" : "{\n  \"id\" : \"1c990ab7-bd4d-40e0-84c0-80603c43d6d8\",\n  \"fromUser\" : {\n    \"id\" : \"18c3529a-1a8d-4da0-9792-ffb03d238ee9\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"d5997335-2d1d-4b7a-a84f-14a5579b7417\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"isHangingOut\" : false\n}"
+                    "value" : "{\n  \"id\" : \"7bf5054c-d6e0-414b-9087-8a101834c7a5\",\n  \"fromUser\" : {\n    \"id\" : \"789eaaf0-3241-4244-85b5-5fc21d61873d\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"68f996f4-cc0c-476e-8c55-6fbaaaa62831\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  }\n}"
                   }
                 }
               }
@@ -314,7 +362,7 @@
           "schema" : {
             "type" : "string"
           },
-          "example" : "Bearer 5fbf99f1-339a-40e3-9908-70fee78667ed"
+          "example" : "Bearer 382680c1-abef-4310-b65c-a1765ef9f862"
         } ],
         "responses" : {
           "200" : {
@@ -322,11 +370,11 @@
             "content" : {
               "application/json;charset=UTF-8" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/users-me-1863268708"
+                  "$ref" : "#/components/schemas/users-me-extra-info-1863268708"
                 },
                 "examples" : {
                   "my-user" : {
-                    "value" : "{\n  \"isSuccess\" : true,\n  \"user\" : {\n    \"id\" : \"bb09d2ca-57d0-4358-b068-bfd4abc2d4fd\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : null,\n    \"address\" : null,\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : false,\n    \"verified\" : false\n  }\n}"
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"user\" : {\n    \"id\" : \"242180ef-601d-4f3e-89b2-c40aa313e232\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : null,\n    \"address\" : null,\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : false,\n    \"verified\" : false\n  }\n}"
                   }
                 }
               }
@@ -349,7 +397,7 @@
           "schema" : {
             "type" : "string"
           },
-          "example" : "Bearer a54b9cdd-0f32-4292-80e8-aa83a2918b07"
+          "example" : "Bearer c7cad56e-598b-4a70-afe1-59dc4c4336dc"
         } ],
         "requestBody" : {
           "content" : {
@@ -371,11 +419,11 @@
             "content" : {
               "application/json;charset=UTF-8" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/users-me-1863268708"
+                  "$ref" : "#/components/schemas/users-me-extra-info-1863268708"
                 },
                 "examples" : {
                   "submit-extra-info" : {
-                    "value" : "{\n  \"isSuccess\" : true,\n  \"user\" : {\n    \"id\" : \"fd1080b5-07ec-4c70-86e0-b48346f493a1\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : \"DPS0340\",\n    \"address\" : \"경기도 시흥시 서울대학로278번길 19-13\",\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : true,\n    \"verified\" : false\n  }\n}"
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"user\" : {\n    \"id\" : \"cdb8c1dd-7d80-4b63-a284-940355048af5\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : \"DPS0340\",\n    \"address\" : \"경기도 시흥시 서울대학로278번길 19-13\",\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : true,\n    \"verified\" : false\n  }\n}"
                   }
                 }
               }
@@ -387,6 +435,24 @@
   },
   "components" : {
     "schemas" : {
+      "api-v1-images-1687754793" : {
+        "type" : "object",
+        "properties" : {
+          "filename" : {
+            "type" : "string",
+            "description" : "File name of image in S3"
+          }
+        }
+      },
+      "api-v1-images894266175" : {
+        "type" : "object",
+        "properties" : {
+          "url" : {
+            "type" : "string",
+            "description" : "URL of image in S3"
+          }
+        }
+      },
       "api-v1-friend-requests-id529653109" : {
         "type" : "object",
         "properties" : {
@@ -450,7 +516,33 @@
           }
         }
       },
-      "api-v1-friends-id-491435824" : {
+      "api-v1-hello527089244" : {
+        "type" : "object",
+        "properties" : {
+          "success" : {
+            "type" : "boolean",
+            "description" : "성공 여부를 나타내는 불린 변수"
+          },
+          "createdOn" : {
+            "type" : "string",
+            "description" : "객체 생성 시각"
+          },
+          "value" : {
+            "type" : "string",
+            "description" : "리스폰스 메시지"
+          }
+        }
+      },
+      "api-v1-friend-requests-id-989932600" : {
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string",
+            "description" : "친구 요청 상태 (ACCEPTED)"
+          }
+        }
+      },
+      "api-v1-friends-id1757474246" : {
         "type" : "object",
         "properties" : {
           "toUser" : {
@@ -477,10 +569,6 @@
                 "description" : "친구 이메일"
               }
             }
-          },
-          "isHangingOut" : {
-            "type" : "boolean",
-            "description" : "놀러가기 여부"
           },
           "fromUser" : {
             "type" : "object",
@@ -513,32 +601,6 @@
           }
         }
       },
-      "api-v1-hello527089244" : {
-        "type" : "object",
-        "properties" : {
-          "success" : {
-            "type" : "boolean",
-            "description" : "성공 여부를 나타내는 불린 변수"
-          },
-          "createdOn" : {
-            "type" : "string",
-            "description" : "객체 생성 시각"
-          },
-          "value" : {
-            "type" : "string",
-            "description" : "리스폰스 메시지"
-          }
-        }
-      },
-      "api-v1-friend-requests-id-989932600" : {
-        "type" : "object",
-        "properties" : {
-          "status" : {
-            "type" : "string",
-            "description" : "친구 요청 상태 (ACCEPTED)"
-          }
-        }
-      },
       "api-v1-hello-1906941826" : {
         "type" : "object",
         "properties" : {
@@ -552,78 +614,7 @@
           }
         }
       },
-      "api-v1-friends-1521885839" : {
-        "type" : "object",
-        "properties" : {
-          "content" : {
-            "type" : "array",
-            "items" : {
-              "type" : "object",
-              "properties" : {
-                "toUser" : {
-                  "type" : "object",
-                  "properties" : {
-                    "imageUrl" : {
-                      "type" : "string",
-                      "description" : "친구 프로필 사진 주소"
-                    },
-                    "nickname" : {
-                      "type" : "string",
-                      "description" : "친구 닉네임"
-                    },
-                    "name" : {
-                      "type" : "string",
-                      "description" : "친구 이름"
-                    },
-                    "id" : {
-                      "type" : "string",
-                      "description" : "친구 ID"
-                    },
-                    "email" : {
-                      "type" : "string",
-                      "description" : "친구 이메일"
-                    }
-                  }
-                },
-                "isHangingOut" : {
-                  "type" : "boolean",
-                  "description" : "놀러가기 여부"
-                },
-                "fromUser" : {
-                  "type" : "object",
-                  "properties" : {
-                    "imageUrl" : {
-                      "type" : "string",
-                      "description" : "사용자 프로필 사진 주소"
-                    },
-                    "nickname" : {
-                      "type" : "string",
-                      "description" : "사용자 닉네임"
-                    },
-                    "name" : {
-                      "type" : "string",
-                      "description" : "사용자 이름"
-                    },
-                    "id" : {
-                      "type" : "string",
-                      "description" : "사용자 ID"
-                    },
-                    "email" : {
-                      "type" : "string",
-                      "description" : "사용자 이메일"
-                    }
-                  }
-                },
-                "id" : {
-                  "type" : "string",
-                  "description" : "ID"
-                }
-              }
-            }
-          }
-        }
-      },
-      "users-me-1863268708" : {
+      "users-me-extra-info-1863268708" : {
         "type" : "object",
         "properties" : {
           "user" : {
@@ -670,6 +661,19 @@
           "isSuccess" : {
             "type" : "boolean",
             "description" : "성공 여부"
+          }
+        }
+      },
+      "api-v1-friend-requests390944723" : {
+        "type" : "object",
+        "properties" : {
+          "fromUserId" : {
+            "type" : "string",
+            "description" : "친구 요청을 보낸 사용자 ID"
+          },
+          "toUserId" : {
+            "type" : "string",
+            "description" : "친구 요청을 받은 사용자 ID"
           }
         }
       },
@@ -744,16 +748,70 @@
           }
         }
       },
-      "api-v1-friend-requests390944723" : {
+      "api-v1-friends1746498055" : {
         "type" : "object",
         "properties" : {
-          "fromUserId" : {
-            "type" : "string",
-            "description" : "친구 요청을 보낸 사용자 ID"
-          },
-          "toUserId" : {
-            "type" : "string",
-            "description" : "친구 요청을 받은 사용자 ID"
+          "content" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "toUser" : {
+                  "type" : "object",
+                  "properties" : {
+                    "imageUrl" : {
+                      "type" : "string",
+                      "description" : "친구 프로필 사진 주소"
+                    },
+                    "nickname" : {
+                      "type" : "string",
+                      "description" : "친구 닉네임"
+                    },
+                    "name" : {
+                      "type" : "string",
+                      "description" : "친구 이름"
+                    },
+                    "id" : {
+                      "type" : "string",
+                      "description" : "친구 ID"
+                    },
+                    "email" : {
+                      "type" : "string",
+                      "description" : "친구 이메일"
+                    }
+                  }
+                },
+                "fromUser" : {
+                  "type" : "object",
+                  "properties" : {
+                    "imageUrl" : {
+                      "type" : "string",
+                      "description" : "사용자 프로필 사진 주소"
+                    },
+                    "nickname" : {
+                      "type" : "string",
+                      "description" : "사용자 닉네임"
+                    },
+                    "name" : {
+                      "type" : "string",
+                      "description" : "사용자 이름"
+                    },
+                    "id" : {
+                      "type" : "string",
+                      "description" : "사용자 ID"
+                    },
+                    "email" : {
+                      "type" : "string",
+                      "description" : "사용자 이메일"
+                    }
+                  }
+                },
+                "id" : {
+                  "type" : "string",
+                  "description" : "ID"
+                }
+              }
+            }
           }
         }
       },

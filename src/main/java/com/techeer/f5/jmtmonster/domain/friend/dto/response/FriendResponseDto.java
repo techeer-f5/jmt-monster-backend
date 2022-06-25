@@ -25,7 +25,4 @@ public class FriendResponseDto extends BaseTimeEntityDto {
 
     @NotNull
     private BasicUserResponseDto toUser;
-
-    @NotNull
-    private Boolean isHangingOut;
 }

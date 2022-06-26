@@ -6,6 +6,7 @@ import com.techeer.f5.jmtmonster.domain.restaurant.entity.Restaurant;
 import com.techeer.f5.jmtmonster.domain.restaurant.repository.RestaurantRepository;
 import com.techeer.f5.jmtmonster.domain.restaurant.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +21,8 @@ public class RestaurantController {
     private final RestaurantService restaurantService;
     private final RestaurantRepository restaurantRepository;
 
-    @PostMapping("/{cid}")
-    public ResponseEntity getRestaurantInformation(@PathVariable Long cid) {
+    @GetMapping("/{cid}")
+    public ResponseEntity<RestaurantResponseDto> getRestaurantInformation(@PathVariable Long cid) {
         RestaurantResponseDto responseDto;
         if (restaurantRepository.existsByCid(cid)) {  // 정보가 있으면
             responseDto = restaurantService.getRestaurantInfo(cid);
@@ -29,7 +30,7 @@ public class RestaurantController {
             responseDto = restaurantService.saveRestaurantInfo(cid);
         }
 
-        return ResponseEntity.ok()
+        return ResponseEntity.status(HttpStatus.CREATED)
                 .body(responseDto);
     }
 }

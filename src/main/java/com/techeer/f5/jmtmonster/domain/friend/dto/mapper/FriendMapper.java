@@ -17,7 +17,6 @@ public class FriendMapper {
                 .id(entity.getId())
                 .fromUser(userMapper.toBasicUserResponseDto(entity.getFromUser()))
                 .toUser(userMapper.toBasicUserResponseDto(entity.getToUser()))
-                .isHangingOut(entity.isHangingOut())
                 .build();
     }
 }

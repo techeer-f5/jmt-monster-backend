@@ -40,20 +40,15 @@ public class Friend extends BaseTimeEntity {
     @NotNull
     private User toUser;
 
-    @NotNull
-    private boolean isHangingOut;
-
     @Builder
-    public Friend(User fromUser, User toUser, boolean isHangingOut) {
+    public Friend(User fromUser, User toUser) {
         this.fromUser = fromUser;
         this.toUser = toUser;
-        this.isHangingOut = isHangingOut;
     }
 
-    public void update(User fromUser, User toUser, boolean isHangingOut) {
+    public void update(User fromUser, User toUser) {
         this.fromUser = fromUser;
         this.toUser = toUser;
-        this.isHangingOut = isHangingOut;
     }
 
     @Override
@@ -62,7 +57,6 @@ public class Friend extends BaseTimeEntity {
                 "id=" + id +
                 ", fromUser.email=" + fromUser.getEmail() +
                 ", toUser.email=" + toUser.getEmail() +
-                ", isHangingOut=" + isHangingOut +
                 '}';
     }
 }

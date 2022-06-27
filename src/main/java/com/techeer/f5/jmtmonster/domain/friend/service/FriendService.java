@@ -77,12 +77,10 @@ public class FriendService {
             friendRepository.saveAndFlush(Friend.builder()
                     .fromUser(entity.getFromUser())
                     .toUser(entity.getToUser())
-                    .isHangingOut(false)
                     .build());
             friendRepository.saveAndFlush(Friend.builder()
                     .fromUser(entity.getToUser())
                     .toUser(entity.getFromUser())
-                    .isHangingOut(false)
                     .build());
         }
 
@@ -117,21 +115,6 @@ public class FriendService {
     }
 
     @Transactional
-    public Friend hangOutWithFriend(UUID id, boolean isHangingOut) {
-        Friend entity = friendRepository.findById(id)
-                .orElseThrow(() ->
-                        new ResourceNotFoundException(Friend.class.getSimpleName(), "id", id));
-
-        if (isHangingOut) {
-            // 해당 사용자의 친구들 모두의 isHangingOut을 false로 만든다
-            friendRepository.hangOutOffForAllFriendsOfFromUser(entity.getFromUser().getId());
-        }
-
-        entity.update(entity.getFromUser(), entity.getToUser(), isHangingOut);
-        return friendRepository.save(entity);
-    }
-
-    @Transactional
     public void deleteFriendById(UUID id) {
         if (!friendRepository.existsById(id)) {
             throw new ResourceNotFoundException(Friend.class.getSimpleName(), "id", id);
@@ -147,8 +130,7 @@ public class FriendService {
     }
 
     @Transactional(readOnly = true)
-    public Page<Friend> findAllFriends(Pageable pageable, UUID fromUserId, UUID toUserId,
-            Boolean isHangingOut) {
-        return friendRepository.searchFriends(pageable, fromUserId, toUserId, isHangingOut);
+    public Page<Friend> findAllFriends(Pageable pageable, UUID fromUserId, UUID toUserId) {
+        return friendRepository.searchFriends(pageable, fromUserId, toUserId);
     }
 }

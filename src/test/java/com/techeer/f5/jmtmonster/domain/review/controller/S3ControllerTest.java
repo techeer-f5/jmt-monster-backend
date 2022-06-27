@@ -36,7 +36,9 @@ import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuild
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.partWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParts;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -82,17 +84,17 @@ public class S3ControllerTest {
         given(s3Service.deleteImage(any())).willReturn(givenFileName);
         given(s3Service.deleteAndCreateImage(any(),any())).willReturn(givenURL);
     }
-    
+
     @Test
     @DisplayName("이미지 업로드 테스트")
     void uploadImage() throws Exception {
         // given
-        
+
         // when
-        
+
         // then
         FieldDescriptor[] responseFieldDescriptors = {
-                fieldWithPath("content.[].url")
+                fieldWithPath("url")
                         .type(JsonFieldType.STRING)
                         .description("URL of image in S3")};
 
@@ -112,17 +114,17 @@ public class S3ControllerTest {
                                 .responseFields(responseFieldDescriptors)
                                 .build())));
     }
-    
+
     @Test
     @DisplayName("")
     void deleteImagesTest() throws Exception {
         // given
-        
+
         // when
-        
+
         // then
         FieldDescriptor[] responseFieldDescriptors = {
-                fieldWithPath("content.[].filename")
+                fieldWithPath("filename")
                         .type(JsonFieldType.STRING)
                         .description("File name of image in S3")};
 
@@ -134,16 +136,16 @@ public class S3ControllerTest {
                 .andDo(document("delete image",
                         preprocessRequest(prettyPrint()),
                         preprocessResponse(prettyPrint()),
-                        requestParts(
-                                partWithName("image").description("The image to upload to s3")),
+                        requestParameters(
+                                parameterWithName("filename").description("The filename of the image to delete from s3")),
                         resource(ResourceSnippetParameters.builder()
                                 .description("이미지를 하나 S3에서 삭제 합니다. 파일을 삭제할 땐 '폴더명/나노아이디-파일이름.확장자' 형식의 이름을 사용할 것.")
                                 .summary("S3 이미지 삭제")
                                 .responseFields(responseFieldDescriptors)
                                 .build())));
     }
-    
-    
+
+
 
 }
 

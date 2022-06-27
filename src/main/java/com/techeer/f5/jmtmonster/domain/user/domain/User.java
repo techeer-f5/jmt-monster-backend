@@ -1,5 +1,6 @@
 package com.techeer.f5.jmtmonster.domain.user.domain;
 
+import com.techeer.f5.jmtmonster.domain.home.domain.HomeToUser;
 import com.techeer.f5.jmtmonster.domain.oauth.domain.PersistentToken;
 import java.util.ArrayList;
 import java.util.List;
@@ -88,6 +89,10 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @Builder.Default
     private List<PersistentToken> tokens = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @Builder.Default
+    private List<HomeToUser> homeToUsers = new ArrayList<>();
 
     @Transactional
     public void addToken(PersistentToken persistentToken) {

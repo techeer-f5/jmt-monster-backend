@@ -17,6 +17,7 @@ public class HomeHistoryDto {
     private String code = "";
 
     @Builder.Default
+    @Setter
     private Boolean isCurrentHome = Boolean.FALSE;
 
 }

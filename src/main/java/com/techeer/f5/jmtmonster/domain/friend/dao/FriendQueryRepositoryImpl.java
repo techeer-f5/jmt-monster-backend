@@ -35,6 +35,8 @@ public class FriendQueryRepositoryImpl implements FriendQueryRepository {
                 .fetchJoin()
                 .innerJoin(friend.toUser, toUser)
                 .fetchJoin()
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
 
         JPAQuery<Long> countQuery = getCount(fromUser, toUser, fromUserIdCond, toUserIdCond);

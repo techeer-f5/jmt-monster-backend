@@ -37,6 +37,8 @@ public class FriendRequestQueryRepositoryImpl implements FriendRequestQueryRepos
                 .where(fromUserIdEq(fromUser, fromUserIdCond),
                         toUserIdEq(toUser, toUserIdCond),
                         statusEq(statusCond))
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .fetch();
 
         JPAQuery<Long> countQuery = getCount(fromUser, toUser, fromUserIdCond, toUserIdCond,

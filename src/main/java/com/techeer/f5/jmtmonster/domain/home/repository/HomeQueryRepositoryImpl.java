@@ -23,7 +23,7 @@ public class HomeQueryRepositoryImpl implements HomeQueryRepository {
     @Override
     public List<HomeToUser> findAllHomeToUsersByUser(User user) {
         return jpaQueryFactory.from(QUser.user)
-                .where(QUser.user.eq(user))
+                .where(QUser.user.id.eq(user.getId()))
                 .innerJoin(QHomeToUser.homeToUser)
                 .fetchJoin()
                 .orderBy(QHomeToUser.homeToUser.updatedOn.desc())
@@ -34,7 +34,7 @@ public class HomeQueryRepositoryImpl implements HomeQueryRepository {
     @Override
     public List<Home> findAllHomesByUser(User user) {
         return jpaQueryFactory.from(QUser.user)
-                .where(QUser.user.eq(user))
+                .where(QUser.user.id.eq(user.getId()))
                 .innerJoin(QHomeToUser.homeToUser)
                 .fetchJoin()
                 .innerJoin(QHome.home)
@@ -47,7 +47,7 @@ public class HomeQueryRepositoryImpl implements HomeQueryRepository {
     @Override
     public Home findCurrentHomeByUser(User user) {
         return jpaQueryFactory.from(QUser.user)
-                .where(QUser.user.eq(user))
+                .where(QUser.user.id.eq(user.getId()))
                 .innerJoin(QHomeToUser.homeToUser)
                 .fetchJoin()
                 .innerJoin(QHome.home)
@@ -60,7 +60,7 @@ public class HomeQueryRepositoryImpl implements HomeQueryRepository {
     @Override
     public void migrate(User user, Home home) {
         List<HomeToUser> previousHomes = jpaQueryFactory.selectFrom(QHomeToUser.homeToUser)
-                .where(QHomeToUser.homeToUser.user.eq(user))
+                .where(QHomeToUser.homeToUser.user.id.eq(user.getId()))
                 .where(QHomeToUser.homeToUser.current.isTrue())
                 .fetch();
 
@@ -70,15 +70,15 @@ public class HomeQueryRepositoryImpl implements HomeQueryRepository {
         }
 
         HomeToUser homeToUser = jpaQueryFactory.selectFrom(QHomeToUser.homeToUser)
-                .where(QHomeToUser.homeToUser.user.eq(user))
-                .where(QHomeToUser.homeToUser.home.eq(home))
+                .where(QHomeToUser.homeToUser.user.id.eq(user.getId()))
+                .where(QHomeToUser.homeToUser.home.id.eq(home.getId()))
                 .fetchOne();
 
         if (homeToUser == null) {
             homeToUser = HomeToUser.builder()
-                            .user(user)
-                            .home(home)
-                            .build();
+                    .user(user)
+                    .home(home)
+                    .build();
         }
 
         homeToUser.setCurrent(true);

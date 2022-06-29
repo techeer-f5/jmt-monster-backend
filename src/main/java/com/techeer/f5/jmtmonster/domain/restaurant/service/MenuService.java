@@ -6,6 +6,7 @@ import com.techeer.f5.jmtmonster.domain.restaurant.service.information.MenuInfo;
 import com.techeer.f5.jmtmonster.domain.restaurant.service.information.RestaurantInfo;
 import net.minidev.json.parser.ParseException;
 import org.springframework.http.*;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -15,7 +16,7 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-@RestController
+@Service
 public class MenuService {
     private String url = "https://place.map.kakao.com/main/v/";
 

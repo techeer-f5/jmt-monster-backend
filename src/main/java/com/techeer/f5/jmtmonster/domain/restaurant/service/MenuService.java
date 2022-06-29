@@ -17,6 +17,7 @@ public class MenuService {
 
     @GetMapping("/menu/{cidnum}")
     public String callApi(@PathVariable("cidnum") long cidnum) throws UnsupportedEncodingException, ParseException {
+        RestaurantMapper restaurantMapper = new RestaurantMapper();
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders); //엔티티로 만들기

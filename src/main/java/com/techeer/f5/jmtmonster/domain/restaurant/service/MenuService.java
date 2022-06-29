@@ -1,5 +1,9 @@
 package com.techeer.f5.jmtmonster.domain.restaurant.service;
 
+import com.techeer.f5.jmtmonster.domain.restaurant.dto.mapper.RestaurantMapper;
+import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.RestaurantInfoResponseDto;
+import com.techeer.f5.jmtmonster.domain.restaurant.service.information.MenuInfo;
+import com.techeer.f5.jmtmonster.domain.restaurant.service.information.RestaurantInfo;
 import net.minidev.json.parser.ParseException;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -29,24 +33,18 @@ public class MenuService {
         // 전체 내용
         ResponseEntity<Map> result = restTemplate.exchange(targetUrl, HttpMethod.GET, httpEntity, Map.class);
         Map<String, Object> resultMap = result.getBody();
+        Map<String, Object> basicInfo = (Map<String, Object>) resultMap.get("basicInfo");
 
-        // cid 값 추출
-        Map<String, Object> parsingcid = (Map<String, Object>) resultMap.get("basicInfo");
-        String cid = String.valueOf(parsingcid.get("cid"));
+        // ToPOJO
+        Long cid = Long.valueOf(String.valueOf(basicInfo.get("cid")));
+        String restaurantName = (String) basicInfo.get("placenamefull");
+        Map<String, Object> menu = (Map<String, Object>) resultMap.get("menuInfo");
+        List<Map<String, Object>> menuList = (List<Map<String, Object>>) menu.get("menuList");
 
-        //menu 정보 추출
-        Map<String, Object> parsingmenu = (Map<String, Object>) resultMap.get("menuInfo");
-        List<Map<String, Object>> menuList = (List<Map<String, Object>>) parsingmenu.get("menuList");
-        List<String> menuInfo = menuList.stream().map((e) -> (String) e.get("menu")).toList();
+        MenuInfo menuInfo = new MenuInfo(cid, restaurantName, menuList);
+//        RestaurantInfo restaurantInfo = new RestaurantInfo(cid, restaurantName);
 
-        //x 값 추출
-        Map<String, Object> parsing_x = (Map<String, Object>) resultMap.get("findway");
-        String x_code = String.valueOf(parsing_x.get("x"));
-
-        //y 값 추출
-        Map<String, Object> parsing_y = (Map<String, Object>) resultMap.get("findway");
-        String y_code = String.valueOf(parsing_y.get("y"));
-
-        return "cid 값 : " + cid + "  menu 정보 :" + menuInfo + "  x_code값 : "  +  x_code + "  y_code 값 : " + y_code;
+        return restaurantMapper.toRestaurantInfoResponseDto(menuInfo);
+//        return restaurantMapper.toRestaurantInfoResponseDto(restaurantInfo);
     }
 }

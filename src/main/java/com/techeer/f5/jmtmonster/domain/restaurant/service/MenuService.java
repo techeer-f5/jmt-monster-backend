@@ -1,6 +1,7 @@
 package com.techeer.f5.jmtmonster.domain.restaurant.service;
 
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.mapper.RestaurantMapper;
+import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.MenuInfoResponseDto;
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.RestaurantInfoResponseDto;
 import com.techeer.f5.jmtmonster.domain.restaurant.service.information.MenuInfo;
 import com.techeer.f5.jmtmonster.domain.restaurant.service.information.RestaurantInfo;
@@ -21,7 +22,7 @@ public class MenuService {
     private String url = "https://place.map.kakao.com/main/v/";
 
     @GetMapping("/menu/{cidnum}")
-    public RestaurantInfoResponseDto callApi(@PathVariable("cidnum") long cidnum) throws UnsupportedEncodingException, ParseException {
+    public MenuInfoResponseDto getMenuByKakao(@PathVariable("cidnum") long cidnum) {
         RestaurantMapper restaurantMapper = new RestaurantMapper();
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -46,7 +47,7 @@ public class MenuService {
         MenuInfo menuInfo = new MenuInfo(cid, restaurantName, menuList);
 //        RestaurantInfo restaurantInfo = new RestaurantInfo(cid, restaurantName);
 
-        return restaurantMapper.toRestaurantInfoResponseDto(menuInfo);
+        return restaurantMapper.toMenuInfoResponseDto(menuInfo);
 //        return restaurantMapper.toRestaurantInfoResponseDto(restaurantInfo);
     }
 }

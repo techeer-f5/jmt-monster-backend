@@ -2,6 +2,7 @@ package com.techeer.f5.jmtmonster.domain.restaurant.service;
 
 import net.minidev.json.parser.ParseException;
 import org.springframework.http.*;
+import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -11,12 +12,11 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-@RestController
+@Service
 public class MenuService {
     private String url = "https://place.map.kakao.com/main/v/";
 
-    @GetMapping("/menu/{cidnum}")
-    public String callApi(@PathVariable("cidnum") long cidnum) throws UnsupportedEncodingException, ParseException {
+    public String getMenuByKakao(Long cidnum) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders); //엔티티로 만들기

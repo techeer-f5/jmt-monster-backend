@@ -4,6 +4,7 @@ import com.techeer.f5.jmtmonster.domain.restaurant.dto.mapper.RestaurantMapper;
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.RestaurantResponseDto;
 import com.techeer.f5.jmtmonster.domain.restaurant.entity.Restaurant;
 import com.techeer.f5.jmtmonster.domain.restaurant.repository.RestaurantRepository;
+import com.techeer.f5.jmtmonster.domain.restaurant.service.MenuService;
 import com.techeer.f5.jmtmonster.domain.restaurant.service.RestaurantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class RestaurantController {
 
     private final RestaurantService restaurantService;
+    private final MenuService menuService;
     private final RestaurantRepository restaurantRepository;
 
     @GetMapping("/{cid}")
@@ -26,11 +28,14 @@ public class RestaurantController {
         RestaurantResponseDto responseDto;
         if (restaurantRepository.existsByCid(cid)) {  // 정보가 있으면
             responseDto = restaurantService.getRestaurantInfo(cid);
+            menuService.getMenuByKakao(cid);
         } else { // 정보가 없으면
             responseDto = restaurantService.saveRestaurantInfo(cid);
         }
 
+
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(responseDto);
     }
+
 }

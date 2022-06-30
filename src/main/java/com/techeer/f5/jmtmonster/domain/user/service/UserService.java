@@ -1,24 +1,23 @@
 package com.techeer.f5.jmtmonster.domain.user.service;
 
 import com.techeer.f5.jmtmonster.domain.oauth.domain.PersistentToken;
-import com.techeer.f5.jmtmonster.domain.user.dto.UserResponseDto;
 import com.techeer.f5.jmtmonster.domain.oauth.repository.PersistentTokenRepository;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.dto.ExtraUserInfoRequestDto;
 import com.techeer.f5.jmtmonster.domain.user.dto.UserDto;
 import com.techeer.f5.jmtmonster.domain.user.dto.UserMapper;
+import com.techeer.f5.jmtmonster.domain.user.dto.UserResponseDto;
 import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
-import com.techeer.f5.jmtmonster.global.error.exception.CustomStatusException;
-import com.techeer.f5.jmtmonster.global.error.exception.ErrorCode;
 import com.techeer.f5.jmtmonster.global.error.exception.NotAuthorizedException;
 import com.techeer.f5.jmtmonster.global.error.exception.ResourceNotFoundException;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
-
-import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 import java.util.UUID;
+import javax.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -48,6 +47,10 @@ public class UserService {
 
     public Optional<User> findUserById(UUID id) {
         return userRepository.findById(id);
+    }
+
+    public Page<User> searchByEmail(Pageable pageable, String email) {
+        return userRepository.searchByEmail(pageable, email);
     }
 
     public Optional<User> findUserByTokenId(UUID tokenId) {

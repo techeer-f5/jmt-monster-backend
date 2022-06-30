@@ -19,11 +19,13 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 import java.util.UUID;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Slf4j
 @RequiredArgsConstructor
 public class UserService {
+
     private final UserRepository userRepository;
     private final PersistentTokenRepository persistentTokenRepository;
     private final UserMapper userMapper;
@@ -60,7 +62,7 @@ public class UserService {
         return Optional.ofNullable(persistentToken.getUser());
     }
 
-    public User findUserWithRequest(HttpServletRequest request) {
+    public User findUserWithRequest(HttpServletRequest request) throws ResourceNotFoundException {
         UUID tokenId = getTokenId(request);
         Optional<User> optionalUser = findUserByTokenId(tokenId);
 
@@ -77,20 +79,22 @@ public class UserService {
         UserDto userDto = userMapper.toUserDto(user);
 
         return UserResponseDto.builder()
-                .success(true)
+                .isSuccess(true)
                 .user(userDto)
                 .build();
     }
 
-    public UserResponseDto submitExtraInfo(HttpServletRequest request, ExtraUserInfoRequestDto extraUserInfoRequestDto) {
+    @Transactional(rollbackFor = {ResourceNotFoundException.class, NotAuthorizedException.class})
+    public UserResponseDto submitExtraInfo(HttpServletRequest request,
+            ExtraUserInfoRequestDto extraUserInfoRequestDto) throws ResourceNotFoundException, NotAuthorizedException {
         User user = findUserWithRequest(request);
 
+        user.addExtraInfo(
+                extraUserInfoRequestDto.getNickname(),
+                extraUserInfoRequestDto.getAddress(),
+                extraUserInfoRequestDto.getImageUrl());
 
-        try {
-            user.addExtraInfo(extraUserInfoRequestDto.getNickname(), extraUserInfoRequestDto.getAddress(), extraUserInfoRequestDto.getImageUrl());
-        } catch (IllegalStateException exception) {
-            throw new CustomStatusException(ErrorCode.CONFLICT, exception.getMessage());
-        }
+        user = userRepository.saveAndFlush(user);
 
         return userMapper.toUserResponseDto(user);
     }

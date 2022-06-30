@@ -7,10 +7,10 @@ spring:
   devtools:
     livereload:
       enabled: true # live reload
+      
   jpa:
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL8Dialect
         # Print all SQL queries from Hibernate execution to console
         show_sql: true
         # Format JPA queries on console with readability
@@ -18,6 +18,7 @@ spring:
         # Print extra information besides SQL queries for debugging
         use_sql_comments: true
         ddl-auto: update
+        default_batch_fetch_size: 100
     generate-ddl: true
   # Disable flyway
   flyway:
@@ -27,7 +28,7 @@ spring:
 app:
   cors:
     # comma (',') seperated list of allowed origins for CORS
-    allowed-origins: http://localhost,http://localhost:3000,http://localhost:8001
+    allowed-origins: http://localhost,http://localhost:3000,http://localhost:8001,https://frontend.jmtmonster.com,https://swagger.jmtmonster.com
 
 server:
   servlet:

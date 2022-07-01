@@ -3,8 +3,9 @@ package com.techeer.f5.jmtmonster.domain.review.service;
 import com.techeer.f5.jmtmonster.domain.review.dao.ReviewFoodRepository;
 import com.techeer.f5.jmtmonster.domain.review.dao.ReviewImageRepository;
 import com.techeer.f5.jmtmonster.domain.review.dao.ReviewRequestRepository;
+import com.techeer.f5.jmtmonster.domain.review.domain.Review;
 import com.techeer.f5.jmtmonster.domain.review.domain.ReviewFood;
-import com.techeer.f5.jmtmonster.domain.review.domain.ReviewRequest;
+import com.techeer.f5.jmtmonster.domain.review.domain.ReviewImage;
 import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestCreateServiceDto;
 import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestUpdateServiceDto;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
@@ -13,15 +14,12 @@ import com.techeer.f5.jmtmonster.global.error.exception.DuplicateResourceExcepti
 import com.techeer.f5.jmtmonster.global.error.exception.FieldErrorWrapper;
 import com.techeer.f5.jmtmonster.global.error.exception.InnerResourceNotFoundException;
 import com.techeer.f5.jmtmonster.global.error.exception.ResourceNotFoundException;
-import com.techeer.f5.jmtmonster.s3.util.S3Manager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -35,10 +33,10 @@ public class ReviewRequestService  {
     private final ReviewImageRepository reviewImageRepository;
     private final UserRepository userRepository;
 
-    public ReviewRequest create(ReviewRequestCreateServiceDto dto){
+    public Review create(ReviewRequestCreateServiceDto dto){
         // Check user information
         UUID userId = dto.getUserId();
-        String resourceName = ReviewRequest.class.getSimpleName();
+        String resourceName = Review.class.getSimpleName();
 
         User user = userRepository.findById(dto.getUserId())
                 .orElseThrow(() -> new InnerResourceNotFoundException(
@@ -56,32 +54,63 @@ public class ReviewRequestService  {
         // Save foods
         List<String> foods = dto.getFoodList();
         List<ReviewFood> foodEntityList = foods.stream().map(food -> ReviewFood.builder()
-                .user(user)
+                .review(null)
                 .food(food)
                 .build()).collect(Collectors.toList());
         reviewFoodRepository.saveAll(foodEntityList);
 
-        ReviewRequest request_entity = ReviewRequest.builder()
+        // Save Images
+        List<String> images = dto.getImageList();
+        List<ReviewImage> imageEntityList = images.stream().map(image -> ReviewImage.builder()
+                .review(null)
+                .url(image)
+                .build()).collect(Collectors.toList());
+        reviewImageRepository.saveAll(imageEntityList);
+
+        // Save Request
+        Review request_entity = Review.builder()
                 .user(user)
                 .content(dto.getContent())
                 .like(dto.getLike())
                 .star(dto.getStar())
                 .build();
 
+        // Update Foods (Modify Foreign Key)
+        for(ReviewFood food : foodEntityList){
+            food.setReview(request_entity);
+            reviewFoodRepository.save(food);
+        }
+
+        // Update Images (Modify Foreign Key)
+        for(ReviewImage image : imageEntityList){
+            image.setReview(request_entity);
+            reviewImageRepository.save(image);
+        }
+         // JPA는 변경감지를 하여 SAVE 메소드로 UPDATE 쿼리문 생성 가능
+
         return reviewRequestRepository.save(request_entity);
+        // 최종적으로 REVIEW 엔티티 저장
     }
 
-    public ReviewRequest updateRequest(UUID id, ReviewRequestUpdateServiceDto dto){
-        ReviewRequest entity = findRequestById(id);
+    public Review updateRequest(UUID id, ReviewRequestUpdateServiceDto dto){
+        Review entity = findRequestById(id);
         User user = entity.getUser();
 
         // Save foods
         List<String> foods = dto.getFoodList();
         List<ReviewFood> foodEntityList = foods.stream().map(food -> ReviewFood.builder()
-                .user(user)
+                .review(entity)
                 .food(food)
                 .build()).collect(Collectors.toList());
         reviewFoodRepository.saveAll(foodEntityList);
+
+        // Save images
+        List<String> images = dto.getImageList();
+        List<ReviewImage> imageEntityList = images.stream().map(image -> ReviewImage.builder()
+                .review(entity)
+                .url(image)
+                .build()).collect(Collectors.toList());
+        reviewImageRepository.saveAll(imageEntityList);
 
         entity.update(
                 user,
@@ -95,20 +124,20 @@ public class ReviewRequestService  {
 
     public void deleteRequestById(UUID id){
         if (!reviewRequestRepository.existsById(id)) {
-            throw new ResourceNotFoundException(ReviewRequest.class.getSimpleName(), "id", id);
+            throw new ResourceNotFoundException(Review.class.getSimpleName(), "id", id);
         }
         reviewRequestRepository.deleteById(id);
     }
 
     @Transactional(readOnly = true)
-    public ReviewRequest findRequestById(UUID id){
+    public Review findRequestById(UUID id){
         return reviewRequestRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
-                        ReviewRequest.class.getSimpleName(), "id", id));
+                        Review.class.getSimpleName(), "id", id));
     }
 
     @Transactional(readOnly = true)
-    public Page<ReviewRequest> findAllRequests(Pageable pageable){
+    public Page<Review> findAllRequests(Pageable pageable){
         return reviewRequestRepository.findAll(pageable);
     }
 

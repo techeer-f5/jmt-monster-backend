@@ -92,8 +92,8 @@ public class ReviewRequestService  {
         // 최종적으로 REVIEW 엔티티 저장
     }
 
-    public Review updateRequest(UUID id, ReviewRequestUpdateServiceDto dto){
-        Review entity = findRequestById(id);
+    public Review updateRequest(UUID reviewId, ReviewRequestUpdateServiceDto dto){
+        Review entity = findRequestById(reviewId);
         User user = entity.getUser();
 
         // Save foods

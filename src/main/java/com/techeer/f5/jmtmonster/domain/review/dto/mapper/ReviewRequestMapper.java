@@ -1,6 +1,6 @@
 package com.techeer.f5.jmtmonster.domain.review.dto.mapper;
 
-import com.techeer.f5.jmtmonster.domain.review.domain.ReviewRequest;
+import com.techeer.f5.jmtmonster.domain.review.domain.Review;
 import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestCreateRequestDto;
 import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestCreateServiceDto;
 import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestUpdateRequestDto;
@@ -16,9 +16,9 @@ public class ReviewRequestMapper {
 
     private final UserMapper userMapper;
 
-    public ReviewRequestResponseDto toResponseDto(ReviewRequest entity) {
+    public ReviewRequestResponseDto toResponseDto(Review entity) {
         return ReviewRequestResponseDto.builder()
-                .id(entity.getId())
+                .id(entity.getId()) // ReviewId
                 .user(userMapper.toBasicUserResponseDto(entity.getUser()))
                 .build();
     }

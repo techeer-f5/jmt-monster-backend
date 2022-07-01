@@ -25,8 +25,8 @@ public class ReviewRequestMapper {
 
     public ReviewRequestCreateServiceDto toServiceDto(ReviewRequestCreateRequestDto dto){
         return ReviewRequestCreateServiceDto.builder()
-                .like(dto.getLike())
                 .content(dto.getContent())
+                .like(dto.getLike())
                 .star(dto.getStar())
                 .foodList(dto.getFoodList())
                 .imageList(dto.getImageList())
@@ -35,8 +35,9 @@ public class ReviewRequestMapper {
 
     public ReviewRequestUpdateServiceDto toServiceDto(ReviewRequestUpdateRequestDto dto){
         return ReviewRequestUpdateServiceDto.builder()
-                .like(dto.getLike())
+                .reviewRequestId(dto.getReviewRequestId())
                 .content(dto.getContent())
+                .like(dto.getLike())
                 .star(dto.getStar())
                 .foodList(dto.getFoodList())
                 .imageList(dto.getImageList())

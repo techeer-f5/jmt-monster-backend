@@ -40,6 +40,8 @@ public class HomeService {
 
     public HomeResponseDto migrate(User user, HomeRequestDto homeRequestDto) {
         Home home = homeMapper.toEntity(homeRequestDto);
+        home = homeRepository.saveAndFlush(home);
+
         homeRepository.migrate(user, home);
 
         return homeMapper.toResponseDto(home);

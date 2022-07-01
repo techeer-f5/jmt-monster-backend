@@ -19,6 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -99,7 +100,10 @@ public class HomeServiceTest {
         HomeResponseDto homeResponseDto = homeService.findHomeByUser(null);
 
         // then
-        assertNull(homeResponseDto);
+        assertAll(
+                () -> assertNull(homeResponseDto.getName()),
+                () -> assertNull(homeResponseDto.getCode())
+        );
     }
 
     @Test
@@ -139,19 +143,20 @@ public class HomeServiceTest {
         // given
         List<Home> givenHomes = List.of(home, home, home);
 
-        given(homeRepository.findAllHomesByUser(any())).willReturn(null);
+        given(homeRepository.findAllHomesByUser(any())).willReturn(new ArrayList<>());
         given(homeRepository.findAllHomesByUser(user)).willReturn(givenHomes);
 
         // when
         HomeHistoriesDto homeHistoriesDto = homeService.getHomeHistory(null);
 
         // then
-        assertNull(homeHistoriesDto);
+        assertEquals(0, homeHistoriesDto.getHistory().size());
     }
 
     @Test
     void testMigrate() {
         // given
+        given(homeRepository.saveAndFlush(any())).willReturn(home);
 
         // when
         HomeResponseDto homeResponseDto = homeService.migrate(user, homeRequestDto);

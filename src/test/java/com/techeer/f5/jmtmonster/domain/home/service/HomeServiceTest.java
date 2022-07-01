@@ -3,7 +3,9 @@ package com.techeer.f5.jmtmonster.domain.home.service;
 import com.techeer.f5.jmtmonster.domain.home.domain.Home;
 import com.techeer.f5.jmtmonster.domain.home.dto.HomeHistoriesDto;
 import com.techeer.f5.jmtmonster.domain.home.dto.HomeHistoryDto;
+import com.techeer.f5.jmtmonster.domain.home.dto.HomeRequestDto;
 import com.techeer.f5.jmtmonster.domain.home.dto.HomeResponseDto;
+import com.techeer.f5.jmtmonster.domain.home.mapper.HomeMapper;
 import com.techeer.f5.jmtmonster.domain.home.repository.HomeRepository;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -38,13 +40,16 @@ public class HomeServiceTest {
     @MockBean
     private HomeRepository homeRepository;
 
-    // UserMapper 클래스는 모킹이 어렵고 모킹의 이점이 없다고 생각하여 모킹하지 않음.
+    // UserMapper 클래스는 모킹이 어렵고 모킹의 이점이 없다고 생각하여 (유닛 테스트 완료) 모킹하지 않음.
+    @Autowired
+    private HomeMapper homeMapper;
 
     @Autowired
     private HomeService homeService;
 
     private User user;
     private Home home;
+    private HomeRequestDto homeRequestDto;
 
     @BeforeEach
     public void setUp() {
@@ -58,10 +63,13 @@ public class HomeServiceTest {
                 .extraInfoInjected(true)
                 .verified(true)
                 .build();
+
         home = Home.builder()
                 .name("abc")
                 .code("123")
                 .build();
+
+        homeRequestDto = homeMapper.toRequestDto(home);
     }
 
     @Test
@@ -139,6 +147,22 @@ public class HomeServiceTest {
 
         // then
         assertNull(homeHistoriesDto);
+    }
+
+    @Test
+    void testMigrate() {
+        // given
+
+        // when
+        HomeResponseDto homeResponseDto = homeService.migrate(user, homeRequestDto);
+
+        // then
+        assertAll(
+                () -> assertEquals(homeResponseDto.getCode(), home.getCode()),
+                () -> assertEquals(homeResponseDto.getName(), home.getName())
+        );
+
+
     }
 
 }

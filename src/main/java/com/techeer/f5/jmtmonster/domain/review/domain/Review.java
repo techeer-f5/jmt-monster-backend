@@ -17,7 +17,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class ReviewRequest extends BaseTimeEntity {
+public class Review extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -40,11 +40,11 @@ public class ReviewRequest extends BaseTimeEntity {
     private Star star;
 
     @NotNull
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "review")
     private List<ReviewFood> foodList;
 
     @NotNull
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "review")
     private List<ReviewImage> imageList;
 
     public void update(User user,String content, Like like, Star star){

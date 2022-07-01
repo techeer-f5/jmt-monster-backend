@@ -1,6 +1,5 @@
 package com.techeer.f5.jmtmonster.domain.review.domain;
 
-import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.global.domain.domain.BaseTimeEntity;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
@@ -9,6 +8,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
+@Setter
 @Entity
 @Getter
 @ToString
@@ -24,9 +24,9 @@ public class ReviewImage extends BaseTimeEntity {
     @Builder.Default
     private UUID id = UUID.randomUUID();
 
-    @NotNull
+    // @NotNull , 테이블 간의 순환참조를 없애기 위해 NotNull 삭제
     @ManyToOne
-    private User user;
+    private Review review;
 
     @NotNull
     private String url;

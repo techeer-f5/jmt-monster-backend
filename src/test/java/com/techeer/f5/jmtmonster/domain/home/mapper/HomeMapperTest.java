@@ -44,7 +44,7 @@ public class HomeMapperTest {
     private HomeRequestDto homeRequestDto;
 
     @BeforeEach
-    void setUp(){
+    public void setUp(){
         // given
 
         String name = "123";
@@ -63,7 +63,7 @@ public class HomeMapperTest {
     }
 
     @Test
-    void TestToResponseDto() {
+    public void testToResponseDto() {
         // given
 
         // when
@@ -77,7 +77,7 @@ public class HomeMapperTest {
     }
 
     @Test
-    void TestToHistoryDto() {
+    public void testToHistoryDto() {
         // given
 
         // when
@@ -91,7 +91,7 @@ public class HomeMapperTest {
     }
 
     @Test
-    void TestToHistoriesDto() {
+    public void testToHistoriesDto() {
         // given
         List<Home> homes = List.of(home, home, home);
 
@@ -113,7 +113,7 @@ public class HomeMapperTest {
     }
 
     @Test
-    void TestToEntity() {
+    public void testToEntity() {
         // given
         given(homeRepository.findHomeByCode(any())).willReturn(null);
 

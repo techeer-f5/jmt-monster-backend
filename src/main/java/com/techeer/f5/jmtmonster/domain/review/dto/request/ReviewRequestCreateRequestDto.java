@@ -18,7 +18,7 @@ import java.util.UUID;
 public class ReviewRequestCreateRequestDto {
 
     @NotNull
-    private UUID userId;
+    private UUID userId; // user 정보를 조회하여 ReviewRequest에 넣기 위함.
 
     @NotNull
     private String content;
@@ -34,4 +34,5 @@ public class ReviewRequestCreateRequestDto {
 
     @NotNull
     private List<String> imageList;
+    // S3 API를 이용하여 Image를 먼저 S3에 올린 후에 반환된 URL을 List 형식으로 저장함.
 }

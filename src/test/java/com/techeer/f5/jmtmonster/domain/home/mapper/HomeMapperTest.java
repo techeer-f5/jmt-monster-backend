@@ -126,4 +126,18 @@ public class HomeMapperTest {
                 () -> assertEquals(entity.getName(), home.getName())
         );
     }
+
+    @Test
+    public void testToRequestDto() {
+        // given
+
+        // when
+        HomeRequestDto givenHomeRequestDto = homeMapper.toRequestDto(home);
+
+        // then
+        assertAll(
+                () -> assertEquals(givenHomeRequestDto.getCode(), home.getCode()),
+                () -> assertEquals(givenHomeRequestDto.getName(), home.getName())
+        );
+    }
 }

@@ -1,9 +1,8 @@
 package com.techeer.f5.jmtmonster.domain.review.controller;
 
-import com.techeer.f5.jmtmonster.domain.review.domain.ReviewRequest;
+import com.techeer.f5.jmtmonster.domain.review.domain.Review;
 import com.techeer.f5.jmtmonster.domain.review.dto.mapper.ReviewRequestMapper;
 import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestCreateRequestDto;
-import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestModel;
 import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestUpdateRequestDto;
 import com.techeer.f5.jmtmonster.domain.review.dto.response.ReviewRequestResponseDto;
 import com.techeer.f5.jmtmonster.domain.review.service.ReviewRequestService;
@@ -12,15 +11,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 
-import java.io.IOException;
-import java.util.List;
 import java.util.UUID;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -34,26 +29,19 @@ public class ReviewRequestController {
     private final ReviewRequestMapper mapper;
 
     @PostMapping
-    public ResponseEntity<ReviewRequestModel> create(
+    public ResponseEntity<ReviewRequestResponseDto> create(
             @Valid @RequestBody ReviewRequestCreateRequestDto dto
             ){
-        ReviewRequest entity = service.create(mapper.toServiceDto(dto));
+        Review entity = service.create(mapper.toServiceDto(dto));
         ReviewRequestResponseDto response = mapper.toResponseDto(entity);
 
-        WebMvcLinkBuilder listLink = linkTo(ReviewRequestController.class);
-        WebMvcLinkBuilder selfLink = listLink.slash(response.getId());
-
-        ReviewRequestModel model = new ReviewRequestModel(response);
-        model.add(selfLink.withSelfRel());
-
         return ResponseEntity
-                .created(selfLink.toUri())
-                .body(model);
+                .ok()
+                .body(response);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<ReviewRequestResponseDto> getOne(@PathVariable UUID id) {
-
         return ResponseEntity
                 .ok(mapper.toResponseDto(service.findRequestById(id)));
     }

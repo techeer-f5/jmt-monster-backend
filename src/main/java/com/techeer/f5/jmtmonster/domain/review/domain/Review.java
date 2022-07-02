@@ -43,19 +43,12 @@ public class Review extends BaseTimeEntity {
     private Star star;
 
 //    @NotNull
-    @OneToMany(mappedBy = "review")
+    @OneToMany(mappedBy = "review", orphanRemoval = true)
     private List<ReviewFood> foodList;
 
 //    @NotNull
-    @OneToMany(mappedBy = "review")
+    @OneToMany(mappedBy = "review", orphanRemoval = true)
     private List<ReviewImage> imageList;
-
-    public void update(User user,String content, Like like, Star star){
-        this.user = user;
-        this.content = content;
-        this.like = like;
-        this.star = star;
-    }
 
     @Override
     public String toString() {

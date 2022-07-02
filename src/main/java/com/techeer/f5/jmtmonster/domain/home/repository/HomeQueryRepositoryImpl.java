@@ -14,6 +14,7 @@ import java.util.Optional;
 import com.techeer.f5.jmtmonster.domain.home.domain.QHome;
 import com.techeer.f5.jmtmonster.domain.home.domain.QHomeToUser;
 import com.techeer.f5.jmtmonster.domain.user.domain.QUser;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @RequiredArgsConstructor
@@ -59,6 +60,7 @@ public class HomeQueryRepositoryImpl implements HomeQueryRepository {
     }
 
     @Override
+    @Transactional
     public void migrate(User user, Home home) {
         List<HomeToUser> previousHomes = jpaQueryFactory.selectFrom(QHomeToUser.homeToUser)
                 .innerJoin(QHomeToUser.homeToUser.user, QUser.user)
@@ -88,6 +90,8 @@ public class HomeQueryRepositoryImpl implements HomeQueryRepository {
                     .home(home)
                     .build();
         }
+
+        user.setAddress(home.getName());
 
         homeToUser.setCurrent(true);
 

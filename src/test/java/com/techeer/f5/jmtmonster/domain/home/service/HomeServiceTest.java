@@ -41,7 +41,7 @@ public class HomeServiceTest {
     @MockBean
     private HomeRepository homeRepository;
 
-    // UserMapper 클래스는 모킹이 어렵고 모킹의 이점이 없다고 생각하여 (유닛 테스트 완료) 모킹하지 않음.
+    // HomeMapper 클래스는 모킹이 어렵고 모킹의 이점이 없다고 생각하여 (유닛 테스트 완료) 모킹하지 않음.
     @Autowired
     private HomeMapper homeMapper;
 

@@ -186,6 +186,8 @@ public class HomeRepositoryTest {
         // when
         homeRepository.migrate(user, newHome);
 
+        assertEquals(user.getAddress(), newHome.getName());
+
         List<HomeToUser> foundHomeToUsers = homeRepository.findAllHomeToUsersByUser(user);
 
         // then

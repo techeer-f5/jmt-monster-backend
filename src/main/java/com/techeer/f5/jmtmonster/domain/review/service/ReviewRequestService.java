@@ -2,7 +2,7 @@ package com.techeer.f5.jmtmonster.domain.review.service;
 
 import com.techeer.f5.jmtmonster.domain.review.dao.ReviewFoodRepository;
 import com.techeer.f5.jmtmonster.domain.review.dao.ReviewImageRepository;
-import com.techeer.f5.jmtmonster.domain.review.dao.ReviewRequestRepository;
+import com.techeer.f5.jmtmonster.domain.review.dao.ReviewRepository;
 import com.techeer.f5.jmtmonster.domain.review.domain.Review;
 import com.techeer.f5.jmtmonster.domain.review.domain.ReviewFood;
 import com.techeer.f5.jmtmonster.domain.review.domain.ReviewImage;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ReviewRequestService  {
 
-    private final ReviewRequestRepository reviewRequestRepository;
+    private final ReviewRepository reviewRepository;
     private final ReviewFoodRepository reviewFoodRepository;
     private final ReviewImageRepository reviewImageRepository;
     private final UserRepository userRepository;
@@ -46,7 +46,7 @@ public class ReviewRequestService  {
                                 userId.toString(), "not found"))));
 
         // Check existing condition
-        if (reviewRequestRepository.existsById(userId)) {
+        if (reviewRepository.existsById(userId)) {
             throw new DuplicateResourceException(resourceName,
                     List.of(new FieldErrorWrapper(resourceName, "userId", userId.toString(),
                                     "already exists with userId")));
@@ -88,7 +88,7 @@ public class ReviewRequestService  {
         }
          // JPA는 변경감지를 하여 SAVE 메소드로 UPDATE 쿼리문 생성 가능
 
-        return reviewRequestRepository.save(request_entity);
+        return reviewRepository.save(request_entity);
         // 최종적으로 REVIEW 엔티티 저장
     }
 
@@ -118,27 +118,27 @@ public class ReviewRequestService  {
                 dto.getLike(),
                 dto.getStar()
         );
-        return reviewRequestRepository.save(entity);
+        return reviewRepository.save(entity);
     }
 
 
     public void deleteRequestById(UUID id){
-        if (!reviewRequestRepository.existsById(id)) {
+        if (!reviewRepository.existsById(id)) {
             throw new ResourceNotFoundException(Review.class.getSimpleName(), "id", id);
         }
-        reviewRequestRepository.deleteById(id);
+        reviewRepository.deleteById(id);
     }
 
     @Transactional(readOnly = true)
     public Review findRequestById(UUID id){
-        return reviewRequestRepository.findById(id)
+        return reviewRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         Review.class.getSimpleName(), "id", id));
     }
 
     @Transactional(readOnly = true)
     public Page<Review> findAllRequests(Pageable pageable){
-        return reviewRequestRepository.findAll(pageable);
+        return reviewRepository.findAll(pageable);
     }
 
 

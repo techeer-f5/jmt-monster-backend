@@ -5,15 +5,17 @@ import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.global.domain.domain.BaseTimeEntity;
 import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
+@Setter
 @Entity
 @Getter
-@ToString
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -34,16 +36,17 @@ public class Review extends BaseTimeEntity {
     private String content;
 
     @NotNull
+    @Column(name = "review_like")
     private Like like;
 
     @NotNull
     private Star star;
 
-    @NotNull
+//    @NotNull
     @OneToMany(mappedBy = "review")
     private List<ReviewFood> foodList;
 
-    @NotNull
+//    @NotNull
     @OneToMany(mappedBy = "review")
     private List<ReviewImage> imageList;
 
@@ -52,5 +55,18 @@ public class Review extends BaseTimeEntity {
         this.content = content;
         this.like = like;
         this.star = star;
+    }
+
+    @Override
+    public String toString() {
+        return "Review{" +
+                "id=" + id +
+                ", user=" + user +
+                ", content=" + content +
+                ", like=" + like +
+                ", star=" + star +
+                ", foodList size=" + foodList.size() + // 순환 참조 발생해서 개수 반환
+                ", imageList size=" + imageList.size() +
+                '}';
     }
 }

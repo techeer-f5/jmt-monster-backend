@@ -60,7 +60,7 @@ public class ReviewRequestController {
             @Valid @RequestBody ReviewRequestUpdateRequestDto dto
     ) {
         return ResponseEntity
-                .ok(mapper.toResponseDto(service.updateRequest(id, mapper.toServiceDto(dto))));
+                .ok(mapper.toResponseDto(service.updateRequest(mapper.toServiceDto(dto))));
     }
 
     @DeleteMapping("/{id}")

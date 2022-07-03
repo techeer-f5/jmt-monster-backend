@@ -45,9 +45,7 @@ public class MenuService {
         List<Map<String, Object>> menuList = (List<Map<String, Object>>) menu.get("menuList");
 
         MenuInfo menuInfo = new MenuInfo(cid, restaurantName, menuList);
-//        RestaurantInfo restaurantInfo = new RestaurantInfo(cid, restaurantName);
 
         return restaurantMapper.toMenuInfoResponseDto(menuInfo);
-//        return restaurantMapper.toRestaurantInfoResponseDto(restaurantInfo);
     }
 }

@@ -16,7 +16,6 @@ import java.util.*;
 public class MenuService {
     private String url = "https://place.map.kakao.com/main/v/";
 
-    @GetMapping("/menu/{cidnum}")
     public MenuInfoResponseDto getMenuByKakao(@PathVariable("cidnum") long cidnum) {
         RestaurantMapper restaurantMapper = new RestaurantMapper();
         RestTemplate restTemplate = new RestTemplate();

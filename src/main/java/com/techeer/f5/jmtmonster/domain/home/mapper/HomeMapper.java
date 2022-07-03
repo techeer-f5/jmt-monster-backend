@@ -13,4 +13,5 @@ public interface HomeMapper {
     HomeHistoryDto toHistoryDto(Home home);
     HomeHistoriesDto toHistoriesDto(List<Home> homes);
     Home toEntity(HomeRequestDto requestDto);
+    HomeRequestDto toRequestDto(Home home);
 }

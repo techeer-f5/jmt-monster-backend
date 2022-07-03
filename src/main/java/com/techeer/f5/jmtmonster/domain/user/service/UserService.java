@@ -1,5 +1,6 @@
 package com.techeer.f5.jmtmonster.domain.user.service;
 
+import com.techeer.f5.jmtmonster.domain.home.service.HomeService;
 import com.techeer.f5.jmtmonster.domain.oauth.domain.PersistentToken;
 import com.techeer.f5.jmtmonster.domain.user.dto.UserResponseDto;
 import com.techeer.f5.jmtmonster.domain.oauth.repository.PersistentTokenRepository;
@@ -26,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserService {
 
+    private final HomeService homeService;
     private final UserRepository userRepository;
     private final PersistentTokenRepository persistentTokenRepository;
     private final UserMapper userMapper;
@@ -95,6 +97,8 @@ public class UserService {
                 extraUserInfoRequestDto.getImageUrl());
 
         user = userRepository.saveAndFlush(user);
+
+        // TODO: migrate API using extraUserInfoRequestDto.getAddressCode()
 
         return userMapper.toUserResponseDto(user);
     }

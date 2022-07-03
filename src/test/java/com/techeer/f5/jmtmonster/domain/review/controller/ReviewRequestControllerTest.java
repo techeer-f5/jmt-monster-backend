@@ -334,7 +334,7 @@ public class ReviewRequestControllerTest {
     }
 
     @Nested
-    @DisplayName("리뷰 업데이트")
+    @DisplayName("REVIEW 업데이트")
     class UpdateTest{
 
         @Test
@@ -419,16 +419,12 @@ public class ReviewRequestControllerTest {
                     .andExpect(status().isOk())
                     .andExpect(content().string(objectMapper.writeValueAsString(response)))
                     .andDo(print())
-                    .andDo(document("review-get-list",
+                    .andDo(document("review-update",
                             preprocessRequest(prettyPrint()),
                             preprocessResponse(prettyPrint()),
                             resource(ResourceSnippetParameters.builder()
-                                    .description("리뷰 목록을 사용자 ID를 이용하여 조회합니다.")
-                                    .summary("리뷰 목록 조회")
-                                    .requestParameters(
-                                            parameterWithName("user-id")
-                                                    .type(SimpleType.STRING)
-                                                    .description("사용자 ID"))
+                                    .description("리뷰를 지우고 새로 만듦으로써 업데이트 합니다..")
+                                    .summary("리뷰 업데이트")
                                     .responseFields(
                                             responseFieldDescriptors)
                                     .build())));

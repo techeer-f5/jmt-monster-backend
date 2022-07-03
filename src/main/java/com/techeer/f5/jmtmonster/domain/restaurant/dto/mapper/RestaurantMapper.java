@@ -5,7 +5,7 @@ import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.MenuInfoResponse
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.RestaurantInfoResponseDto;
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.RestaurantResponseDto;
 import com.techeer.f5.jmtmonster.domain.restaurant.entity.Restaurant;
-import com.techeer.f5.jmtmonster.domain.restaurant.service.information.MenuInfo;
+import com.techeer.f5.jmtmonster.domain.restaurant.service.MenuInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 

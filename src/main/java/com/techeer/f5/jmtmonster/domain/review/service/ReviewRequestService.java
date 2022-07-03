@@ -122,7 +122,7 @@ public class ReviewRequestService  {
     }
 
     @Transactional(readOnly = true)
-    public Review findRequestById(UUID id){
+    public Review findRequestById(UUID id){ // ReviewID로 검색
         return reviewRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException(
                         Review.class.getSimpleName(), "id", id));

@@ -23,11 +23,8 @@ public class RestaurantMapper {
 
     public RestaurantResponseDto toResponseDto(Restaurant restaurant) {
         return RestaurantResponseDto.builder()
-//                .id(restaurant.getId())
                 .cid(restaurant.getCid())
                 .name(restaurant.getName())
-//                .x_cord(restaurant.getX_cord())
-//                .y_cord(restaurant.getY_cord())
                 .build();
     }
 

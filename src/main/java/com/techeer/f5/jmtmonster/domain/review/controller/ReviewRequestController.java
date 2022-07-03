@@ -11,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,9 +56,8 @@ public class ReviewRequestController {
                 .ok(service.findRequestsByUserId(userId, pageable).map(mapper::toResponseDto));
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     public ResponseEntity<ReviewRequestResponseDto> update(
-            @PathVariable UUID id,
             @Valid @RequestBody ReviewRequestUpdateRequestDto dto
     ) {
         return ResponseEntity

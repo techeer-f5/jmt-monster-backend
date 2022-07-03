@@ -4,12 +4,10 @@ import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.SimpleType;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.techeer.f5.jmtmonster.domain.friend.controller.FriendController;
-import com.techeer.f5.jmtmonster.domain.friend.dto.mapper.FriendMapper;
-import com.techeer.f5.jmtmonster.domain.friend.service.FriendService;
 import com.techeer.f5.jmtmonster.domain.review.domain.*;
 import com.techeer.f5.jmtmonster.domain.review.dto.mapper.ReviewRequestMapper;
 import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestCreateRequestDto;
+import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestUpdateRequestDto;
 import com.techeer.f5.jmtmonster.domain.review.dto.response.ReviewRequestResponseDto;
 import com.techeer.f5.jmtmonster.domain.review.service.ReviewRequestService;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
@@ -25,6 +23,9 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.restdocs.payload.FieldDescriptor;
 import org.springframework.restdocs.payload.JsonFieldType;
@@ -38,12 +39,10 @@ import java.util.UUID;
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static com.epages.restdocs.apispec.ResourceDocumentation.parameterWithName;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
-import static com.techeer.f5.jmtmonster.document.util.ResponseFieldDescriptorUtils.withHateOasDescriptorsIgnored;
 import static com.techeer.f5.jmtmonster.document.util.ResponseFieldDescriptorUtils.withPageDescriptorsIgnored;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
-import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.post;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
 import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
@@ -69,9 +68,6 @@ public class ReviewRequestControllerTest {
     @Autowired
     private ReviewRequestMapper mapper;
 
-    @Autowired
-    private UserMapper userMapper;
-
     @MockBean
     private ReviewRequestService service;
 
@@ -84,56 +80,56 @@ public class ReviewRequestControllerTest {
     private List<ReviewImage> givenImages;
     private Review givenReview;
 
+    @BeforeEach
+    void setUp() {
+        givenUser = User.builder()
+                .id(UUID.randomUUID())
+                .email("tester1@example.com")
+                .name("Tester1")
+                .nickname("Tester1")
+                .build();
+
+        givenReview = Review.builder()
+                .id(UUID.randomUUID())
+                .user(givenUser)
+                .content("Test content")
+                .like(Like.LIKE)
+                .star(Star.FIVE)
+                .foodList(null)
+                .imageList(null)
+                .build();
+
+        givenFood1 = ReviewFood.builder()
+                .id(UUID.randomUUID())
+                .review(givenReview)
+                .food("Test food 1")
+                .build();
+        givenFood2 = ReviewFood.builder()
+                .id(UUID.randomUUID())
+                .review(givenReview)
+                .food("Test food 2")
+                .build();
+        givenFoods = List.of(givenFood1, givenFood2);
+
+        givenImage1 = ReviewImage.builder()
+                .id(UUID.randomUUID())
+                .review(givenReview)
+                .url("Test URL 1")
+                .build();
+        givenImage2 = ReviewImage.builder()
+                .id(UUID.randomUUID())
+                .review(givenReview)
+                .url("Test URL 2")
+                .build();
+        givenImages = List.of(givenImage1, givenImage2);
+
+        givenReview.setFoodList(givenFoods);
+        givenReview.setImageList(givenImages);
+    }
+
     @Nested
     @DisplayName("REVIEW 단일 생성")
     class CreateTest{
-
-        @BeforeEach
-        void setUp() {
-            givenUser = User.builder()
-                    .id(UUID.randomUUID())
-                    .email("tester1@example.com")
-                    .name("Tester1")
-                    .nickname("Tester1")
-                    .build();
-
-            givenReview = Review.builder()
-                    .id(UUID.randomUUID())
-                    .user(givenUser)
-                    .content("Test content")
-                    .like(Like.LIKE)
-                    .star(Star.FIVE)
-                    .foodList(null)
-                    .imageList(null)
-                    .build();
-
-            givenFood1 = ReviewFood.builder()
-                    .id(UUID.randomUUID())
-                    .review(givenReview)
-                    .food("Test food 1")
-                    .build();
-            givenFood2 = ReviewFood.builder()
-                    .id(UUID.randomUUID())
-                    .review(givenReview)
-                    .food("Test food 2")
-                    .build();
-            givenFoods = List.of(givenFood1, givenFood2);
-
-            givenImage1 = ReviewImage.builder()
-                    .id(UUID.randomUUID())
-                    .review(givenReview)
-                    .url("Test URL 1")
-                    .build();
-            givenImage2 = ReviewImage.builder()
-                    .id(UUID.randomUUID())
-                    .review(givenReview)
-                    .url("Test URL 2")
-                    .build();
-            givenImages = List.of(givenImage1, givenImage2);
-
-            givenReview.setFoodList(givenFoods);
-            givenReview.setImageList(givenImages);
-        }
 
         @Test
         @DisplayName("성공")
@@ -214,5 +210,57 @@ public class ReviewRequestControllerTest {
         }
     }
 
+    @Nested
+    @DisplayName("REVIEW 단일 조회")
+    class GetOneTest{
 
+        @Test
+        @DisplayName("성공")
+        void GetOneSuccessTest() throws Exception {
+            // given
+            System.out.printf("REVIEW : %s",givenReview);
+            ReviewRequestResponseDto responseDto = mapper.toResponseDto(givenReview);
+
+            given(service.findRequestById(any())).willReturn(givenReview);
+
+            // when
+
+            // then
+            FieldDescriptor[] responseFieldDescriptors = {
+                    fieldWithPath("id")
+                            .type(JsonFieldType.STRING)
+                            .description("REVIEW ID"),
+                    fieldWithPath("user.id")
+                            .type(JsonFieldType.STRING)
+                            .description("사용자 ID"),
+                    fieldWithPath("user.name")
+                            .type(JsonFieldType.STRING)
+                            .description("사용자 이름"),
+                    fieldWithPath("user.email")
+                            .type(JsonFieldType.STRING)
+                            .description("사용자 이메일"),
+                    fieldWithPath("user.nickname")
+                            .type(JsonFieldType.STRING)
+                            .description("사용자 별명"),
+                    fieldWithPath("user.imageUrl")
+                            .type(JsonFieldType.STRING)
+                            .description("사용자 이미지 url")
+                            .optional()};
+
+            mockMvc.perform(get("/api/v1/reviews/{id}",givenReview.getId())
+                            .accept(MediaType.APPLICATION_JSON)
+                            .characterEncoding("utf-8"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().string(objectMapper.writeValueAsString(responseDto)))
+                    .andDo(print())
+                    .andDo(document("review-get-one",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            resource(ResourceSnippetParameters.builder()
+                                    .description("리뷰를 하나 조회합니다.")
+                                    .summary("리뷰 단일 조회")
+                                    .responseFields(responseFieldDescriptors)
+                                    .build())));
+        }
+    }
 }

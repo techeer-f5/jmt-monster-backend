@@ -42,6 +42,7 @@ import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static com.techeer.f5.jmtmonster.document.util.ResponseFieldDescriptorUtils.withPageDescriptorsIgnored;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
@@ -259,6 +260,10 @@ public class ReviewRequestControllerTest {
                             resource(ResourceSnippetParameters.builder()
                                     .description("리뷰를 하나 조회합니다.")
                                     .summary("리뷰 단일 조회")
+                                    .pathParameters(
+                                            parameterWithName("id")
+                                                    .type(SimpleType.STRING)
+                                                    .description("REVIEW ID"))
                                     .responseFields(responseFieldDescriptors)
                                     .build())));
         }
@@ -426,6 +431,39 @@ public class ReviewRequestControllerTest {
                                                     .description("사용자 ID"))
                                     .responseFields(
                                             responseFieldDescriptors)
+                                    .build())));
+        }
+
+    }
+
+    @Nested
+    @DisplayName("REVIEW 삭제")
+    class DeleteTest {
+
+        @Test
+        @DisplayName("성공")
+        void DeleteSuccessTest() throws Exception {
+            // given
+            doNothing().when(service).deleteRequestById(givenReview.getId());
+
+            // when
+
+            // then
+            mockMvc.perform(delete("/api/v1/reviews/{id}",givenReview.getId())
+                        .accept(MediaType.APPLICATION_JSON)
+                        .characterEncoding("utf-8"))
+                    .andExpect(status().isNoContent())
+                    .andDo(print())
+                    .andDo(document("review-get-list",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            resource(ResourceSnippetParameters.builder()
+                                    .description("리뷰 아이디를 이용하여 리뷰를 삭제합니다.")
+                                    .summary("리뷰 단일 삭제")
+                                    .pathParameters(
+                                            parameterWithName("id")
+                                                    .type(SimpleType.STRING)
+                                                    .description("REVIEW ID"))
                                     .build())));
         }
 

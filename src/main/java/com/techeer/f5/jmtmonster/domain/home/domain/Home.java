@@ -1,10 +1,7 @@
 package com.techeer.f5.jmtmonster.domain.home.domain;
 
 import com.techeer.f5.jmtmonster.global.domain.domain.BaseTimeEntity;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;

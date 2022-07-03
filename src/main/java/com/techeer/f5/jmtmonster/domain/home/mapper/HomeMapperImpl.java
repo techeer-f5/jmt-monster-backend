@@ -57,4 +57,12 @@ public class HomeMapperImpl implements HomeMapper {
 
         return home;
     }
+
+    @Override
+    public HomeRequestDto toRequestDto(Home home) {
+        return HomeRequestDto.builder()
+                .name(home.getName())
+                .code(home.getCode())
+                .build();
+    }
 }

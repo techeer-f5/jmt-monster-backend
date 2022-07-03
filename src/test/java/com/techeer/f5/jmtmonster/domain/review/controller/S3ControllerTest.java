@@ -116,7 +116,7 @@ public class S3ControllerTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("이미지 삭제 테스트")
     void deleteImagesTest() throws Exception {
         // given
 

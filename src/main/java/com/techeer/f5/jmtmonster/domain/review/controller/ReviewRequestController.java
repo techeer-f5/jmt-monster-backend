@@ -40,18 +40,19 @@ public class ReviewRequestController {
                 .body(response);
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}") // Review ID로 조회
     public ResponseEntity<ReviewRequestResponseDto> getOne(@PathVariable UUID id) {
         return ResponseEntity
                 .ok(mapper.toResponseDto(service.findRequestById(id)));
     }
 
     @GetMapping
-    public ResponseEntity<Page<ReviewRequestResponseDto>> getList(
+    public ResponseEntity<Page<ReviewRequestResponseDto>> getList( // User ID로 Pagination
+            @RequestParam(value = "user-id") UUID userId,
             @PageableDefault(size = 20, sort = "createdOn", direction = Sort.Direction.DESC) final Pageable pageable
     ) {
         return ResponseEntity
-                .ok(service.findAllRequests(pageable).map(mapper::toResponseDto));
+                .ok(service.findRequestsByUserId(userId, pageable).map(mapper::toResponseDto));
     }
 
     @PutMapping("/{id}")

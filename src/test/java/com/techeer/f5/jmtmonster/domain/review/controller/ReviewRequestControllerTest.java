@@ -327,4 +327,110 @@ public class ReviewRequestControllerTest {
                                     .build())));
         }
     }
+
+    @Nested
+    @DisplayName("리뷰 업데이트")
+    class UpdateTest{
+
+        @Test
+        @DisplayName("성공")
+        void UpdateSuccessTest() throws Exception {
+            // given
+            ReviewRequestUpdateRequestDto requestDto = ReviewRequestUpdateRequestDto.builder()
+                    .reviewRequestId(givenReview.getId())
+                    .content("Changed content")
+                    .like(Like.DISLIKE)
+                    .star(Star.FOUR)
+                    .foodList(List.of("new food 1","new food 2"))
+                    .imageList(List.of("new url 1","new url 2"))
+                    .build();
+
+            Review newReview = Review.builder()
+                    .id(givenReview.getId())
+                    .user(givenUser)
+                    .content(requestDto.getContent())
+                    .like(requestDto.getLike())
+                    .star(requestDto.getStar())
+                    .foodList(null)
+                    .imageList(null)
+                    .build();
+
+            ReviewFood food1 = ReviewFood.builder()
+                    .review(givenReview)
+                    .food("new food 1")
+                    .build();
+            ReviewFood food2 = ReviewFood.builder()
+                    .review(givenReview)
+                    .food("new food 2")
+                    .build();
+            List<ReviewFood> foods = List.of(food1, food2);
+
+            ReviewImage image1 = ReviewImage.builder()
+                    .review(givenReview)
+                    .url("new url 1")
+                    .build();
+            ReviewImage image2 = ReviewImage.builder()
+                    .review(givenReview)
+                    .url("new url 2")
+                    .build();
+            List<ReviewImage> images = List.of(image1, image2);
+
+            newReview.setFoodList(foods);
+            newReview.setImageList(images);
+
+            ReviewRequestResponseDto response = mapper.toResponseDto(newReview);
+
+            FieldDescriptor[] responseFieldDescriptors = {
+                    fieldWithPath("id")
+                            .type(JsonFieldType.STRING)
+                            .description("REVIEW ID"),
+                    fieldWithPath("user.id")
+                            .type(JsonFieldType.STRING)
+                            .description("사용자 ID"),
+                    fieldWithPath("user.name")
+                            .type(JsonFieldType.STRING)
+                            .description("사용자 이름"),
+                    fieldWithPath("user.email")
+                            .type(JsonFieldType.STRING)
+                            .description("사용자 이메일"),
+                    fieldWithPath("user.nickname")
+                            .type(JsonFieldType.STRING)
+                            .description("사용자 별명"),
+                    fieldWithPath("user.imageUrl")
+                            .type(JsonFieldType.STRING)
+                            .description("사용자 이미지 url")
+                            .optional()};
+
+            given(service.updateRequest(any())).willReturn(newReview);
+
+            // when
+
+            // then
+            mockMvc.perform(put("/api/v1/reviews")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .accept(MediaType.APPLICATION_JSON)
+                            .content(objectMapper.writeValueAsString(requestDto))
+                            .characterEncoding("utf-8"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().string(objectMapper.writeValueAsString(response)))
+                    .andDo(print())
+                    .andDo(document("review-get-list",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            resource(ResourceSnippetParameters.builder()
+                                    .description("리뷰 목록을 사용자 ID를 이용하여 조회합니다.")
+                                    .summary("리뷰 목록 조회")
+                                    .requestParameters(
+                                            parameterWithName("user-id")
+                                                    .type(SimpleType.STRING)
+                                                    .description("사용자 ID"))
+                                    .responseFields(
+                                            responseFieldDescriptors)
+                                    .build())));
+        }
+
+    }
+
+
+
 }

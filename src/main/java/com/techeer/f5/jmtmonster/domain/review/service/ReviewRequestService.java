@@ -83,7 +83,7 @@ public class ReviewRequestService  {
         return request_entity;
     }
 
-    @Transactional(readOnly = true)
+    @Transactional
     public Review updateRequest(ReviewRequestUpdateServiceDto dto){
         // Checking Review Information
         String resourceName = Review.class.getSimpleName();
@@ -113,7 +113,7 @@ public class ReviewRequestService  {
         return create(createServiceDto);
     }
 
-
+    @Transactional
     public void deleteRequestById(UUID id){
         if (!reviewRepository.existsById(id)) {
             throw new ResourceNotFoundException(Review.class.getSimpleName(), "id", id);
@@ -129,11 +129,8 @@ public class ReviewRequestService  {
     }
 
     @Transactional(readOnly = true)
-    public Page<Review> findAllRequests(Pageable pageable){
-        return reviewRepository.findAll(pageable);
+    public Page<Review> findRequestsByUserId(UUID userId, Pageable pageable){
+        return reviewRepository.findByUserId(userId, pageable);
     }
-
-
-
 }
 

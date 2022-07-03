@@ -263,4 +263,68 @@ public class ReviewRequestControllerTest {
                                     .build())));
         }
     }
+
+    @Nested
+    @DisplayName("REVIEW 페이지 조회")
+    class GetListTest {
+
+        @Test
+        @DisplayName("성공")
+        void GetListSuccessTest() throws Exception {
+            // given
+            List<Review> content = List.of(givenReview);
+
+            Page<Review> pageResponse = new PageImpl<>(content, PageRequest.of(0, 10),
+                    content.size());
+
+            Page<ReviewRequestResponseDto> response = pageResponse.map(mapper::toResponseDto);
+
+            given(service.findRequestsByUserId(any(),any())).willReturn(pageResponse);
+
+            FieldDescriptor[] responseFieldDescriptors = {
+                    fieldWithPath("content.[].id")
+                            .type(JsonFieldType.STRING)
+                            .description("REVIEW ID"),
+                    fieldWithPath("content.[].user.id")
+                            .type(JsonFieldType.STRING)
+                            .description("사용자 ID"),
+                    fieldWithPath("content.[].user.name")
+                            .type(JsonFieldType.STRING)
+                            .description("사용자 이름"),
+                    fieldWithPath("content.[].user.email")
+                            .type(JsonFieldType.STRING)
+                            .description("사용자 이메일"),
+                    fieldWithPath("content.[].user.nickname")
+                            .type(JsonFieldType.STRING)
+                            .description("사용자 별명"),
+                    fieldWithPath("content.[].user.imageUrl")
+                            .type(JsonFieldType.STRING)
+                            .description("사용자 이미지 url")
+                            .optional()};
+
+            // when
+
+            // then
+            mockMvc.perform(get("/api/v1/reviews")
+                            .queryParam("user-id",givenUser.getId().toString())
+                            .accept(MediaType.APPLICATION_JSON)
+                            .characterEncoding("utf-8"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().string(objectMapper.writeValueAsString(response)))
+                    .andDo(print())
+                    .andDo(document("review-get-list",
+                            preprocessRequest(prettyPrint()),
+                            preprocessResponse(prettyPrint()),
+                            resource(ResourceSnippetParameters.builder()
+                                    .description("리뷰 목록을 사용자 ID를 이용하여 조회합니다.")
+                                    .summary("리뷰 목록 조회")
+                                    .requestParameters(
+                                            parameterWithName("user-id")
+                                                    .type(SimpleType.STRING)
+                                                    .description("사용자 ID"))
+                                    .responseFields(
+                                            withPageDescriptorsIgnored(responseFieldDescriptors))
+                                    .build())));
+        }
+    }
 }

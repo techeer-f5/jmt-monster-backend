@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -51,10 +52,18 @@ public class ReviewRequestService  {
                     List.of(new FieldErrorWrapper(resourceName, "userId", userId.toString(),
                                     "already exists with userId")));
         }
+        // Save Request
+        Review request_entity = reviewRepository.save(Review.builder()
+                .user(user)
+                .content(dto.getContent())
+                .like(dto.getLike())
+                .star(dto.getStar())
+                .build());
+
         // Save foods
         List<String> foods = dto.getFoodList();
         List<ReviewFood> foodEntityList = foods.stream().map(food -> ReviewFood.builder()
-                .review(null)
+                .review(request_entity)
                 .food(food)
                 .build()).collect(Collectors.toList());
         reviewFoodRepository.saveAll(foodEntityList);
@@ -62,63 +71,46 @@ public class ReviewRequestService  {
         // Save Images
         List<String> images = dto.getImageList();
         List<ReviewImage> imageEntityList = images.stream().map(image -> ReviewImage.builder()
-                .review(null)
+                .review(request_entity)
                 .url(image)
                 .build()).collect(Collectors.toList());
         reviewImageRepository.saveAll(imageEntityList);
 
-        // Save Request
-        Review request_entity = Review.builder()
-                .user(user)
+        // Update Review (Modify Foreign Key)
+        request_entity.setFoodList(foodEntityList);
+        request_entity.setImageList(imageEntityList);
+
+        return request_entity;
+    }
+
+    @Transactional(readOnly = true)
+    public Review updateRequest(ReviewRequestUpdateServiceDto dto){
+        // Checking Review Information
+        String resourceName = Review.class.getSimpleName();
+        UUID reviewId = dto.getReviewRequestId();
+        User user;
+
+        Optional<Review> optionalReview = Optional.ofNullable(findRequestById(dto.getReviewRequestId()));
+        if(optionalReview.isPresent()){
+            Review review = optionalReview.get();
+            user = review.getUser();
+            // Deleting existing review
+            reviewRepository.delete(review);
+        }else{
+            throw new ResourceNotFoundException(resourceName, "Review ID" ,reviewId);
+        }
+
+        // Making New Review
+        ReviewRequestCreateServiceDto createServiceDto = ReviewRequestCreateServiceDto.builder()
+                .userId(user.getId())
                 .content(dto.getContent())
                 .like(dto.getLike())
                 .star(dto.getStar())
+                .foodList(dto.getFoodList())
+                .imageList(dto.getImageList())
                 .build();
 
-        // Update Foods (Modify Foreign Key)
-        for(ReviewFood food : foodEntityList){
-            food.setReview(request_entity);
-            reviewFoodRepository.save(food);
-        }
-
-        // Update Images (Modify Foreign Key)
-        for(ReviewImage image : imageEntityList){
-            image.setReview(request_entity);
-            reviewImageRepository.save(image);
-        }
-         // JPA는 변경감지를 하여 SAVE 메소드로 UPDATE 쿼리문 생성 가능
-
-        return reviewRepository.save(request_entity);
-        // 최종적으로 REVIEW 엔티티 저장
-    }
-
-    public Review updateRequest(UUID reviewId, ReviewRequestUpdateServiceDto dto){
-        Review entity = findRequestById(reviewId);
-        User user = entity.getUser();
-
-        // Save foods
-        List<String> foods = dto.getFoodList();
-        List<ReviewFood> foodEntityList = foods.stream().map(food -> ReviewFood.builder()
-                .review(entity)
-                .food(food)
-                .build()).collect(Collectors.toList());
-        reviewFoodRepository.saveAll(foodEntityList);
-
-        // Save images
-        List<String> images = dto.getImageList();
-        List<ReviewImage> imageEntityList = images.stream().map(image -> ReviewImage.builder()
-                .review(entity)
-                .url(image)
-                .build()).collect(Collectors.toList());
-        reviewImageRepository.saveAll(imageEntityList);
-
-        entity.update(
-                user,
-                dto.getContent(),
-                dto.getLike(),
-                dto.getStar()
-        );
-        return reviewRepository.save(entity);
+        return create(createServiceDto);
     }
 
 

@@ -66,7 +66,7 @@ public class ReviewRequestController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable UUID id) {
-        service.deleteRequestById(id);
+        service.deleteRequestById(id); // Review ID로 삭제
         return ResponseEntity
                 .noContent()
                 .build();

@@ -177,7 +177,7 @@ public class ReviewControllerTest {
                         .accept(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(requestDto))
                         .characterEncoding("utf-8"))
-                    .andExpect(status().isOk())
+                    .andExpect(status().isCreated())
                     .andExpect(content().string(objectMapper.writeValueAsString(responseDto)))
                     .andDo(print())
                     .andDo(document("review-create",

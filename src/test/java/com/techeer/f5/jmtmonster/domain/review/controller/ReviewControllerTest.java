@@ -148,9 +148,7 @@ public class ReviewControllerTest {
 
             given(service.create(any())).willReturn(givenReview);
 
-            // when
-
-            // then
+            // when & then
             FieldDescriptor[] responseFieldDescriptors = {
                     fieldWithPath("id")
                             .type(JsonFieldType.STRING)
@@ -223,9 +221,7 @@ public class ReviewControllerTest {
 
             given(service.findRequestById(any())).willReturn(givenReview);
 
-            // when
-
-            // then
+            // when & then
             FieldDescriptor[] responseFieldDescriptors = {
                     fieldWithPath("id")
                             .type(JsonFieldType.STRING)
@@ -306,9 +302,7 @@ public class ReviewControllerTest {
                             .description("사용자 이미지 url")
                             .optional()};
 
-            // when
-
-            // then
+            // when & then
             mockMvc.perform(get("/api/v1/reviews")
                             .queryParam("user-id",givenUser.getId().toString())
                             .accept(MediaType.APPLICATION_JSON)
@@ -407,9 +401,7 @@ public class ReviewControllerTest {
 
             given(service.updateRequest(any())).willReturn(newReview);
 
-            // when
-
-            // then
+            // when & then
             mockMvc.perform(put("/api/v1/reviews")
                             .contentType(MediaType.APPLICATION_JSON)
                             .accept(MediaType.APPLICATION_JSON)
@@ -441,9 +433,7 @@ public class ReviewControllerTest {
             // given
             doNothing().when(service).deleteRequestById(givenReview.getId());
 
-            // when
-
-            // then
+            // when & then
             mockMvc.perform(delete("/api/v1/reviews/{id}",givenReview.getId())
                         .accept(MediaType.APPLICATION_JSON)
                         .characterEncoding("utf-8"))

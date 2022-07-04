@@ -170,9 +170,7 @@ public class ReviewServiceTest {
                     .imageList(List.of("new url 1","new url 2"))
                     .build();
 
-            // when
-
-            // then
+            // when & then
             assertThrows(ResourceNotFoundException.class,()->{
                 Review actualReview = reviewService.updateRequest(givenDto);
             });
@@ -232,9 +230,7 @@ public class ReviewServiceTest {
         void deleteRequestByIdFailTest() {
             // given
 
-            // when
-
-            // then
+            // when & then
             assertThrows(ResourceNotFoundException.class,()->{
                 reviewService.deleteRequestById(UUID.randomUUID());
             });

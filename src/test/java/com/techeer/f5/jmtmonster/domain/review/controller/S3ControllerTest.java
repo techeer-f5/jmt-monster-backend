@@ -47,7 +47,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc(addFilters = false)
 @AutoConfigureRestDocs
-@ActiveProfiles(profiles = {"test","secret","disable-auth"})
+@ActiveProfiles(profiles = {"test","disable-auth"})
 @Import({S3Mapper.class, UserMapper.class})
 @DisplayName("S3 API")
 public class S3ControllerTest {

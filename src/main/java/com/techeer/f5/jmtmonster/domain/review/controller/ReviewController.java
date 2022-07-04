@@ -54,12 +54,13 @@ public class ReviewController {
                 .ok(service.findRequestsByUserId(userId, pageable).map(mapper::toResponseDto));
     }
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<ReviewResponseDto> update(
+            @PathVariable UUID id,
             @Valid @RequestBody ReviewUpdateRequestDto dto
     ) {
         return ResponseEntity
-                .ok(mapper.toResponseDto(service.updateRequest(mapper.toServiceDto(dto))));
+                .ok(mapper.toResponseDto(service.updateRequest(mapper.toServiceDto(dto, id))));
     }
 
     @DeleteMapping("/{id}")

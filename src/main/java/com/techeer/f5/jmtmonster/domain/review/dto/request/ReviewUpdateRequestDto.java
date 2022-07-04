@@ -19,9 +19,6 @@ public class ReviewUpdateRequestDto {
     // update는 reviewRequestId를 통해서 아예 새로운 review 생성하는 방식으로 구현함.
 
     @NotNull
-    private UUID reviewRequestId;
-
-    @NotNull
     private String content;
 
     @NotNull

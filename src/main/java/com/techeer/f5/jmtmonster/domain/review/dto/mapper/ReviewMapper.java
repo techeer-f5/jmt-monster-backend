@@ -10,6 +10,8 @@ import com.techeer.f5.jmtmonster.domain.user.dto.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.UUID;
+
 @Component
 @RequiredArgsConstructor
 public class ReviewMapper {
@@ -33,9 +35,9 @@ public class ReviewMapper {
                 .build();
     }
 
-    public ReviewUpdateServiceDto toServiceDto(ReviewUpdateRequestDto dto){
+    public ReviewUpdateServiceDto toServiceDto(ReviewUpdateRequestDto dto, UUID reviewId){
         return ReviewUpdateServiceDto.builder()
-                .reviewRequestId(dto.getReviewRequestId())
+                .reviewRequestId(reviewId)
                 .content(dto.getContent())
                 .like(dto.getLike())
                 .star(dto.getStar())

@@ -335,7 +335,6 @@ public class ReviewControllerTest {
         void UpdateSuccessTest() throws Exception {
             // given
             ReviewUpdateRequestDto requestDto = ReviewUpdateRequestDto.builder()
-                    .reviewRequestId(givenReview.getId())
                     .content("Changed content")
                     .like(Like.DISLIKE)
                     .star(Star.FOUR)
@@ -402,7 +401,7 @@ public class ReviewControllerTest {
             given(service.updateRequest(any())).willReturn(newReview);
 
             // when & then
-            mockMvc.perform(put("/api/v1/reviews")
+            mockMvc.perform(put("/api/v1/reviews/{id}",givenReview.getId())
                             .contentType(MediaType.APPLICATION_JSON)
                             .accept(MediaType.APPLICATION_JSON)
                             .content(objectMapper.writeValueAsString(requestDto))

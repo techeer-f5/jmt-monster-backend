@@ -25,7 +25,7 @@ public class ReviewImage extends BaseTimeEntity {
     @Builder.Default
     private UUID id = UUID.randomUUID();
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
     private Review review;
 

@@ -24,11 +24,11 @@ oauth:
 cloud:
   aws:
     credentials:
-      accessKey: ''
-      secretKey: ''
+      accessKey: 'test-access-key'
+      secretKey: 'test-secret-key'
     s3:
-      bucket: ''
+      bucket: 'test-bucket-name'
     region:
-      static: ap-northeast-2
+      static: us-east-1 # Error 메시지에서 해당 지역을 사용하라고 경고함.
     stack:
       auto: false

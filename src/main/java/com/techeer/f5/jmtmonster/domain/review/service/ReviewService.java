@@ -53,7 +53,7 @@ public class ReviewService {
                                     "already exists with userId")));
         }
         // Save Request
-        Review request_entity = reviewRepository.save(Review.builder()
+        Review entity = reviewRepository.save(Review.builder()
                 .user(user)
                 .content(dto.getContent())
                 .like(dto.getLike())
@@ -63,7 +63,7 @@ public class ReviewService {
         // Save foods
         List<String> foods = dto.getFoodList();
         List<ReviewFood> foodEntityList = foods.stream().map(food -> ReviewFood.builder()
-                .review(request_entity)
+                .review(entity)
                 .food(food)
                 .build()).collect(Collectors.toList());
         reviewFoodRepository.saveAll(foodEntityList);
@@ -71,16 +71,16 @@ public class ReviewService {
         // Save Images
         List<String> images = dto.getImageList();
         List<ReviewImage> imageEntityList = images.stream().map(image -> ReviewImage.builder()
-                .review(request_entity)
+                .review(entity)
                 .url(image)
                 .build()).collect(Collectors.toList());
         reviewImageRepository.saveAll(imageEntityList);
 
         // Update Review (Modify Foreign Key)
-        request_entity.setFoodList(foodEntityList);
-        request_entity.setImageList(imageEntityList);
+        entity.setFoodList(foodEntityList);
+        entity.setImageList(imageEntityList);
 
-        return request_entity;
+        return entity;
     }
 
     @Transactional

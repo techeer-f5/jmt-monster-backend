@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class ReviewRequestMapper {
+public class ReviewMapper {
 
     private final UserMapper userMapper;
 

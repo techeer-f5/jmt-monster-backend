@@ -1,7 +1,7 @@
 package com.techeer.f5.jmtmonster.domain.review.controller;
 
 import com.techeer.f5.jmtmonster.domain.review.domain.Review;
-import com.techeer.f5.jmtmonster.domain.review.dto.mapper.ReviewRequestMapper;
+import com.techeer.f5.jmtmonster.domain.review.dto.mapper.ReviewMapper;
 import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestCreateRequestDto;
 import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestUpdateRequestDto;
 import com.techeer.f5.jmtmonster.domain.review.dto.response.ReviewRequestResponseDto;
@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,15 +18,13 @@ import javax.validation.Valid;
 
 import java.util.UUID;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-
 @RestController
 @RequestMapping("/api/v1/reviews")
 @RequiredArgsConstructor
-public class ReviewRequestController {
+public class ReviewController {
 
     private final ReviewRequestService service;
-    private final ReviewRequestMapper mapper;
+    private final ReviewMapper mapper;
 
     @PostMapping
     public ResponseEntity<ReviewRequestResponseDto> create(
@@ -41,7 +38,7 @@ public class ReviewRequestController {
                 .body(response);
     }
 
-    @GetMapping("/{id}") // Review ID로 조회
+    @GetMapping("/{id}")
     public ResponseEntity<ReviewRequestResponseDto> getOne(@PathVariable UUID id) {
         return ResponseEntity
                 .ok(mapper.toResponseDto(service.findRequestById(id)));

@@ -2,10 +2,9 @@ package com.techeer.f5.jmtmonster.domain.review.controller;
 
 import com.epages.restdocs.apispec.ResourceSnippetParameters;
 import com.epages.restdocs.apispec.SimpleType;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techeer.f5.jmtmonster.domain.review.domain.*;
-import com.techeer.f5.jmtmonster.domain.review.dto.mapper.ReviewRequestMapper;
+import com.techeer.f5.jmtmonster.domain.review.dto.mapper.ReviewMapper;
 import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestCreateRequestDto;
 import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestUpdateRequestDto;
 import com.techeer.f5.jmtmonster.domain.review.dto.response.ReviewRequestResponseDto;
@@ -51,14 +50,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(ReviewRequestController.class)
+@WebMvcTest(ReviewController.class)
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc(addFilters = false)
 @AutoConfigureRestDocs
 @ActiveProfiles(profiles = {"secret", "test", "disable-auth"})
-@Import({ReviewRequestMapper.class, UserMapper.class})
+@Import({ReviewMapper.class, UserMapper.class})
 @DisplayName("리뷰 API")
-public class ReviewRequestControllerTest {
+public class ReviewControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
@@ -67,7 +66,7 @@ public class ReviewRequestControllerTest {
     private ObjectMapper objectMapper;
 
     @Autowired
-    private ReviewRequestMapper mapper;
+    private ReviewMapper mapper;
 
     @MockBean
     private ReviewRequestService service;

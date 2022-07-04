@@ -5,10 +5,10 @@ import com.epages.restdocs.apispec.SimpleType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.techeer.f5.jmtmonster.domain.review.domain.*;
 import com.techeer.f5.jmtmonster.domain.review.dto.mapper.ReviewMapper;
-import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestCreateRequestDto;
-import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestUpdateRequestDto;
-import com.techeer.f5.jmtmonster.domain.review.dto.response.ReviewRequestResponseDto;
-import com.techeer.f5.jmtmonster.domain.review.service.ReviewRequestService;
+import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewCreateRequestDto;
+import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewUpdateRequestDto;
+import com.techeer.f5.jmtmonster.domain.review.dto.response.ReviewResponseDto;
+import com.techeer.f5.jmtmonster.domain.review.service.ReviewService;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.dto.UserMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -69,7 +69,7 @@ public class ReviewControllerTest {
     private ReviewMapper mapper;
 
     @MockBean
-    private ReviewRequestService service;
+    private ReviewService service;
 
     private User givenUser;
     private ReviewFood givenFood1;
@@ -135,7 +135,7 @@ public class ReviewControllerTest {
         @DisplayName("성공")
         void CreateSuccessTest() throws Exception {
             // given
-            ReviewRequestCreateRequestDto requestDto = ReviewRequestCreateRequestDto.builder()
+            ReviewCreateRequestDto requestDto = ReviewCreateRequestDto.builder()
                     .userId(givenUser.getId())
                     .content("Test content")
                     .like(Like.LIKE)
@@ -144,7 +144,7 @@ public class ReviewControllerTest {
                     .imageList(List.of("Test URL 1","Test URL 2"))
                     .build();
 
-            ReviewRequestResponseDto responseDto = mapper.toResponseDto(givenReview);
+            ReviewResponseDto responseDto = mapper.toResponseDto(givenReview);
 
             given(service.create(any())).willReturn(givenReview);
 
@@ -219,7 +219,7 @@ public class ReviewControllerTest {
         void GetOneSuccessTest() throws Exception {
             // given
             System.out.printf("REVIEW : %s",givenReview);
-            ReviewRequestResponseDto responseDto = mapper.toResponseDto(givenReview);
+            ReviewResponseDto responseDto = mapper.toResponseDto(givenReview);
 
             given(service.findRequestById(any())).willReturn(givenReview);
 
@@ -281,7 +281,7 @@ public class ReviewControllerTest {
             Page<Review> pageResponse = new PageImpl<>(content, PageRequest.of(0, 10),
                     content.size());
 
-            Page<ReviewRequestResponseDto> response = pageResponse.map(mapper::toResponseDto);
+            Page<ReviewResponseDto> response = pageResponse.map(mapper::toResponseDto);
 
             given(service.findRequestsByUserId(any(),any())).willReturn(pageResponse);
 
@@ -340,7 +340,7 @@ public class ReviewControllerTest {
         @DisplayName("성공")
         void UpdateSuccessTest() throws Exception {
             // given
-            ReviewRequestUpdateRequestDto requestDto = ReviewRequestUpdateRequestDto.builder()
+            ReviewUpdateRequestDto requestDto = ReviewUpdateRequestDto.builder()
                     .reviewRequestId(givenReview.getId())
                     .content("Changed content")
                     .like(Like.DISLIKE)
@@ -382,7 +382,7 @@ public class ReviewControllerTest {
             newReview.setFoodList(foods);
             newReview.setImageList(images);
 
-            ReviewRequestResponseDto response = mapper.toResponseDto(newReview);
+            ReviewResponseDto response = mapper.toResponseDto(newReview);
 
             FieldDescriptor[] responseFieldDescriptors = {
                     fieldWithPath("id")

@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReviewRequestUpdateServiceDto {
+public class ReviewUpdateRequestDto {
     // update는 reviewRequestId를 통해서 아예 새로운 review 생성하는 방식으로 구현함.
 
     @NotNull

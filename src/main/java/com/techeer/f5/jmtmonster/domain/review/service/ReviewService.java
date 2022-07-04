@@ -6,8 +6,8 @@ import com.techeer.f5.jmtmonster.domain.review.dao.ReviewRepository;
 import com.techeer.f5.jmtmonster.domain.review.domain.Review;
 import com.techeer.f5.jmtmonster.domain.review.domain.ReviewFood;
 import com.techeer.f5.jmtmonster.domain.review.domain.ReviewImage;
-import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestCreateServiceDto;
-import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestUpdateServiceDto;
+import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewCreateServiceDto;
+import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewUpdateServiceDto;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
 import com.techeer.f5.jmtmonster.global.error.exception.DuplicateResourceException;
@@ -27,14 +27,14 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ReviewRequestService  {
+public class ReviewService {
 
     private final ReviewRepository reviewRepository;
     private final ReviewFoodRepository reviewFoodRepository;
     private final ReviewImageRepository reviewImageRepository;
     private final UserRepository userRepository;
 
-    public Review create(ReviewRequestCreateServiceDto dto){
+    public Review create(ReviewCreateServiceDto dto){
         // Check user information
         UUID userId = dto.getUserId();
         String resourceName = Review.class.getSimpleName();
@@ -84,7 +84,7 @@ public class ReviewRequestService  {
     }
 
     @Transactional
-    public Review updateRequest(ReviewRequestUpdateServiceDto dto){
+    public Review updateRequest(ReviewUpdateServiceDto dto){
         // Checking Review Information
         String resourceName = Review.class.getSimpleName();
         UUID reviewId = dto.getReviewRequestId();
@@ -101,7 +101,7 @@ public class ReviewRequestService  {
         }
 
         // Making New Review
-        ReviewRequestCreateServiceDto createServiceDto = ReviewRequestCreateServiceDto.builder()
+        ReviewCreateServiceDto createServiceDto = ReviewCreateServiceDto.builder()
                 .userId(user.getId())
                 .content(dto.getContent())
                 .like(dto.getLike())

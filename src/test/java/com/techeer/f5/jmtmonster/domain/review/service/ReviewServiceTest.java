@@ -4,8 +4,8 @@ import com.techeer.f5.jmtmonster.domain.review.dao.ReviewFoodRepository;
 import com.techeer.f5.jmtmonster.domain.review.dao.ReviewImageRepository;
 import com.techeer.f5.jmtmonster.domain.review.dao.ReviewRepository;
 import com.techeer.f5.jmtmonster.domain.review.domain.*;
-import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestCreateServiceDto;
-import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewRequestUpdateServiceDto;
+import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewCreateServiceDto;
+import com.techeer.f5.jmtmonster.domain.review.dto.request.ReviewUpdateServiceDto;
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.domain.user.repository.UserRepository;
 import com.techeer.f5.jmtmonster.global.error.exception.ResourceNotFoundException;
@@ -29,11 +29,11 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
 @ActiveProfiles(profiles = {"test"})
-public class ReviewRequestServiceTest {
+public class ReviewServiceTest {
 
     // 시간 관계상 Repository Test Code 작성하지 않아 Mocking도 하지 않음.
     @Autowired
-    private ReviewRequestService reviewRequestService;
+    private ReviewService reviewService;
     @Autowired
     private ReviewRepository reviewRepository;
     @Autowired
@@ -102,7 +102,7 @@ public class ReviewRequestServiceTest {
         @Transactional
         void createTest() {
             // given
-            ReviewRequestCreateServiceDto givenDto = ReviewRequestCreateServiceDto.builder()
+            ReviewCreateServiceDto givenDto = ReviewCreateServiceDto.builder()
                     .userId(givenUser.getId())
                     .content("Create content")
                     .like(Like.LIKE)
@@ -112,7 +112,7 @@ public class ReviewRequestServiceTest {
                     .build();
 
             // when
-            Review actualReview = reviewRequestService.create(givenDto);
+            Review actualReview = reviewService.create(givenDto);
 
             // then
             assertThat(actualReview.getContent()).isEqualTo("Create content");
@@ -134,7 +134,7 @@ public class ReviewRequestServiceTest {
         @Transactional
         void updateRequestSuccessTest() {
             // given
-            ReviewRequestUpdateServiceDto givenDto = ReviewRequestUpdateServiceDto.builder()
+            ReviewUpdateServiceDto givenDto = ReviewUpdateServiceDto.builder()
                     .reviewRequestId(givenReview.getId())
                     .content("Changed content")
                     .like(Like.DISLIKE)
@@ -144,7 +144,7 @@ public class ReviewRequestServiceTest {
                     .build();
 
             // when
-            Review actualReview = reviewRequestService.updateRequest(givenDto);
+            Review actualReview = reviewService.updateRequest(givenDto);
 
             // then
             assertThat(actualReview.getContent()).isEqualTo("Changed content");
@@ -161,7 +161,7 @@ public class ReviewRequestServiceTest {
         @Transactional
         void updateReviewFailTest() {
             // given
-            ReviewRequestUpdateServiceDto givenDto = ReviewRequestUpdateServiceDto.builder()
+            ReviewUpdateServiceDto givenDto = ReviewUpdateServiceDto.builder()
                     .reviewRequestId(UUID.randomUUID()) // 없는 review id
                     .content("Changed content")
                     .like(Like.DISLIKE)
@@ -174,7 +174,7 @@ public class ReviewRequestServiceTest {
 
             // then
             assertThrows(ResourceNotFoundException.class,()->{
-                Review actualReview = reviewRequestService.updateRequest(givenDto);
+                Review actualReview = reviewService.updateRequest(givenDto);
             });
 
         }
@@ -191,7 +191,7 @@ public class ReviewRequestServiceTest {
             // given
 
             // when
-            Review actualReview = reviewRequestService.findRequestById(givenReview.getId());
+            Review actualReview = reviewService.findRequestById(givenReview.getId());
             System.out.printf("GIVEN REVIEW : %s\n",givenReview);
             System.out.printf("REVIEW : %s\n",actualReview);
 
@@ -218,11 +218,11 @@ public class ReviewRequestServiceTest {
             // given
 
             // when
-            reviewRequestService.deleteRequestById(givenReview.getId());
+            reviewService.deleteRequestById(givenReview.getId());
 
             // then
             assertThrows(ResourceNotFoundException.class,()->{
-                reviewRequestService.findRequestById(givenReview.getId());
+                reviewService.findRequestById(givenReview.getId());
             });
         }
 
@@ -236,7 +236,7 @@ public class ReviewRequestServiceTest {
 
             // then
             assertThrows(ResourceNotFoundException.class,()->{
-                reviewRequestService.deleteRequestById(UUID.randomUUID());
+                reviewService.deleteRequestById(UUID.randomUUID());
             });
         }
     }

@@ -12,7 +12,7 @@ import java.util.UUID;
 @Getter
 @Builder
 @AllArgsConstructor
-public class ReviewRequestResponseDto extends BaseTimeEntityDto {
+public class ReviewResponseDto extends BaseTimeEntityDto {
 
     @NotNull
     private UUID id; // review id

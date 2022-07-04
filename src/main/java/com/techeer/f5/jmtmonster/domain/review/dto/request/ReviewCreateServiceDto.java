@@ -15,7 +15,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReviewRequestCreateRequestDto {
+public class ReviewCreateServiceDto {
 
     @NotNull
     private UUID userId; // user 정보를 조회하여 ReviewRequest에 넣기 위함.

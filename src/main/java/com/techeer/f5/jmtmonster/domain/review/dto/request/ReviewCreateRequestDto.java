@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -16,7 +15,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReviewRequestCreateServiceDto {
+public class ReviewCreateRequestDto {
 
     @NotNull
     private UUID userId; // user 정보를 조회하여 ReviewRequest에 넣기 위함.

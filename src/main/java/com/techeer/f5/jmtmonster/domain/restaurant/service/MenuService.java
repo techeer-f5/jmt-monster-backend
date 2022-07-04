@@ -2,6 +2,7 @@ package com.techeer.f5.jmtmonster.domain.restaurant.service;
 
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.mapper.RestaurantMapper;
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.MenuInfoResponseDto;
+import com.techeer.f5.jmtmonster.domain.restaurant.dto.service.MenuInfo;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;

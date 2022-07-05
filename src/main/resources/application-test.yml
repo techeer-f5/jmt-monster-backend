@@ -11,6 +11,8 @@ spring:
     hibernate.dialect: org.hibernate.dialect.MariaDBDialect
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate.ddl-auto: create-drop
+    default_batch_fetch_size: 100
+
 
 oauth:
   back-end-base-url: http://localhost:8000

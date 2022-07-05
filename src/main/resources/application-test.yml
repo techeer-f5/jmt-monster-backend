@@ -12,6 +12,8 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate.ddl-auto: create-drop
     default_batch_fetch_size: 100
+  main:
+    allow-bean-definition-overriding: true
 
 
 oauth:
@@ -26,11 +28,11 @@ oauth:
 cloud:
   aws:
     credentials:
-      accessKey: 'test-access-key'
-      secretKey: 'test-secret-key'
+      accessKey: accesskey
+      secretKey: secretkey
     s3:
-      bucket: 'test-bucket-name'
+      bucket: test-bucket-name
     region:
-      static: us-east-1 # Error 메시지에서 해당 지역을 사용하라고 경고함.
+      static: ap-northeast-2
     stack:
       auto: false

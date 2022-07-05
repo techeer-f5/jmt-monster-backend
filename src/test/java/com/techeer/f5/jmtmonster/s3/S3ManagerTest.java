@@ -72,7 +72,4 @@ public class S3ManagerTest {
         // then
         s3Manager.delete(actualFilename);
     }
-
-
-
 }

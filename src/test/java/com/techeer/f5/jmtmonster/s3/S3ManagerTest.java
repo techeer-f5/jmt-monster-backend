@@ -13,6 +13,9 @@ import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+/** 주의 **/
+// 컨테이너를 실행하려면 아래의 명령어로 컨테이너를 먼저 띄어야 합니다.
+// docker run --rm -it -p 4566:4566 -p 4571:4571 localstack/localstack
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = LocalStackS3Config.class)
 public class S3ManagerTest {
 

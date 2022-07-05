@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -16,10 +15,11 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReviewRequestCreateServiceDto {
+public class ReviewUpdateServiceDto {
+    // update는 reviewRequestId를 통해서 아예 새로운 review 생성하는 방식으로 구현함.
 
     @NotNull
-    private UUID userId;
+    private UUID reviewRequestId;
 
     @NotNull
     private String content;
@@ -35,4 +35,5 @@ public class ReviewRequestCreateServiceDto {
 
     @NotNull
     private List<String> imageList;
+    // S3 API를 이용하여 Image를 먼저 S3에 올린 후에 반환된 URL을 List 형식으로 저장함.
 }

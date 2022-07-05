@@ -2,7 +2,6 @@ package com.techeer.f5.jmtmonster.domain.review.dto.mapper;
 
 import com.techeer.f5.jmtmonster.domain.review.dto.response.S3DeleteResponseDto;
 import com.techeer.f5.jmtmonster.domain.review.dto.response.S3UploadResponseDto;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 @Component

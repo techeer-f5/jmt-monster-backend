@@ -1,33 +1,26 @@
 package com.techeer.f5.jmtmonster.s3;
 
+import com.amazonaws.services.s3.AmazonS3;
 import com.techeer.f5.jmtmonster.s3.util.S3Manager;
-import io.findify.s3mock.S3Mock;
-import org.aspectj.lang.annotation.After;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@ActiveProfiles(profiles = {"test", "secret"})
-@Import(S3MockConfig.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = LocalStackS3Config.class)
 public class S3ManagerTest {
 
     @Autowired
     S3Manager s3Manager;
 
     @Autowired
-    S3Mock s3Mock;
+    AmazonS3 amazonS3;
 
     private MockMultipartFile mockMultipartFile;
     private String file;
@@ -37,13 +30,11 @@ public class S3ManagerTest {
         file = "mock1.png";
         mockMultipartFile = new MockMultipartFile("file", file,
                 "image/png", "test data".getBytes());
+
+        String bucketName = "jmt-monster-bucket";
+        amazonS3.createBucket(bucketName);
     }
 
-    @After("Test is done")
-    public void shutdownMockS3(){
-        s3Mock.stop();
-    }
-    
     @Test
     @DisplayName("S3 이미지 업로드 테스트")
     void uploadTest() throws IOException {
@@ -59,7 +50,7 @@ public class S3ManagerTest {
 
     @Test
     @DisplayName("S3 이미지 삭제 테스트")
-    void S3ManagerTest() throws IOException {
+    void deleteTest() throws IOException {
         // given
         String file2 = "mock2.png";
         MockMultipartFile mockMultipartFile2 = new MockMultipartFile("file", file,
@@ -72,7 +63,4 @@ public class S3ManagerTest {
         // then
         s3Manager.delete(actualFilename);
     }
-
-
-
 }

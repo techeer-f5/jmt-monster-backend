@@ -5,7 +5,7 @@ import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.MenuInfoResponse
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.RestaurantInfoResponseDto;
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.RestaurantResponseDto;
 import com.techeer.f5.jmtmonster.domain.restaurant.entity.Restaurant;
-import com.techeer.f5.jmtmonster.domain.restaurant.service.information.MenuInfo;
+import com.techeer.f5.jmtmonster.domain.restaurant.dto.service.MenuInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -23,11 +23,8 @@ public class RestaurantMapper {
 
     public RestaurantResponseDto toResponseDto(Restaurant restaurant) {
         return RestaurantResponseDto.builder()
-//                .id(restaurant.getId())
                 .cid(restaurant.getCid())
                 .name(restaurant.getName())
-//                .x_cord(restaurant.getX_cord())
-//                .y_cord(restaurant.getY_cord())
                 .build();
     }
 

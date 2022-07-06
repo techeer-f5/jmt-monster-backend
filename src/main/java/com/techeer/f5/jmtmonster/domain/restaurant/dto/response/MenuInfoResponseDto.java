@@ -15,5 +15,5 @@ public class MenuInfoResponseDto {
 
     private Long cid;
     private String name;
-    private List menuList;
+    private List menuName;
 }

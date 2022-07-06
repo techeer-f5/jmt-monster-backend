@@ -1,13 +1,17 @@
-package com.techeer.f5.jmtmonster.domain.restaurant.service.information;
+package com.techeer.f5.jmtmonster.domain.restaurant.dto.service;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RestaurantInfo {
+public class MenuInfo {
     private Long cid;
     private String restaurantName;
+    private String menuName;
+
 }

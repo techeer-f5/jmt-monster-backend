@@ -2,17 +2,13 @@ package com.techeer.f5.jmtmonster.domain.restaurant.service;
 
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.mapper.RestaurantMapper;
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.MenuInfoResponseDto;
-import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.RestaurantInfoResponseDto;
-import com.techeer.f5.jmtmonster.domain.restaurant.service.information.MenuInfo;
-import com.techeer.f5.jmtmonster.domain.restaurant.service.information.RestaurantInfo;
-import net.minidev.json.parser.ParseException;
+import com.techeer.f5.jmtmonster.domain.restaurant.dto.service.MenuInfo;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
@@ -21,7 +17,6 @@ import java.util.*;
 public class MenuService {
     private String url = "https://place.map.kakao.com/main/v/";
 
-    @GetMapping("/menu/{cidnum}")
     public MenuInfoResponseDto getMenuByKakao(@PathVariable("cidnum") long cidnum) {
         RestaurantMapper restaurantMapper = new RestaurantMapper();
         RestTemplate restTemplate = new RestTemplate();
@@ -43,11 +38,11 @@ public class MenuService {
         String restaurantName = (String) basicInfo.get("placenamefull");
         Map<String, Object> menu = (Map<String, Object>) resultMap.get("menuInfo");
         List<Map<String, Object>> menuList = (List<Map<String, Object>>) menu.get("menuList");
+        List<Map<String, Object>> menuName = (List<Map<String, Object>>) menuList.get("menu");
 
-        MenuInfo menuInfo = new MenuInfo(cid, restaurantName, menuList);
-//        RestaurantInfo restaurantInfo = new RestaurantInfo(cid, restaurantName);
+        MenuInfo menuInfo = new MenuInfo(cid, restaurantName, menuName);
+
 
         return restaurantMapper.toMenuInfoResponseDto(menuInfo);
-//        return restaurantMapper.toRestaurantInfoResponseDto(restaurantInfo);
     }
 }

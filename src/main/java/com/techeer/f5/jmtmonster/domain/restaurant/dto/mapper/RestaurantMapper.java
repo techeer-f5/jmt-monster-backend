@@ -16,8 +16,8 @@ public class RestaurantMapper {
         return Restaurant.builder()
                 .cid(cid)
                 .name(jsonObject.getAsString("name"))
-                .x_cord(Long.parseLong(jsonObject.getAsString("x_cord")))
-                .y_cord(Long.parseLong(jsonObject.getAsString("y_cord")))
+                .xcoorDinate(Long.parseLong(jsonObject.getAsString("xcoorDinate")))
+                .ycoorDinate(Long.parseLong(jsonObject.getAsString("ycoorDinate")))
                 .build();
     }
 
@@ -32,7 +32,7 @@ public class RestaurantMapper {
         return MenuInfoResponseDto.builder()
                 .cid(menuInfo.getCid())
                 .name(menuInfo.getRestaurantName())
-                .menuList(menuInfo.getMenuList())
+                .menuName(menuInfo.getMenuName())
                 .build();
     }
 

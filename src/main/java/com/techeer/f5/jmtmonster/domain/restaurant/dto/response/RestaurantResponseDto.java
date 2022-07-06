@@ -15,6 +15,6 @@ public class RestaurantResponseDto {
     private Long cid;
     private String name;
     private List menuList;
-//    private Long x_cord;
-//    private Long y_cord;
+    private Long xcoorDinate;
+    private Long ycoorDinate;
 }

@@ -15,7 +15,7 @@ public class RestaurantController {
 
     @GetMapping("/{cid}")
     public ResponseEntity<MenuInfoResponseDto> getRestaurantInformation(@PathVariable Long cid) {
-        MenuInfoResponseDto menuInfoResponseDto = menuService.getMenuByKakao(cid);
+        MenuInfoResponseDto menuInfoResponseDto = menuService.restauRants(cid);
 
 
         return ResponseEntity.status(HttpStatus.CREATED)

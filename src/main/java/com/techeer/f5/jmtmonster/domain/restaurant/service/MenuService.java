@@ -17,7 +17,7 @@ import java.util.*;
 public class MenuService {
     private String url = "https://place.map.kakao.com/main/v/";
 
-    public MenuInfoResponseDto getMenuByKakao(@PathVariable("cidnum") long cidnum) {
+    public MenuInfoResponseDto restauRants(@PathVariable("cidnum") long cidnum) {
         RestaurantMapper restaurantMapper = new RestaurantMapper();
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
@@ -36,8 +36,8 @@ public class MenuService {
         // ToPOJO
         Long cid = Long.valueOf(String.valueOf(basicInfo.get("cid")));
         String restaurantName = (String) basicInfo.get("placenamefull");
-        Map<String, Object> menu = (Map<String, Object>) resultMap.get("menuInfo");
-        List<Map<String, Object>> menuList = (List<Map<String, Object>>) menu.get("menuList");
+        Map<String, Object> menuAll = (Map<String, Object>) resultMap.get("menuInfo");
+        List<Map<String, Object>> menuList = (List<Map<String, Object>>) menuAll.get("menuList");
         List<Map<String, Object>> menuName = (List<Map<String, Object>>) menuList.get("menu");
 
         MenuInfo menuInfo = new MenuInfo(cid, restaurantName, menuName);

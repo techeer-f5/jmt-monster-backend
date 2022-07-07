@@ -9,9 +9,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface ReviewRepository extends JpaRepository<Review, UUID> {
+public interface ReviewRepository extends JpaRepository<Review, UUID>, ReviewQueryRepository {
 
   boolean existsById(UUID uuid);
 
-  Page<Review> findAllByUserId(UUID userId, Pageable pageable);
 }

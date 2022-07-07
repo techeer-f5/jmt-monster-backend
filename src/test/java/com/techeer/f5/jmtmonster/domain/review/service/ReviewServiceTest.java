@@ -90,6 +90,8 @@ public class ReviewServiceTest {
 
         givenReview.addFoodList(givenFoods);
         givenReview.addImageList(givenImages);
+
+        reviewRepository.flush();
     }
 
     @Nested
@@ -183,7 +185,6 @@ public class ReviewServiceTest {
 
         @Test
         @DisplayName("성공")
-//    @Transactional
         void findByIdSuccessTest() {
             // given
 

@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -65,8 +66,6 @@ public class ReviewRepositoryTest {
             .content("Test content 1")
             .like(Like.LIKE)
             .star(Star.FIVE)
-            .foodList(null)
-            .imageList(null)
             .build());
         givenFood1 = foodRepository.save(ReviewFood.builder()
             .review(givenReview1)
@@ -95,8 +94,6 @@ public class ReviewRepositoryTest {
             .content("Test content 2")
             .like(Like.LIKE)
             .star(Star.FIVE)
-            .foodList(null)
-            .imageList(null)
             .build());
         givenFood3 = foodRepository.save(ReviewFood.builder()
             .review(givenReview2)
@@ -116,8 +113,10 @@ public class ReviewRepositoryTest {
             .url("Test URL 4")
             .build());
         givenImages2 = List.of(givenImage3, givenImage4);
-        givenReview2.setFoodList(givenFoods2);
-        givenReview2.setImageList(givenImages2);
+        givenReview2.addFoodList(givenFoods2);
+        givenReview2.addImageList(givenImages2);
+
+        reviewRepository.flush();
     }
 
     @Nested
@@ -149,12 +148,30 @@ public class ReviewRepositoryTest {
             UUID userId = givenUser.getId();
             Pageable pageable = PageRequest.of(0, 10);
 
+            givenFood1 = null;
+
             // when
             Page<Review> result = reviewRepository.findAllByUserId(userId, pageable);
 
             // then
-            assertThat(result.stream().toList().size()).isEqualTo(2);
+            List<Review> resultList = result.stream().toList();
+            assertThat(resultList.size()).isEqualTo(2);
+
+            for (Review resultElem : resultList) {
+                System.out.println(resultElem.getFoodList());
+                System.out.println(resultElem.getImageList());
+
+                for (var food : resultElem.getFoodList()) {
+                    System.out.println(food.getFood());
+                    System.out.println(food.getReview());
+                }
+                for (var image : resultElem.getImageList()) {
+                    System.out.println(image.getUrl());
+                    System.out.println(image.getReview());
+                }
+            }
         }
 
     }
+
 }

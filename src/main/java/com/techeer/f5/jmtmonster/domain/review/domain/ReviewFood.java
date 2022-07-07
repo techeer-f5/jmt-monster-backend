@@ -29,6 +29,7 @@ public class ReviewFood extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
+    @ToString.Exclude
     private Review review;
 
     @NotNull

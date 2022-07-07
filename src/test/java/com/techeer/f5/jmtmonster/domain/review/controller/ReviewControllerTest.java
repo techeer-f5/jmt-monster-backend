@@ -54,7 +54,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc(addFilters = false)
 @AutoConfigureRestDocs
-@ActiveProfiles(profiles = {"secret", "test", "disable-auth"})
+@ActiveProfiles(profiles = {"test", "disable-auth"})
 @Import({ReviewMapper.class, UserMapper.class})
 @DisplayName("리뷰 API")
 public class ReviewControllerTest {

@@ -52,69 +52,69 @@ public class ReviewRepositoryTest {
     private Review givenReview2;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         givenUser = userRepository.save(User.builder()
-                .email("tester1@example.com")
-                .name("Tester1")
-                .nickname("Tester1")
-                .build());
+            .email("tester1@example.com")
+            .name("Tester1")
+            .nickname("Tester1")
+            .build());
 
         // Review 1
         givenReview1 = reviewRepository.save(Review.builder()
-                .user(givenUser)
-                .content("Test content 1")
-                .like(Like.LIKE)
-                .star(Star.FIVE)
-                .foodList(null)
-                .imageList(null)
-                .build());
+            .user(givenUser)
+            .content("Test content 1")
+            .like(Like.LIKE)
+            .star(Star.FIVE)
+            .foodList(null)
+            .imageList(null)
+            .build());
         givenFood1 = foodRepository.save(ReviewFood.builder()
-                .review(givenReview1)
-                .food("Test food 1")
-                .build());
+            .review(givenReview1)
+            .food("Test food 1")
+            .build());
         givenFood2 = foodRepository.save(ReviewFood.builder()
-                .review(givenReview1)
-                .food("Test food 2")
-                .build());
+            .review(givenReview1)
+            .food("Test food 2")
+            .build());
         givenFoods1 = List.of(givenFood1, givenFood2);
         givenImage1 = imageRepository.save(ReviewImage.builder()
-                .review(givenReview1)
-                .url("Test URL 1")
-                .build());
+            .review(givenReview1)
+            .url("Test URL 1")
+            .build());
         givenImage2 = imageRepository.save(ReviewImage.builder()
-                .review(givenReview1)
-                .url("Test URL 2")
-                .build());
+            .review(givenReview1)
+            .url("Test URL 2")
+            .build());
         givenImages1 = List.of(givenImage1, givenImage2);
         givenReview1.setFoodList(givenFoods1);
         givenReview1.setImageList(givenImages1);
 
         //Review 2
         givenReview2 = reviewRepository.save(Review.builder()
-                .user(givenUser)
-                .content("Test content 2")
-                .like(Like.LIKE)
-                .star(Star.FIVE)
-                .foodList(null)
-                .imageList(null)
-                .build());
+            .user(givenUser)
+            .content("Test content 2")
+            .like(Like.LIKE)
+            .star(Star.FIVE)
+            .foodList(null)
+            .imageList(null)
+            .build());
         givenFood3 = foodRepository.save(ReviewFood.builder()
-                .review(givenReview2)
-                .food("Test food 3")
-                .build());
+            .review(givenReview2)
+            .food("Test food 3")
+            .build());
         givenFood4 = foodRepository.save(ReviewFood.builder()
-                .review(givenReview2)
-                .food("Test food 4")
-                .build());
+            .review(givenReview2)
+            .food("Test food 4")
+            .build());
         givenFoods2 = List.of(givenFood3, givenFood4);
         givenImage3 = imageRepository.save(ReviewImage.builder()
-                .review(givenReview2)
-                .url("Test URL 3")
-                .build());
+            .review(givenReview2)
+            .url("Test URL 3")
+            .build());
         givenImage4 = imageRepository.save(ReviewImage.builder()
-                .review(givenReview2)
-                .url("Test URL 4")
-                .build());
+            .review(givenReview2)
+            .url("Test URL 4")
+            .build());
         givenImages2 = List.of(givenImage3, givenImage4);
         givenReview2.setFoodList(givenFoods2);
         givenReview2.setImageList(givenImages2);
@@ -122,7 +122,8 @@ public class ReviewRepositoryTest {
 
     @Nested
     @DisplayName("Review ID를 이용한 검색")
-    class ExistsByIdTest{
+    class ExistsByIdTest {
+
         @Test
         @DisplayName("성공")
         void existsByIdSuccessTest() {
@@ -139,16 +140,17 @@ public class ReviewRepositoryTest {
 
     @Nested
     @DisplayName("USER ID를 이용하여 REVIEW 리스트 검색")
-    class FindByUserIdTest{
+    class FindByUserIdTest {
+
         @Test
         @DisplayName("성공")
         void FindByUserIdSuccessTest() {
             // given
-            UUID userId= givenUser.getId();
-            Pageable pageable = PageRequest.of(0,10);
+            UUID userId = givenUser.getId();
+            Pageable pageable = PageRequest.of(0, 10);
 
             // when
-            Page<Review> result = reviewRepository.findByUserId(userId, pageable);
+            Page<Review> result = reviewRepository.findAllByUserId(userId, pageable);
 
             // then
             assertThat(result.stream().toList().size()).isEqualTo(2);

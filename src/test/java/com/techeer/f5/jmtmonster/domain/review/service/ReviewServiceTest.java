@@ -53,44 +53,43 @@ public class ReviewServiceTest {
     private Review givenReview;
 
     @BeforeEach
-    void setUp(){
+    @Transactional
+    void setUp() {
         givenUser = userRepository.save(User.builder()
-                .email("tester1@example.com")
-                .name("Tester1")
-                .nickname("Tester1")
-                .build());
+            .email("tester1@example.com")
+            .name("Tester1")
+            .nickname("Tester1")
+            .build());
 
         givenReview = reviewRepository.save(Review.builder()
-                .user(givenUser)
-                .content("Test content")
-                .like(Like.LIKE)
-                .star(Star.FIVE)
-                .foodList(null)
-                .imageList(null)
-                .build());
+            .user(givenUser)
+            .content("Test content")
+            .like(Like.LIKE)
+            .star(Star.FIVE)
+            .build());
 
         givenFood1 = foodRepository.save(ReviewFood.builder()
-                .review(givenReview)
-                .food("Test food 1")
-                .build());
+            .review(givenReview)
+            .food("Test food 1")
+            .build());
         givenFood2 = foodRepository.save(ReviewFood.builder()
-                .review(givenReview)
-                .food("Test food 2")
-                .build());
+            .review(givenReview)
+            .food("Test food 2")
+            .build());
         givenFoods = List.of(givenFood1, givenFood2);
 
         givenImage1 = imageRepository.save(ReviewImage.builder()
-                .review(givenReview)
-                .url("Test URL 1")
-                .build());
+            .review(givenReview)
+            .url("Test URL 1")
+            .build());
         givenImage2 = imageRepository.save(ReviewImage.builder()
-                .review(givenReview)
-                .url("Test URL 2")
-                .build());
+            .review(givenReview)
+            .url("Test URL 2")
+            .build());
         givenImages = List.of(givenImage1, givenImage2);
 
-        givenReview.setFoodList(givenFoods);
-        givenReview.setImageList(givenImages);
+        givenReview.addFoodList(givenFoods);
+        givenReview.addImageList(givenImages);
     }
 
     @Nested
@@ -103,13 +102,13 @@ public class ReviewServiceTest {
         void createTest() {
             // given
             ReviewCreateServiceDto givenDto = ReviewCreateServiceDto.builder()
-                    .userId(givenUser.getId())
-                    .content("Create content")
-                    .like(Like.LIKE)
-                    .star(Star.FIVE)
-                    .foodList(List.of("Create food 1", "Create food 2"))
-                    .imageList(List.of("Create URL 1", "Create URL 2"))
-                    .build();
+                .userId(givenUser.getId())
+                .content("Create content")
+                .like(Like.LIKE)
+                .star(Star.FIVE)
+                .foodList(List.of("Create food 1", "Create food 2"))
+                .imageList(List.of("Create URL 1", "Create URL 2"))
+                .build();
 
             // when
             Review actualReview = reviewService.create(givenDto);
@@ -135,13 +134,13 @@ public class ReviewServiceTest {
         void updateRequestSuccessTest() {
             // given
             ReviewUpdateServiceDto givenDto = ReviewUpdateServiceDto.builder()
-                    .reviewRequestId(givenReview.getId())
-                    .content("Changed content")
-                    .like(Like.DISLIKE)
-                    .star(Star.ONE)
-                    .foodList(List.of("new food 1","new food 2"))
-                    .imageList(List.of("new url 1","new url 2"))
-                    .build();
+                .reviewRequestId(givenReview.getId())
+                .content("Changed content")
+                .like(Like.DISLIKE)
+                .star(Star.ONE)
+                .foodList(List.of("new food 1", "new food 2"))
+                .imageList(List.of("new url 1", "new url 2"))
+                .build();
 
             // when
             Review actualReview = reviewService.updateRequest(givenDto);
@@ -162,16 +161,16 @@ public class ReviewServiceTest {
         void updateReviewFailTest() {
             // given
             ReviewUpdateServiceDto givenDto = ReviewUpdateServiceDto.builder()
-                    .reviewRequestId(UUID.randomUUID()) // 없는 review id
-                    .content("Changed content")
-                    .like(Like.DISLIKE)
-                    .star(Star.ONE)
-                    .foodList(List.of("new food 1","new food 2"))
-                    .imageList(List.of("new url 1","new url 2"))
-                    .build();
+                .reviewRequestId(UUID.randomUUID()) // 없는 review id
+                .content("Changed content")
+                .like(Like.DISLIKE)
+                .star(Star.ONE)
+                .foodList(List.of("new food 1", "new food 2"))
+                .imageList(List.of("new url 1", "new url 2"))
+                .build();
 
             // when & then
-            assertThrows(ResourceNotFoundException.class,()->{
+            assertThrows(ResourceNotFoundException.class, () -> {
                 Review actualReview = reviewService.updateRequest(givenDto);
             });
 
@@ -180,19 +179,18 @@ public class ReviewServiceTest {
 
     @Nested
     @DisplayName("REVIEW 검색 테스트")
-    class FindByIdTest{
+    class FindByIdTest {
 
         @Test
         @DisplayName("성공")
-        @Transactional
+//    @Transactional
         void findByIdSuccessTest() {
             // given
 
             // when
             Review actualReview = reviewService.findRequestById(givenReview.getId());
-            System.out.printf("GIVEN REVIEW : %s\n",givenReview);
-            System.out.printf("REVIEW : %s\n",actualReview);
-
+            System.out.printf("GIVEN REVIEW : %s\n", givenReview);
+            System.out.printf("REVIEW : %s\n", actualReview);
             // then
             assertThat(actualReview.getContent()).isEqualTo("Test content");
             assertThat(actualReview.getLike()).isEqualTo(Like.LIKE);
@@ -202,12 +200,11 @@ public class ReviewServiceTest {
             assertThat(actualReview.getImageList().get(0).getUrl()).isEqualTo("Test URL 1");
             assertThat(actualReview.getImageList().get(1).getUrl()).isEqualTo("Test URL 2");
         }
-
     }
 
     @Nested
     @DisplayName("REVIEW 삭제 테스트")
-    class DeleteByIdTest{
+    class DeleteByIdTest {
 
         @Test
         @DisplayName("성공")
@@ -219,7 +216,7 @@ public class ReviewServiceTest {
             reviewService.deleteRequestById(givenReview.getId());
 
             // then
-            assertThrows(ResourceNotFoundException.class,()->{
+            assertThrows(ResourceNotFoundException.class, () -> {
                 reviewService.findRequestById(givenReview.getId());
             });
         }
@@ -231,7 +228,7 @@ public class ReviewServiceTest {
             // given
 
             // when & then
-            assertThrows(ResourceNotFoundException.class,()->{
+            assertThrows(ResourceNotFoundException.class, () -> {
                 reviewService.deleteRequestById(UUID.randomUUID());
             });
         }

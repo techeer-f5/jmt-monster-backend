@@ -2,6 +2,8 @@ package com.techeer.f5.jmtmonster.domain.restaurant.service;
 
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.mapper.RestaurantMapper;
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.RestaurantResponseDto;
+import com.techeer.f5.jmtmonster.domain.restaurant.dto.service.MenuList;
+import com.techeer.f5.jmtmonster.domain.restaurant.dto.service.RestaurantInfo;
 import com.techeer.f5.jmtmonster.domain.restaurant.entity.Restaurant;
 import com.techeer.f5.jmtmonster.domain.restaurant.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
@@ -42,39 +44,30 @@ public class MenuService {
         Map<String, Object> menuInfo = (Map<String, Object>) resultMap.get("menuInfo");
 
         List<Map<String, Object>> menuList = (List<Map<String, Object>>) menuInfo.get("menuList");
-        menuList.stream().map(i -> listMenu.add(i.get("menu")));
-        System.out.println("listMenu" + listMenu);
-
 
         String restaurantName = Objects.toString(basicInfo.get("placenamefull"));
         Long xCord = Long.valueOf(String.valueOf(place.get("x")));
         Long yCord = Long.valueOf(String.valueOf(place.get("y")));
 
-
-//        if (restaurantRepository.findByCid(cid).isPresent()) {
-//            // 이미 존재 => 조회된 정보 바로 전송
-//        }
-
-//         db에 저장
-        Restaurant restaurant = restaurantRepository.save(restaurantMapper.toEntity(cid, restaurantName, xCord, yCord));
-
-
-//        restaurantMapper.toEntity(restaurantInformation);
-
-//        return restaurantMapper.toResponseDto(restaurant);
-
-        // Get MenuInformation
+        // Get listMenu
         for (Map<String, Object> oneMenuInfo : menuList) {
             LinkedHashMap menu = (LinkedHashMap) oneMenuInfo;
             listMenu.add(menu.get("menu"));
         }
 
-//        return restaurantMapper.toResponseDto();
-        return restaurantMapper.toResponseDto(listMenu, restaurant);
-    }
+        // TODO: change raw type data
+        MenuList MENULIST = restaurantMapper.toMenuList(listMenu);
+        RestaurantInfo restaurantInfo = restaurantMapper.toInformation(cid, restaurantName, xCord, yCord, MENULIST);
 
-//    public MenuInfoResponseDto getInfoFromKakao() {
-//
-//    }
+        if (restaurantRepository.findByCid(cid).isPresent()) {
+            // 이미 존재 => 조회된 정보 바로 전송
+            return restaurantMapper.toResponseDto(restaurantInfo);
+        }
+
+//         db에 저장
+        restaurantRepository.save(restaurantMapper.toEntity(cid, restaurantName, xCord, yCord));
+
+        return restaurantMapper.toResponseDto(restaurantInfo);
+    }
 
 }

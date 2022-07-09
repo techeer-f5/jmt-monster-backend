@@ -28,7 +28,7 @@
                 },
                 "examples" : {
                   "friend-request-get-list" : {
-                    "value" : "{\n  \"content\" : [ {\n    \"id\" : \"382d4131-d0c5-41b9-9271-5c26dd5337ee\",\n    \"fromUser\" : {\n      \"id\" : \"2ee76b23-d47a-4e9e-a4bb-062f99c541cc\",\n      \"name\" : \"FromUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"FromUser\",\n      \"imageUrl\" : \"https://profile.example.com/from-user\"\n    },\n    \"toUser\" : {\n      \"id\" : \"558622ea-063a-42d4-adbc-3a2822651b06\",\n      \"name\" : \"ToUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"ToUser\",\n      \"imageUrl\" : \"https://profile.example.com/to-user\"\n    },\n    \"status\" : \"PENDING\"\n  } ],\n  \"pageable\" : {\n    \"sort\" : {\n      \"empty\" : true,\n      \"sorted\" : false,\n      \"unsorted\" : true\n    },\n    \"offset\" : 0,\n    \"pageNumber\" : 0,\n    \"pageSize\" : 10,\n    \"paged\" : true,\n    \"unpaged\" : false\n  },\n  \"totalPages\" : 1,\n  \"totalElements\" : 1,\n  \"last\" : true,\n  \"size\" : 10,\n  \"sort\" : {\n    \"empty\" : true,\n    \"sorted\" : false,\n    \"unsorted\" : true\n  },\n  \"number\" : 0,\n  \"numberOfElements\" : 1,\n  \"first\" : true,\n  \"empty\" : false\n}"
+                    "value" : "{\n  \"content\" : [ {\n    \"id\" : \"7557f369-2687-4c7a-8604-17d9d7129871\",\n    \"fromUser\" : {\n      \"id\" : \"e5054725-7407-479e-ba8e-ba07d33c44c0\",\n      \"name\" : \"FromUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"FromUser\",\n      \"imageUrl\" : \"https://profile.example.com/from-user\"\n    },\n    \"toUser\" : {\n      \"id\" : \"723eaf6d-9d27-4ef0-81ec-ca4f79555c42\",\n      \"name\" : \"ToUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"ToUser\",\n      \"imageUrl\" : \"https://profile.example.com/to-user\"\n    },\n    \"status\" : \"PENDING\"\n  } ],\n  \"pageable\" : {\n    \"sort\" : {\n      \"empty\" : true,\n      \"sorted\" : false,\n      \"unsorted\" : true\n    },\n    \"offset\" : 0,\n    \"pageNumber\" : 0,\n    \"pageSize\" : 10,\n    \"paged\" : true,\n    \"unpaged\" : false\n  },\n  \"totalPages\" : 1,\n  \"totalElements\" : 1,\n  \"last\" : true,\n  \"number\" : 0,\n  \"sort\" : {\n    \"empty\" : true,\n    \"sorted\" : false,\n    \"unsorted\" : true\n  },\n  \"size\" : 10,\n  \"numberOfElements\" : 1,\n  \"first\" : true,\n  \"empty\" : false\n}"
                   }
                 }
               }
@@ -49,7 +49,7 @@
               },
               "examples" : {
                 "friend-request-create" : {
-                  "value" : "{\n  \"fromUserId\" : \"d811543c-24de-4126-9782-c4b3502f09f4\",\n  \"toUserId\" : \"9e96bb81-e7c4-4615-b94c-a12eaeaa003a\"\n}"
+                  "value" : "{\n  \"fromUserId\" : \"72cd3e27-b121-4549-9ded-180cc6382325\",\n  \"toUserId\" : \"ef93e695-e42e-4cd8-ab52-53a3ef5e5d63\"\n}"
                 }
               }
             }
@@ -61,11 +61,11 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/api-v1-friend-requests529653109"
+                  "$ref" : "#/components/schemas/api-v1-friend-requests-id529653109"
                 },
                 "examples" : {
                   "friend-request-create" : {
-                    "value" : "{\n  \"id\" : \"34714d12-3152-4409-9080-05e83050a0cb\",\n  \"fromUser\" : {\n    \"id\" : \"d811543c-24de-4126-9782-c4b3502f09f4\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"9e96bb81-e7c4-4615-b94c-a12eaeaa003a\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"PENDING\",\n  \"_links\" : {\n    \"list\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests\"\n    },\n    \"self\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/34714d12-3152-4409-9080-05e83050a0cb\"\n    },\n    \"update\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/34714d12-3152-4409-9080-05e83050a0cb\"\n    },\n    \"delete\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/34714d12-3152-4409-9080-05e83050a0cb\"\n    }\n  }\n}"
+                    "value" : "{\n  \"id\" : \"0b0ad693-3d4f-4268-ab8c-1a9d90443e61\",\n  \"fromUser\" : {\n    \"id\" : \"72cd3e27-b121-4549-9ded-180cc6382325\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"ef93e695-e42e-4cd8-ab52-53a3ef5e5d63\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"PENDING\",\n  \"_links\" : {\n    \"list\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests\"\n    },\n    \"self\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/0b0ad693-3d4f-4268-ab8c-1a9d90443e61\"\n    },\n    \"update\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/0b0ad693-3d4f-4268-ab8c-1a9d90443e61\"\n    },\n    \"delete\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/0b0ad693-3d4f-4268-ab8c-1a9d90443e61\"\n    }\n  }\n}"
                   }
                 }
               }
@@ -115,7 +115,7 @@
                 },
                 "examples" : {
                   "friend-get-list" : {
-                    "value" : "{\n  \"content\" : [ {\n    \"id\" : \"15a0254a-28bf-45f9-bb73-236be0d492c5\",\n    \"fromUser\" : {\n      \"id\" : \"28a343b5-8f58-4486-9794-22cab3f933a9\",\n      \"name\" : \"FromUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"FromUser\",\n      \"imageUrl\" : \"https://profile.example.com/from-user\"\n    },\n    \"toUser\" : {\n      \"id\" : \"b324f643-36be-4196-a799-1b4663d431bf\",\n      \"name\" : \"ToUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"ToUser\",\n      \"imageUrl\" : \"https://profile.example.com/to-user\"\n    }\n  } ],\n  \"pageable\" : {\n    \"sort\" : {\n      \"empty\" : true,\n      \"sorted\" : false,\n      \"unsorted\" : true\n    },\n    \"offset\" : 0,\n    \"pageNumber\" : 0,\n    \"pageSize\" : 10,\n    \"paged\" : true,\n    \"unpaged\" : false\n  },\n  \"totalPages\" : 1,\n  \"totalElements\" : 1,\n  \"last\" : true,\n  \"size\" : 10,\n  \"sort\" : {\n    \"empty\" : true,\n    \"sorted\" : false,\n    \"unsorted\" : true\n  },\n  \"number\" : 0,\n  \"numberOfElements\" : 1,\n  \"first\" : true,\n  \"empty\" : false\n}"
+                    "value" : "{\n  \"content\" : [ {\n    \"id\" : \"573cdb25-7d7f-44d6-8a10-ecf5442c7909\",\n    \"fromUser\" : {\n      \"id\" : \"de7d6709-4cfc-4318-ab9b-75c032a4ffb5\",\n      \"name\" : \"FromUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"FromUser\",\n      \"imageUrl\" : \"https://profile.example.com/from-user\"\n    },\n    \"toUser\" : {\n      \"id\" : \"3c3bf60d-73a7-469c-9ce9-cbe6aa30c457\",\n      \"name\" : \"ToUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"ToUser\",\n      \"imageUrl\" : \"https://profile.example.com/to-user\"\n    }\n  } ],\n  \"pageable\" : {\n    \"sort\" : {\n      \"empty\" : true,\n      \"sorted\" : false,\n      \"unsorted\" : true\n    },\n    \"offset\" : 0,\n    \"pageNumber\" : 0,\n    \"pageSize\" : 10,\n    \"paged\" : true,\n    \"unpaged\" : false\n  },\n  \"totalPages\" : 1,\n  \"totalElements\" : 1,\n  \"last\" : true,\n  \"number\" : 0,\n  \"sort\" : {\n    \"empty\" : true,\n    \"sorted\" : false,\n    \"unsorted\" : true\n  },\n  \"size\" : 10,\n  \"numberOfElements\" : 1,\n  \"first\" : true,\n  \"empty\" : false\n}"
                   }
                 }
               }
@@ -140,7 +140,7 @@
                 },
                 "examples" : {
                   "hello-get" : {
-                    "value" : "{\n  \"value\" : \"hello\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-07-09T12:03:23.996112\"\n}"
+                    "value" : "{\n  \"value\" : \"hello\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-07-09T12:09:04.506379\"\n}"
                   }
                 }
               }
@@ -177,7 +177,7 @@
                 },
                 "examples" : {
                   "hello-create" : {
-                    "value" : "{\n  \"value\" : \"hello example1\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-07-09T12:03:23.92818\"\n}"
+                    "value" : "{\n  \"value\" : \"hello example1\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-07-09T12:09:04.464899\"\n}"
                   }
                 }
               }
@@ -259,7 +259,7 @@
                 },
                 "examples" : {
                   "user-profile-search" : {
-                    "value" : "{\n  \"content\" : [ {\n    \"id\" : \"44b31a0f-a1f3-4b27-b684-d011ec2bb462\",\n    \"name\" : \"Testuser\",\n    \"email\" : \"testuser@example.com\",\n    \"nickname\" : \"Testuser\",\n    \"imageUrl\" : \"https://profile.example.com/testuser\"\n  } ],\n  \"pageable\" : {\n    \"sort\" : {\n      \"empty\" : true,\n      \"sorted\" : false,\n      \"unsorted\" : true\n    },\n    \"offset\" : 0,\n    \"pageNumber\" : 0,\n    \"pageSize\" : 10,\n    \"paged\" : true,\n    \"unpaged\" : false\n  },\n  \"totalPages\" : 1,\n  \"totalElements\" : 1,\n  \"last\" : true,\n  \"size\" : 10,\n  \"sort\" : {\n    \"empty\" : true,\n    \"sorted\" : false,\n    \"unsorted\" : true\n  },\n  \"number\" : 0,\n  \"numberOfElements\" : 1,\n  \"first\" : true,\n  \"empty\" : false\n}"
+                    "value" : "{\n  \"content\" : [ {\n    \"id\" : \"dd4354c2-b020-4814-9966-1807d0aea4ad\",\n    \"name\" : \"Testuser\",\n    \"email\" : \"testuser@example.com\",\n    \"nickname\" : \"Testuser\",\n    \"imageUrl\" : \"https://profile.example.com/testuser\"\n  } ],\n  \"pageable\" : {\n    \"sort\" : {\n      \"empty\" : true,\n      \"sorted\" : false,\n      \"unsorted\" : true\n    },\n    \"offset\" : 0,\n    \"pageNumber\" : 0,\n    \"pageSize\" : 10,\n    \"paged\" : true,\n    \"unpaged\" : false\n  },\n  \"totalPages\" : 1,\n  \"totalElements\" : 1,\n  \"last\" : true,\n  \"number\" : 0,\n  \"sort\" : {\n    \"empty\" : true,\n    \"sorted\" : false,\n    \"unsorted\" : true\n  },\n  \"size\" : 10,\n  \"numberOfElements\" : 1,\n  \"first\" : true,\n  \"empty\" : false\n}"
                   }
                 }
               }
@@ -289,11 +289,11 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/api-v1-friend-requests529653109"
+                  "$ref" : "#/components/schemas/api-v1-friend-requests-id529653109"
                 },
                 "examples" : {
                   "friend-request-get-one" : {
-                    "value" : "{\n  \"id\" : \"73aeb8be-cbd7-4b18-89bd-2f81f6244a37\",\n  \"fromUser\" : {\n    \"id\" : \"f0fac66d-5a9a-443d-95a4-5848bbbcd014\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"749caa7a-8fab-4e1e-a721-cc37f57ba004\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"PENDING\"\n}"
+                    "value" : "{\n  \"id\" : \"f08c6fa9-09c9-4223-aeb9-88f6fc9a1f00\",\n  \"fromUser\" : {\n    \"id\" : \"423de3cc-99a7-465b-b847-fd6d2ecda56e\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"bdb291bf-44c8-4e00-b335-e5ebd11c4d04\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"PENDING\"\n}"
                   }
                 }
               }
@@ -335,11 +335,11 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/api-v1-friend-requests529653109"
+                  "$ref" : "#/components/schemas/api-v1-friend-requests-id529653109"
                 },
                 "examples" : {
                   "friend-request-update-to-create-friend" : {
-                    "value" : "{\n  \"id\" : \"a0b8da52-2f03-4ecb-9c1e-9e68bc5312fd\",\n  \"fromUser\" : {\n    \"id\" : \"c2d9e008-41ca-45df-9071-1c4a3de81389\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"e0b5f24b-ddad-4a70-8529-c97612f52763\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"ACCEPTED\"\n}"
+                    "value" : "{\n  \"id\" : \"0f00714c-0c8c-4cf4-a192-fc4cce92e163\",\n  \"fromUser\" : {\n    \"id\" : \"beaa9244-7a1c-41c7-923c-1d45f74732e2\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"8f4a28af-7db6-49e7-bb1d-04eaa4c65b21\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"ACCEPTED\"\n}"
                   }
                 }
               }
@@ -373,7 +373,7 @@
                 },
                 "examples" : {
                   "friend-get-one" : {
-                    "value" : "{\n  \"id\" : \"d45533bc-75e3-4054-a88c-41ef30e03a2f\",\n  \"fromUser\" : {\n    \"id\" : \"92a4051b-66e2-48ad-90f7-6f0f9625aece\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"07cd71c0-93d0-4531-941f-58f95697bc0d\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  }\n}"
+                    "value" : "{\n  \"id\" : \"43f823e3-d470-4e92-81de-61412215ea6c\",\n  \"fromUser\" : {\n    \"id\" : \"b6d43ddb-c0e3-435f-9fe6-573c47abb56a\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"4027b995-9243-4de6-84b4-56bdfb1a36e4\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  }\n}"
                   }
                 }
               }
@@ -396,7 +396,7 @@
           "schema" : {
             "type" : "string"
           },
-          "example" : "Bearer 5e07c712-5732-4877-bd02-2433c46db139"
+          "example" : "Bearer e12e12c1-7bb1-4b10-91d0-66fe266db2c8"
         } ],
         "responses" : {
           "200" : {
@@ -408,7 +408,7 @@
                 },
                 "examples" : {
                   "my-user" : {
-                    "value" : "{\n  \"isSuccess\" : true,\n  \"user\" : {\n    \"id\" : \"5bb606ec-1ebb-49f6-b746-7729167f2aea\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : null,\n    \"address\" : null,\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : false,\n    \"verified\" : false\n  }\n}"
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"user\" : {\n    \"id\" : \"494c9bbd-3bdc-424a-ba6a-f4d2dae6cdd8\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : null,\n    \"address\" : null,\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : false,\n    \"verified\" : false\n  }\n}"
                   }
                 }
               }
@@ -431,7 +431,7 @@
           "schema" : {
             "type" : "string"
           },
-          "example" : "Bearer d5872927-46bc-4701-a19d-8e5a1c491fc0"
+          "example" : "Bearer db9d628a-d3cd-4a1a-abdd-88ae18c634fa"
         } ],
         "requestBody" : {
           "content" : {
@@ -457,7 +457,7 @@
                 },
                 "examples" : {
                   "submit-extra-info" : {
-                    "value" : "{\n  \"isSuccess\" : true,\n  \"user\" : {\n    \"id\" : \"94c87a88-b5c6-408b-b53e-94699455ccbb\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : \"DPS0340\",\n    \"address\" : \"경기도 시흥시 서울대학로278번길 19-13\",\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : true,\n    \"verified\" : false\n  }\n}"
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"user\" : {\n    \"id\" : \"0f543b07-4165-43d8-b42d-cc4ee6a38e6a\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : \"DPS0340\",\n    \"address\" : \"경기도 시흥시 서울대학로278번길 19-13\",\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : true,\n    \"verified\" : false\n  }\n}"
                   }
                 }
               }
@@ -469,7 +469,7 @@
   },
   "components" : {
     "schemas" : {
-      "api-v1-friend-requests529653109" : {
+      "api-v1-friend-requests-id529653109" : {
         "type" : "object",
         "properties" : {
           "toUser" : {
@@ -705,6 +705,15 @@
           }
         }
       },
+      "api-v1-friend-requests-id-989932600" : {
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string",
+            "description" : "친구 요청 상태 (ACCEPTED)"
+          }
+        }
+      },
       "api-v1-hello527089244" : {
         "type" : "object",
         "properties" : {
@@ -719,15 +728,6 @@
           "value" : {
             "type" : "string",
             "description" : "리스폰스 메시지"
-          }
-        }
-      },
-      "api-v1-friend-requests-id-989932600" : {
-        "type" : "object",
-        "properties" : {
-          "status" : {
-            "type" : "string",
-            "description" : "친구 요청 상태 (ACCEPTED)"
           }
         }
       },

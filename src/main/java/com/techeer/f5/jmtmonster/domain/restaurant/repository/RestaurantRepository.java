@@ -10,6 +10,7 @@ import java.util.UUID;
 @Repository
 public interface RestaurantRepository extends JpaRepository<Restaurant, UUID> {
     Optional<Restaurant> findByCid(Long cid);
+    Restaurant getByCid(Long cid);
     boolean existsByCid(Long cid);
 
 }

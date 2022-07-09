@@ -19,7 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@ActiveProfiles(profiles = {"test", "secret"})
+@ActiveProfiles(profiles = {"test"})
 @Import(S3MockConfig.class)
 public class S3ManagerTest {
 
@@ -59,7 +59,7 @@ public class S3ManagerTest {
 
     @Test
     @DisplayName("S3 이미지 삭제 테스트")
-    void S3ManagerTest() throws IOException {
+    void deleteTest() throws IOException {
         // given
         String file2 = "mock2.png";
         MockMultipartFile mockMultipartFile2 = new MockMultipartFile("file", file,
@@ -72,7 +72,4 @@ public class S3ManagerTest {
         // then
         s3Manager.delete(actualFilename);
     }
-
-
-
 }

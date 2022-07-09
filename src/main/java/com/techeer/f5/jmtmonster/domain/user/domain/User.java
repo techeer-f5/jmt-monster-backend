@@ -1,5 +1,6 @@
 package com.techeer.f5.jmtmonster.domain.user.domain;
 
+import com.techeer.f5.jmtmonster.domain.home.domain.HomeToUser;
 import com.techeer.f5.jmtmonster.domain.oauth.domain.PersistentToken;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,12 +15,8 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+
+import lombok.*;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.lang.Nullable;
 import org.springframework.transaction.annotation.Transactional;
@@ -88,6 +85,10 @@ public class User {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     @Builder.Default
     private List<PersistentToken> tokens = new ArrayList<>();
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @Builder.Default
+    private List<HomeToUser> homeToUsers = new ArrayList<>();
 
     @Transactional
     public void addToken(PersistentToken persistentToken) {

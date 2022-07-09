@@ -31,6 +31,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-aop'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.1.2'
@@ -66,6 +67,7 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.22'
     implementation 'com.aventrix.jnanoid:jnanoid:2.0.0'
     testImplementation 'io.findify:s3mock_2.13:0.2.6'
+    implementation 'com.google.guava:guava:r05'
 }
 
 tasks.named('test') {

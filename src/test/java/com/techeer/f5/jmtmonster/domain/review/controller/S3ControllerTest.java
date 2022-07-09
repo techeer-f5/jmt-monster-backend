@@ -28,7 +28,6 @@ import java.io.IOException;
 
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
-import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
@@ -48,7 +47,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc(addFilters = false)
 @AutoConfigureRestDocs
-@ActiveProfiles(profiles = {"test","secret","disable-auth"})
+@ActiveProfiles(profiles = {"test","disable-auth"})
 @Import({S3Mapper.class, UserMapper.class})
 @DisplayName("S3 API")
 public class S3ControllerTest {
@@ -116,7 +115,7 @@ public class S3ControllerTest {
     }
 
     @Test
-    @DisplayName("")
+    @DisplayName("이미지 삭제 테스트")
     void deleteImagesTest() throws Exception {
         // given
 

@@ -11,6 +11,7 @@ spring:
     hibernate.dialect: org.hibernate.dialect.MariaDBDialect
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate.ddl-auto: create-drop
+    default_batch_fetch_size: 100
 
 oauth:
   back-end-base-url: http://localhost:8000
@@ -24,10 +25,10 @@ oauth:
 cloud:
   aws:
     credentials:
-      accessKey: ''
-      secretKey: ''
+      accessKey: ${aws-s3-access-key}
+      secretKey: ${aws-s3-secret-key}
     s3:
-      bucket: ''
+      bucket: ${aws-s3-bucket-name}
     region:
       static: ap-northeast-2
     stack:

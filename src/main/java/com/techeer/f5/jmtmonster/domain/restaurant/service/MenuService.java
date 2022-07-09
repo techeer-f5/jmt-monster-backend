@@ -1,8 +1,10 @@
 package com.techeer.f5.jmtmonster.domain.restaurant.service;
 
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.mapper.RestaurantMapper;
-import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.MenuInfoResponseDto;
-import com.techeer.f5.jmtmonster.domain.restaurant.dto.service.MenuInfo;
+import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.RestaurantResponseDto;
+import com.techeer.f5.jmtmonster.domain.restaurant.entity.Restaurant;
+import com.techeer.f5.jmtmonster.domain.restaurant.repository.RestaurantRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
@@ -14,16 +16,19 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Service
+@RequiredArgsConstructor
 public class MenuService {
-    private String url = "https://place.map.kakao.com/main/v/";
+    private final RestaurantMapper restaurantMapper;
+    private final RestaurantRepository restaurantRepository;
 
-    public MenuInfoResponseDto getMenuByKakao(@PathVariable("cidnum") long cidnum) {
-        RestaurantMapper restaurantMapper = new RestaurantMapper();
+    public RestaurantResponseDto getRestaurantInfo(@PathVariable("cid") long cid) {
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders); //엔티티로 만들기
+        ArrayList listMenu = new ArrayList();
+        String url = "https://place.map.kakao.com/main/v/";
         URI targetUrl = UriComponentsBuilder
-                .fromUriString(url+cidnum)
+                .fromUriString(url +cid)
                 .build()
                 .encode(StandardCharsets.UTF_8)
                 .toUri();
@@ -31,16 +36,45 @@ public class MenuService {
         // 전체 내용
         ResponseEntity<Map> result = restTemplate.exchange(targetUrl, HttpMethod.GET, httpEntity, Map.class);
         Map<String, Object> resultMap = result.getBody();
+
+        Map<String, Object> place = (Map<String, Object>) resultMap.get("findway");
         Map<String, Object> basicInfo = (Map<String, Object>) resultMap.get("basicInfo");
+        Map<String, Object> menuInfo = (Map<String, Object>) resultMap.get("menuInfo");
 
-        // ToPOJO
-        Long cid = Long.valueOf(String.valueOf(basicInfo.get("cid")));
-        String restaurantName = (String) basicInfo.get("placenamefull");
-        Map<String, Object> menu = (Map<String, Object>) resultMap.get("menuInfo");
-        List<Map<String, Object>> menuList = (List<Map<String, Object>>) menu.get("menuList");
+        List<Map<String, Object>> menuList = (List<Map<String, Object>>) menuInfo.get("menuList");
+        menuList.stream().map(i -> listMenu.add(i.get("menu")));
+        System.out.println("listMenu" + listMenu);
 
-        MenuInfo menuInfo = new MenuInfo(cid, restaurantName, menuList);
 
-        return restaurantMapper.toMenuInfoResponseDto(menuInfo);
+        String restaurantName = Objects.toString(basicInfo.get("placenamefull"));
+        Long xCord = Long.valueOf(String.valueOf(place.get("x")));
+        Long yCord = Long.valueOf(String.valueOf(place.get("y")));
+
+
+//        if (restaurantRepository.findByCid(cid).isPresent()) {
+//            // 이미 존재 => 조회된 정보 바로 전송
+//        }
+
+//         db에 저장
+        Restaurant restaurant = restaurantRepository.save(restaurantMapper.toEntity(cid, restaurantName, xCord, yCord));
+
+
+//        restaurantMapper.toEntity(restaurantInformation);
+
+//        return restaurantMapper.toResponseDto(restaurant);
+
+        // Get MenuInformation
+        for (Map<String, Object> oneMenuInfo : menuList) {
+            LinkedHashMap menu = (LinkedHashMap) oneMenuInfo;
+            listMenu.add(menu.get("menu"));
+        }
+
+//        return restaurantMapper.toResponseDto();
+        return restaurantMapper.toResponseDto(listMenu, restaurant);
     }
+
+//    public MenuInfoResponseDto getInfoFromKakao() {
+//
+//    }
+
 }

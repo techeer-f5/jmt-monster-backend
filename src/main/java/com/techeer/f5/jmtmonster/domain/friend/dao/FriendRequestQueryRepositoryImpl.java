@@ -63,9 +63,11 @@ public class FriendRequestQueryRepositoryImpl implements FriendRequestQueryRepos
             UUID toUserIdCond, FriendRequestStatus statusCond) {
         return jpaQueryFactory
                 .select(friendRequest.count())
+                .from(friendRequest)
+                .innerJoin(friendRequest.fromUser, fromUser)
+                .innerJoin(friendRequest.toUser, toUser)
                 .where(fromUserIdEq(fromUser, fromUserIdCond),
                         toUserIdEq(toUser, toUserIdCond),
-                        statusEq(statusCond))
-                .from(friendRequest);
+                        statusEq(statusCond));
     }
 }

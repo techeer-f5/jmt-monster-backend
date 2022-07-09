@@ -47,8 +47,10 @@ public class FriendQueryRepositoryImpl implements FriendQueryRepository {
     private JPAQuery<Long> getCount(QUser fromUser, QUser toUser, UUID fromUserIdCond,
             UUID toUserIdCond) {
         return jpaQueryFactory
-                .select(friendRequest.count())
-                .from(friendRequest)
+                .select(friend.count())
+                .from(friend)
+                .innerJoin(friend.fromUser, fromUser)
+                .innerJoin(friend.toUser, toUser)
                 .where(fromUserIdEq(fromUser, fromUserIdCond),
                         toUserIdEq(toUser, toUserIdCond));
     }

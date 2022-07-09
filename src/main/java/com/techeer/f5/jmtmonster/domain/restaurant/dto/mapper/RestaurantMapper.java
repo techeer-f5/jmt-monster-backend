@@ -1,11 +1,13 @@
 package com.techeer.f5.jmtmonster.domain.restaurant.dto.mapper;
 
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.RestaurantResponseDto;
+import com.techeer.f5.jmtmonster.domain.restaurant.dto.service.MenuList;
+import com.techeer.f5.jmtmonster.domain.restaurant.dto.service.RestaurantInfo;
 import com.techeer.f5.jmtmonster.domain.restaurant.entity.Restaurant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -19,20 +21,27 @@ public class RestaurantMapper {
                 .build();
     }
 
-//    public RestaurantInfo toInformation(Long cid, String restaurantName, Long x, Long y) {
-//        return RestaurantInfo.builder()
-//                .cId(cid)
-//                .name(restaurantName)
-//                .x(x)
-//                .y(y)
-////                .menuList()
-//                .build();
-//    }
-    public RestaurantResponseDto toResponseDto(ArrayList menuList, Restaurant restaurant) {
-        return RestaurantResponseDto.builder()
-                .cid(restaurant.getCid())
-                .name(restaurant.getName())
+    public RestaurantInfo toInformation(Long cid, String restaurantName, Long x, Long y, MenuList menuList) {
+        return RestaurantInfo.builder()
+                .cid(cid)
+                .name(restaurantName)
+                .xCord(x)
+                .yCord(y)
                 .menuList(menuList)
+                .build();
+    }
+
+    public MenuList toMenuList(List menu) {
+        return MenuList.builder()
+                .menu(menu)
+                .build();
+    }
+
+    public RestaurantResponseDto toResponseDto(RestaurantInfo restaurantInfo) {
+        return RestaurantResponseDto.builder()
+                .cid(restaurantInfo.getCid())
+                .name(restaurantInfo.getName())
+                .menuList(restaurantInfo.getMenuList())
                 .build();
     }
 }

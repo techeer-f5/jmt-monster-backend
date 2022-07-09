@@ -1,45 +1,38 @@
 package com.techeer.f5.jmtmonster.domain.restaurant.dto.mapper;
 
-import com.nimbusds.jose.shaded.json.JSONObject;
-import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.MenuInfoResponseDto;
-import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.RestaurantInfoResponseDto;
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.RestaurantResponseDto;
 import com.techeer.f5.jmtmonster.domain.restaurant.entity.Restaurant;
-import com.techeer.f5.jmtmonster.domain.restaurant.dto.service.MenuInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
 
 @Component
 @RequiredArgsConstructor
 public class RestaurantMapper {
-    public Restaurant toEntity(JSONObject jsonObject, Long cid) {
+    public Restaurant toEntity(Long cId, String name, Long x, Long y) {
         return Restaurant.builder()
-                .cid(cid)
-                .name(jsonObject.getAsString("name"))
-                .x_cord(Long.parseLong(jsonObject.getAsString("x_cord")))
-                .y_cord(Long.parseLong(jsonObject.getAsString("y_cord")))
+                .cid(cId)
+                .name(name)
+                .x_cord(x)
+                .y_cord(y)
                 .build();
     }
 
-    public RestaurantResponseDto toResponseDto(Restaurant restaurant) {
+//    public RestaurantInfo toInformation(Long cid, String restaurantName, Long x, Long y) {
+//        return RestaurantInfo.builder()
+//                .cId(cid)
+//                .name(restaurantName)
+//                .x(x)
+//                .y(y)
+////                .menuList()
+//                .build();
+//    }
+    public RestaurantResponseDto toResponseDto(ArrayList menuList, Restaurant restaurant) {
         return RestaurantResponseDto.builder()
                 .cid(restaurant.getCid())
                 .name(restaurant.getName())
-                .build();
-    }
-
-    public MenuInfoResponseDto toMenuInfoResponseDto(MenuInfo menuInfo) {
-        return MenuInfoResponseDto.builder()
-                .cid(menuInfo.getCid())
-                .name(menuInfo.getRestaurantName())
-                .menuList(menuInfo.getMenuList())
-                .build();
-    }
-
-    public RestaurantInfoResponseDto toRestaurantInfoResponseDto(MenuInfo restaurantInfo) {
-        return RestaurantInfoResponseDto.builder()
-                .cid(restaurantInfo.getCid())
-                .name(restaurantInfo.getRestaurantName())
+                .menuList(menuList)
                 .build();
     }
 }

@@ -218,7 +218,6 @@ public class UserControllerTest {
         assertThat(user.getName()).isEqualTo(userResponseDto.getUser().getName());
         assertThat(user.getEmail()).isEqualTo(userResponseDto.getUser().getEmail());
         assertThat(userResponseDto.getUser().getNickname()).isEqualTo("DPS0340");
-        assertThat(userResponseDto.getUser().getAddress()).isEqualTo("경기도 시흥시 서울대학로278번길 19-13");
         assertThat(userResponseDto.getUser().getImageUrl()).isNull();
     }
 

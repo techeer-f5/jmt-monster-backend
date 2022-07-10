@@ -97,8 +97,6 @@ public class UserService {
 
         user = userRepository.saveAndFlush(user);
 
-        // TODO: migrate API using extraUserInfoRequestDto.getAddressCode()
-
         return userMapper.toUserResponseDto(user);
     }
 }

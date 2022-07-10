@@ -33,8 +33,7 @@ public class User {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "BINARY(16)")
-    @Builder.Default
-    private UUID id = UUID.randomUUID();
+    private UUID id;
 
     @Size(min = 1, max = 30, message = "이름 길이는 1자부터 30자까지 가능합니다.")
     @NotBlank
@@ -43,7 +42,7 @@ public class User {
 
     @Size(min = 1, max = 100, message = "이메일 길이는 1자부터 30자까지 가능합니다.")
     @Email
-    @NotNull
+    @NotBlank
     @Column(unique = true)
     private String email;
 

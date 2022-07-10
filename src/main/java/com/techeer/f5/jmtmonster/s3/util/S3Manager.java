@@ -1,11 +1,12 @@
 package com.techeer.f5.jmtmonster.s3.util;
 
-import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.DeleteObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.aventrix.jnanoid.jnanoid.NanoIdUtils;
 import com.google.common.io.Files;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,21 +18,19 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Optional;
 import java.util.Random;
-import java.util.UUID;
-
 
 @Slf4j
 @RequiredArgsConstructor
 @Component
 public class S3Manager {
 
-    private final String DIR_NAME = "JMT-Review-Image";
-    private final AmazonS3Client amazonS3Client;
-
-    public String getDIR_NAME(){return this.DIR_NAME;}
+    @Getter
+    private final String dirName = "JMT-Review-Image";
+    private final AmazonS3 amazonS3Client;
 
     @Value("${cloud.aws.s3.bucket}")
-    public String bucket;  // S3 버킷 이름
+    @Getter
+    private String bucket;  // S3 버킷 이름
 
     public String upload(MultipartFile multipartFile, String dirName) throws IOException {
         File uploadFile = convert(multipartFile)  // 파일 변환할 수 없으면 에러
@@ -42,10 +41,12 @@ public class S3Manager {
 
     // S3로 파일 업로드하기
     private String upload(File uploadFile, String dirName) {
-        char[] alphabet = {'a','b','c','d','e','f','g','h','i','j'};
-        String fileName = dirName + "/" + NanoIdUtils.randomNanoId(new Random(),alphabet , 10) + "-" +uploadFile.getName();   // S3에 저장된 파일 이름
+        char[] alphabet = "asdfghjkl".toCharArray();
+        String fileName = dirName + "/" + NanoIdUtils.randomNanoId(new Random(), alphabet, 10) + "-" +uploadFile.getName();   // S3에 저장된 파일 이름
+
         String uploadImageUrl = putS3(uploadFile, fileName); // s3로 업로드
         removeNewFile(uploadFile);
+
         return uploadImageUrl;
     }
 

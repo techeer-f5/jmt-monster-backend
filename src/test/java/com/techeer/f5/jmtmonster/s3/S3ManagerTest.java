@@ -50,7 +50,7 @@ public class S3ManagerTest {
         // given
 
         // when
-        String actualURL = s3Manager.upload(mockMultipartFile, s3Manager.getDIR_NAME());
+        String actualURL = s3Manager.upload(mockMultipartFile, s3Manager.getDirName());
 
         // then
         assertThat(actualURL).contains("mock1.png");
@@ -61,13 +61,16 @@ public class S3ManagerTest {
     @DisplayName("S3 이미지 삭제 테스트")
     void deleteTest() throws IOException {
         // given
+        String bucketName = s3Manager.getBucket();
         String file2 = "mock2.png";
         MockMultipartFile mockMultipartFile2 = new MockMultipartFile("file", file,
                 "image/png", "test data".getBytes());
 
         // when
-        String actualURL = s3Manager.upload(mockMultipartFile, s3Manager.getDIR_NAME());
-        String actualFilename = actualURL.substring(actualURL.length()-20,actualURL.length());
+        String actualURL = s3Manager.upload(mockMultipartFile, s3Manager.getDirName());
+
+        int objectStartingIndex = actualURL.indexOf(bucketName) + bucketName.length() + 1; // 끝나는 슬래시 포함
+        String actualFilename = actualURL.substring(objectStartingIndex);
 
         // then
         s3Manager.delete(actualFilename);

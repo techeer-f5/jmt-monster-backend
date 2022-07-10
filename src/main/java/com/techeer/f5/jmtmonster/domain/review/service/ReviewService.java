@@ -35,6 +35,10 @@ public class ReviewService {
     private final UserRepository userRepository;
 
     public Review create(ReviewCreateServiceDto dto) {
+        return create(dto, false);
+    }
+
+    public Review create(ReviewCreateServiceDto dto, boolean isUpdate) {
         // Check user information
         UUID userId = dto.getUserId();
         String resourceName = Review.class.getSimpleName();
@@ -46,12 +50,15 @@ public class ReviewService {
                     User.class.getSimpleName(), "userId",
                     userId.toString(), "not found"))));
 
-        // Check existing condition
-        if (reviewRepository.existsById(userId)) {
-            throw new DuplicateResourceException(resourceName,
-                List.of(new FieldErrorWrapper(resourceName, "userId", userId.toString(),
-                    "already exists with userId")));
+        if (!isUpdate) {
+            // Check existing condition
+            if (reviewRepository.existsById(userId)) {
+                throw new DuplicateResourceException(resourceName,
+                    List.of(new FieldErrorWrapper(resourceName, "userId", userId.toString(),
+                        "already exists with userId")));
+            }
         }
+
         // Save Request
         Review entity = reviewRepository.save(Review.builder()
             .user(user)
@@ -111,7 +118,7 @@ public class ReviewService {
             .imageList(dto.getImageList())
             .build();
 
-        return create(createServiceDto);
+        return create(createServiceDto, true);
     }
 
     @Transactional

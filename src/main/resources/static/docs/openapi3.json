@@ -28,7 +28,7 @@
                 },
                 "examples" : {
                   "friend-request-get-list" : {
-                    "value" : "{\n  \"content\" : [ {\n    \"id\" : \"acfe4cd7-8996-456f-84c0-6f72294a3a30\",\n    \"fromUser\" : {\n      \"id\" : \"37b7b8e0-1b85-4d34-85d7-bfa8eb0f66a7\",\n      \"name\" : \"FromUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"FromUser\",\n      \"imageUrl\" : \"https://profile.example.com/from-user\"\n    },\n    \"toUser\" : {\n      \"id\" : \"e835b71c-3b38-4b93-96ac-ef70be7cd354\",\n      \"name\" : \"ToUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"ToUser\",\n      \"imageUrl\" : \"https://profile.example.com/to-user\"\n    },\n    \"status\" : \"PENDING\"\n  } ],\n  \"pageable\" : {\n    \"sort\" : {\n      \"empty\" : true,\n      \"sorted\" : false,\n      \"unsorted\" : true\n    },\n    \"offset\" : 0,\n    \"pageNumber\" : 0,\n    \"pageSize\" : 10,\n    \"paged\" : true,\n    \"unpaged\" : false\n  },\n  \"totalPages\" : 1,\n  \"totalElements\" : 1,\n  \"last\" : true,\n  \"number\" : 0,\n  \"sort\" : {\n    \"empty\" : true,\n    \"sorted\" : false,\n    \"unsorted\" : true\n  },\n  \"size\" : 10,\n  \"numberOfElements\" : 1,\n  \"first\" : true,\n  \"empty\" : false\n}"
+                    "value" : "{\n  \"content\" : [ {\n    \"id\" : \"7557f369-2687-4c7a-8604-17d9d7129871\",\n    \"fromUser\" : {\n      \"id\" : \"e5054725-7407-479e-ba8e-ba07d33c44c0\",\n      \"name\" : \"FromUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"FromUser\",\n      \"imageUrl\" : \"https://profile.example.com/from-user\"\n    },\n    \"toUser\" : {\n      \"id\" : \"723eaf6d-9d27-4ef0-81ec-ca4f79555c42\",\n      \"name\" : \"ToUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"ToUser\",\n      \"imageUrl\" : \"https://profile.example.com/to-user\"\n    },\n    \"status\" : \"PENDING\"\n  } ],\n  \"pageable\" : {\n    \"sort\" : {\n      \"empty\" : true,\n      \"sorted\" : false,\n      \"unsorted\" : true\n    },\n    \"offset\" : 0,\n    \"pageNumber\" : 0,\n    \"pageSize\" : 10,\n    \"paged\" : true,\n    \"unpaged\" : false\n  },\n  \"totalPages\" : 1,\n  \"totalElements\" : 1,\n  \"last\" : true,\n  \"number\" : 0,\n  \"sort\" : {\n    \"empty\" : true,\n    \"sorted\" : false,\n    \"unsorted\" : true\n  },\n  \"size\" : 10,\n  \"numberOfElements\" : 1,\n  \"first\" : true,\n  \"empty\" : false\n}"
                   }
                 }
               }
@@ -49,7 +49,7 @@
               },
               "examples" : {
                 "friend-request-create" : {
-                  "value" : "{\n  \"fromUserId\" : \"e9ee5360-8478-4c9b-b6d2-9ee86b83fb83\",\n  \"toUserId\" : \"f365b7db-3118-44ab-8476-5c76b5021736\"\n}"
+                  "value" : "{\n  \"fromUserId\" : \"72cd3e27-b121-4549-9ded-180cc6382325\",\n  \"toUserId\" : \"ef93e695-e42e-4cd8-ab52-53a3ef5e5d63\"\n}"
                 }
               }
             }
@@ -65,7 +65,7 @@
                 },
                 "examples" : {
                   "friend-request-create" : {
-                    "value" : "{\n  \"id\" : \"1a3fc148-e3f0-4569-9c17-1c39fe1750d1\",\n  \"fromUser\" : {\n    \"id\" : \"e9ee5360-8478-4c9b-b6d2-9ee86b83fb83\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"f365b7db-3118-44ab-8476-5c76b5021736\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"PENDING\",\n  \"_links\" : {\n    \"list\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests\"\n    },\n    \"self\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/1a3fc148-e3f0-4569-9c17-1c39fe1750d1\"\n    },\n    \"update\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/1a3fc148-e3f0-4569-9c17-1c39fe1750d1\"\n    },\n    \"delete\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/1a3fc148-e3f0-4569-9c17-1c39fe1750d1\"\n    }\n  }\n}"
+                    "value" : "{\n  \"id\" : \"0b0ad693-3d4f-4268-ab8c-1a9d90443e61\",\n  \"fromUser\" : {\n    \"id\" : \"72cd3e27-b121-4549-9ded-180cc6382325\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"ef93e695-e42e-4cd8-ab52-53a3ef5e5d63\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"PENDING\",\n  \"_links\" : {\n    \"list\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests\"\n    },\n    \"self\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/0b0ad693-3d4f-4268-ab8c-1a9d90443e61\"\n    },\n    \"update\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/0b0ad693-3d4f-4268-ab8c-1a9d90443e61\"\n    },\n    \"delete\" : {\n      \"href\" : \"http://localhost:8080/api/v1/friend-requests/0b0ad693-3d4f-4268-ab8c-1a9d90443e61\"\n    }\n  }\n}"
                   }
                 }
               }
@@ -115,7 +115,7 @@
                 },
                 "examples" : {
                   "friend-get-list" : {
-                    "value" : "{\n  \"content\" : [ {\n    \"id\" : \"dc69c12a-425c-4dd6-9447-8b7a9e49d15b\",\n    \"fromUser\" : {\n      \"id\" : \"2ea691d3-7e92-44cb-ba57-cf4748cdd839\",\n      \"name\" : \"FromUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"FromUser\",\n      \"imageUrl\" : \"https://profile.example.com/from-user\"\n    },\n    \"toUser\" : {\n      \"id\" : \"1cb01781-5323-448a-96ce-cdcbb35f94fb\",\n      \"name\" : \"ToUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"ToUser\",\n      \"imageUrl\" : \"https://profile.example.com/to-user\"\n    }\n  } ],\n  \"pageable\" : {\n    \"sort\" : {\n      \"empty\" : true,\n      \"sorted\" : false,\n      \"unsorted\" : true\n    },\n    \"offset\" : 0,\n    \"pageNumber\" : 0,\n    \"pageSize\" : 10,\n    \"paged\" : true,\n    \"unpaged\" : false\n  },\n  \"totalPages\" : 1,\n  \"totalElements\" : 1,\n  \"last\" : true,\n  \"number\" : 0,\n  \"sort\" : {\n    \"empty\" : true,\n    \"sorted\" : false,\n    \"unsorted\" : true\n  },\n  \"size\" : 10,\n  \"numberOfElements\" : 1,\n  \"first\" : true,\n  \"empty\" : false\n}"
+                    "value" : "{\n  \"content\" : [ {\n    \"id\" : \"573cdb25-7d7f-44d6-8a10-ecf5442c7909\",\n    \"fromUser\" : {\n      \"id\" : \"de7d6709-4cfc-4318-ab9b-75c032a4ffb5\",\n      \"name\" : \"FromUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"FromUser\",\n      \"imageUrl\" : \"https://profile.example.com/from-user\"\n    },\n    \"toUser\" : {\n      \"id\" : \"3c3bf60d-73a7-469c-9ce9-cbe6aa30c457\",\n      \"name\" : \"ToUser\",\n      \"email\" : \"test@jmt-monster.com\",\n      \"nickname\" : \"ToUser\",\n      \"imageUrl\" : \"https://profile.example.com/to-user\"\n    }\n  } ],\n  \"pageable\" : {\n    \"sort\" : {\n      \"empty\" : true,\n      \"sorted\" : false,\n      \"unsorted\" : true\n    },\n    \"offset\" : 0,\n    \"pageNumber\" : 0,\n    \"pageSize\" : 10,\n    \"paged\" : true,\n    \"unpaged\" : false\n  },\n  \"totalPages\" : 1,\n  \"totalElements\" : 1,\n  \"last\" : true,\n  \"number\" : 0,\n  \"sort\" : {\n    \"empty\" : true,\n    \"sorted\" : false,\n    \"unsorted\" : true\n  },\n  \"size\" : 10,\n  \"numberOfElements\" : 1,\n  \"first\" : true,\n  \"empty\" : false\n}"
                   }
                 }
               }
@@ -140,7 +140,7 @@
                 },
                 "examples" : {
                   "hello-get" : {
-                    "value" : "{\n  \"value\" : \"hello\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-06-22T22:59:29.99012\"\n}"
+                    "value" : "{\n  \"value\" : \"hello\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-07-09T12:09:04.506379\"\n}"
                   }
                 }
               }
@@ -177,7 +177,7 @@
                 },
                 "examples" : {
                   "hello-create" : {
-                    "value" : "{\n  \"value\" : \"hello example1\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-06-22T22:59:29.944766\"\n}"
+                    "value" : "{\n  \"value\" : \"hello example1\",\n  \"success\" : true,\n  \"createdOn\" : \"2022-07-09T12:09:04.464899\"\n}"
                   }
                 }
               }
@@ -234,6 +234,40 @@
         }
       }
     },
+    "/api/v1/users" : {
+      "get" : {
+        "tags" : [ "api" ],
+        "summary" : "사용자 프로필 조회",
+        "description" : "사용자 프로필을 이메일로 조회합니다.",
+        "operationId" : "user-profile-search",
+        "parameters" : [ {
+          "name" : "email",
+          "in" : "query",
+          "description" : "사용자 이메일",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "200",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/api-v1-users701179906"
+                },
+                "examples" : {
+                  "user-profile-search" : {
+                    "value" : "{\n  \"content\" : [ {\n    \"id\" : \"dd4354c2-b020-4814-9966-1807d0aea4ad\",\n    \"name\" : \"Testuser\",\n    \"email\" : \"testuser@example.com\",\n    \"nickname\" : \"Testuser\",\n    \"imageUrl\" : \"https://profile.example.com/testuser\"\n  } ],\n  \"pageable\" : {\n    \"sort\" : {\n      \"empty\" : true,\n      \"sorted\" : false,\n      \"unsorted\" : true\n    },\n    \"offset\" : 0,\n    \"pageNumber\" : 0,\n    \"pageSize\" : 10,\n    \"paged\" : true,\n    \"unpaged\" : false\n  },\n  \"totalPages\" : 1,\n  \"totalElements\" : 1,\n  \"last\" : true,\n  \"number\" : 0,\n  \"sort\" : {\n    \"empty\" : true,\n    \"sorted\" : false,\n    \"unsorted\" : true\n  },\n  \"size\" : 10,\n  \"numberOfElements\" : 1,\n  \"first\" : true,\n  \"empty\" : false\n}"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/v1/friend-requests/{id}" : {
       "get" : {
         "tags" : [ "api" ],
@@ -259,7 +293,7 @@
                 },
                 "examples" : {
                   "friend-request-get-one" : {
-                    "value" : "{\n  \"id\" : \"61cbd5b1-030d-44e3-b093-8226c4c756a0\",\n  \"fromUser\" : {\n    \"id\" : \"8cf952ba-888a-4d09-94fd-04616743fe3b\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"955474c3-1870-45c6-a2d7-87f584d3e0ec\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"PENDING\"\n}"
+                    "value" : "{\n  \"id\" : \"f08c6fa9-09c9-4223-aeb9-88f6fc9a1f00\",\n  \"fromUser\" : {\n    \"id\" : \"423de3cc-99a7-465b-b847-fd6d2ecda56e\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"bdb291bf-44c8-4e00-b335-e5ebd11c4d04\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"PENDING\"\n}"
                   }
                 }
               }
@@ -305,7 +339,7 @@
                 },
                 "examples" : {
                   "friend-request-update-to-create-friend" : {
-                    "value" : "{\n  \"id\" : \"b86fe300-a75d-43b5-8b4a-762d50ef2aa1\",\n  \"fromUser\" : {\n    \"id\" : \"fb7627fb-4200-4fa2-a592-ed0ca2cb5eb6\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"7cb5e091-07ff-4de5-a052-87665fc8f2f5\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"ACCEPTED\"\n}"
+                    "value" : "{\n  \"id\" : \"0f00714c-0c8c-4cf4-a192-fc4cce92e163\",\n  \"fromUser\" : {\n    \"id\" : \"beaa9244-7a1c-41c7-923c-1d45f74732e2\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"8f4a28af-7db6-49e7-bb1d-04eaa4c65b21\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  },\n  \"status\" : \"ACCEPTED\"\n}"
                   }
                 }
               }
@@ -339,7 +373,7 @@
                 },
                 "examples" : {
                   "friend-get-one" : {
-                    "value" : "{\n  \"id\" : \"7bf5054c-d6e0-414b-9087-8a101834c7a5\",\n  \"fromUser\" : {\n    \"id\" : \"789eaaf0-3241-4244-85b5-5fc21d61873d\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"68f996f4-cc0c-476e-8c55-6fbaaaa62831\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  }\n}"
+                    "value" : "{\n  \"id\" : \"43f823e3-d470-4e92-81de-61412215ea6c\",\n  \"fromUser\" : {\n    \"id\" : \"b6d43ddb-c0e3-435f-9fe6-573c47abb56a\",\n    \"name\" : \"FromUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"FromUser\",\n    \"imageUrl\" : \"https://profile.example.com/from-user\"\n  },\n  \"toUser\" : {\n    \"id\" : \"4027b995-9243-4de6-84b4-56bdfb1a36e4\",\n    \"name\" : \"ToUser\",\n    \"email\" : \"test@jmt-monster.com\",\n    \"nickname\" : \"ToUser\",\n    \"imageUrl\" : \"https://profile.example.com/to-user\"\n  }\n}"
                   }
                 }
               }
@@ -362,7 +396,7 @@
           "schema" : {
             "type" : "string"
           },
-          "example" : "Bearer 382680c1-abef-4310-b65c-a1765ef9f862"
+          "example" : "Bearer e12e12c1-7bb1-4b10-91d0-66fe266db2c8"
         } ],
         "responses" : {
           "200" : {
@@ -374,7 +408,7 @@
                 },
                 "examples" : {
                   "my-user" : {
-                    "value" : "{\n  \"isSuccess\" : true,\n  \"user\" : {\n    \"id\" : \"242180ef-601d-4f3e-89b2-c40aa313e232\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : null,\n    \"address\" : null,\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : false,\n    \"verified\" : false\n  }\n}"
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"user\" : {\n    \"id\" : \"494c9bbd-3bdc-424a-ba6a-f4d2dae6cdd8\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : null,\n    \"address\" : null,\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : false,\n    \"verified\" : false\n  }\n}"
                   }
                 }
               }
@@ -397,7 +431,7 @@
           "schema" : {
             "type" : "string"
           },
-          "example" : "Bearer c7cad56e-598b-4a70-afe1-59dc4c4336dc"
+          "example" : "Bearer db9d628a-d3cd-4a1a-abdd-88ae18c634fa"
         } ],
         "requestBody" : {
           "content" : {
@@ -423,7 +457,7 @@
                 },
                 "examples" : {
                   "submit-extra-info" : {
-                    "value" : "{\n  \"isSuccess\" : true,\n  \"user\" : {\n    \"id\" : \"cdb8c1dd-7d80-4b63-a284-940355048af5\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : \"DPS0340\",\n    \"address\" : \"경기도 시흥시 서울대학로278번길 19-13\",\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : true,\n    \"verified\" : false\n  }\n}"
+                    "value" : "{\n  \"isSuccess\" : true,\n  \"user\" : {\n    \"id\" : \"0f543b07-4165-43d8-b42d-cc4ee6a38e6a\",\n    \"name\" : \"이지호\",\n    \"email\" : \"optional.int@kakao.com\",\n    \"nickname\" : \"DPS0340\",\n    \"address\" : \"경기도 시흥시 서울대학로278번길 19-13\",\n    \"imageUrl\" : null,\n    \"emailVerified\" : false,\n    \"extraInfoInjected\" : true,\n    \"verified\" : false\n  }\n}"
                   }
                 }
               }
@@ -435,24 +469,6 @@
   },
   "components" : {
     "schemas" : {
-      "api-v1-images-1687754793" : {
-        "type" : "object",
-        "properties" : {
-          "filename" : {
-            "type" : "string",
-            "description" : "File name of image in S3"
-          }
-        }
-      },
-      "api-v1-images894266175" : {
-        "type" : "object",
-        "properties" : {
-          "url" : {
-            "type" : "string",
-            "description" : "URL of image in S3"
-          }
-        }
-      },
       "api-v1-friend-requests-id529653109" : {
         "type" : "object",
         "properties" : {
@@ -513,32 +529,6 @@
           "status" : {
             "type" : "string",
             "description" : "상태"
-          }
-        }
-      },
-      "api-v1-hello527089244" : {
-        "type" : "object",
-        "properties" : {
-          "success" : {
-            "type" : "boolean",
-            "description" : "성공 여부를 나타내는 불린 변수"
-          },
-          "createdOn" : {
-            "type" : "string",
-            "description" : "객체 생성 시각"
-          },
-          "value" : {
-            "type" : "string",
-            "description" : "리스폰스 메시지"
-          }
-        }
-      },
-      "api-v1-friend-requests-id-989932600" : {
-        "type" : "object",
-        "properties" : {
-          "status" : {
-            "type" : "string",
-            "description" : "친구 요청 상태 (ACCEPTED)"
           }
         }
       },
@@ -614,6 +604,39 @@
           }
         }
       },
+      "api-v1-users701179906" : {
+        "type" : "object",
+        "properties" : {
+          "content" : {
+            "type" : "array",
+            "items" : {
+              "type" : "object",
+              "properties" : {
+                "imageUrl" : {
+                  "type" : "string",
+                  "description" : "사용자 프로필 사진 주소"
+                },
+                "nickname" : {
+                  "type" : "string",
+                  "description" : "사용자 닉네임"
+                },
+                "name" : {
+                  "type" : "string",
+                  "description" : "사용자 이름"
+                },
+                "id" : {
+                  "type" : "string",
+                  "description" : "사용자 ID"
+                },
+                "email" : {
+                  "type" : "string",
+                  "description" : "사용자 이메일"
+                }
+              }
+            }
+          }
+        }
+      },
       "users-me-extra-info-1863268708" : {
         "type" : "object",
         "properties" : {
@@ -661,6 +684,50 @@
           "isSuccess" : {
             "type" : "boolean",
             "description" : "성공 여부"
+          }
+        }
+      },
+      "api-v1-images-1687754793" : {
+        "type" : "object",
+        "properties" : {
+          "filename" : {
+            "type" : "string",
+            "description" : "File name of image in S3"
+          }
+        }
+      },
+      "api-v1-images894266175" : {
+        "type" : "object",
+        "properties" : {
+          "url" : {
+            "type" : "string",
+            "description" : "URL of image in S3"
+          }
+        }
+      },
+      "api-v1-friend-requests-id-989932600" : {
+        "type" : "object",
+        "properties" : {
+          "status" : {
+            "type" : "string",
+            "description" : "친구 요청 상태 (ACCEPTED)"
+          }
+        }
+      },
+      "api-v1-hello527089244" : {
+        "type" : "object",
+        "properties" : {
+          "success" : {
+            "type" : "boolean",
+            "description" : "성공 여부를 나타내는 불린 변수"
+          },
+          "createdOn" : {
+            "type" : "string",
+            "description" : "객체 생성 시각"
+          },
+          "value" : {
+            "type" : "string",
+            "description" : "리스폰스 메시지"
           }
         }
       },

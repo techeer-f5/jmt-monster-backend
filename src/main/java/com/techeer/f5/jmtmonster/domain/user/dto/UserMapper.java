@@ -22,7 +22,6 @@ public class UserMapper {
                 .name(entity.getName())
                 .email(entity.getEmail())
                 .nickname(entity.getNickname())
-                .address(entity.getAddress())
                 .imageUrl(entity.getImageUrl())
                 .emailVerified(entity.getEmailVerified())
                 .extraInfoInjected(entity.getExtraInfoInjected())

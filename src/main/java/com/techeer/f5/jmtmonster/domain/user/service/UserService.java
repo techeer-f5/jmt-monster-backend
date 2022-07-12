@@ -96,12 +96,9 @@ public class UserService {
 
         user.addExtraInfo(
                 extraUserInfoRequestDto.getNickname(),
-                extraUserInfoRequestDto.getAddress(),
                 extraUserInfoRequestDto.getImageUrl());
 
         user = userRepository.saveAndFlush(user);
-
-        // TODO: migrate API using extraUserInfoRequestDto.getAddressCode()
 
         return userMapper.toUserResponseDto(user);
     }

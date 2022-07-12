@@ -52,12 +52,6 @@ public class User {
     @Setter
     private String nickname = null;
 
-    @Size(min = 1, max = 1024, message = "주소 길이는 1자부터 1024자까지 가능합니다.")
-    @Nullable
-    @Builder.Default
-    @Setter
-    private String address = null;
-
     @Size(min = 1, max = 4096, message = "이미지 주소 길이는 1자부터 1024자까지 가능합니다.")
     @Nullable
     @Builder.Default
@@ -94,10 +88,9 @@ public class User {
         tokens.add(persistentToken);
     }
 
-    public boolean addExtraInfo(String nickname, String address, String imageUrl)
+    public boolean addExtraInfo(String nickname, String imageUrl)
             throws IllegalStateException {
         this.nickname = nickname;
-        this.address = address;
         this.imageUrl = imageUrl;
 
         extraInfoInjected = true;

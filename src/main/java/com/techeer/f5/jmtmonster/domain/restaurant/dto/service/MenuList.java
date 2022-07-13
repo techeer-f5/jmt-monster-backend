@@ -1,5 +1,6 @@
 package com.techeer.f5.jmtmonster.domain.restaurant.dto.service;
 
+import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.RestaurantResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -12,5 +13,5 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MenuList {
-    private List menu;
+    private List<RestaurantResponseDto> menu;
 }

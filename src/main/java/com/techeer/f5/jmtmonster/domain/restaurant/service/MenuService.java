@@ -30,7 +30,7 @@ public class MenuService {
         ArrayList listMenu = new ArrayList();
         String url = "https://place.map.kakao.com/main/v/";
         URI targetUrl = UriComponentsBuilder
-                .fromUriString(url +cid)
+                .fromUriString(url + cid)
                 .build()
                 .encode(StandardCharsets.UTF_8)
                 .toUri();
@@ -56,8 +56,8 @@ public class MenuService {
         }
 
         // TODO: change raw type data
-        MenuList MENULIST = restaurantMapper.toMenuList(listMenu);
-        RestaurantInfo restaurantInfo = restaurantMapper.toInformation(cid, restaurantName, xCord, yCord, MENULIST);
+        MenuList menuList2 = restaurantMapper.toMenuList(listMenu);
+        RestaurantInfo restaurantInfo = restaurantMapper.toInformation(cid, restaurantName, xCord, yCord, menuList2);
 
         if (restaurantRepository.findByCid(cid).isPresent()) {
             // 이미 존재 => 조회된 정보 바로 전송

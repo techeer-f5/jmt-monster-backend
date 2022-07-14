@@ -1,5 +1,6 @@
 package com.techeer.f5.jmtmonster.domain.user.controller;
 
+import com.techeer.f5.jmtmonster.domain.oauth.aop.annotation.AuthOnly;
 import com.techeer.f5.jmtmonster.domain.user.dto.UserDto;
 import com.techeer.f5.jmtmonster.domain.user.dto.UserResponseDto;
 import com.techeer.f5.jmtmonster.domain.user.dto.ExtraUserInfoRequestDto;
@@ -25,33 +26,22 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/me")
+    @AuthOnly
     public ResponseEntity<UserResponseDto> getMyUser(HttpServletRequest request) {
         UserResponseDto userResponseDto = userService.getMyUser(request);
 
         return ResponseEntity.status(HttpStatus.OK)
-                .body(userResponseDto);
+            .body(userResponseDto);
     }
 
     @PostMapping("/me/extra-info")
     @PutMapping("/me/extra-info")
+    @AuthOnly
     public ResponseEntity<UserResponseDto> submitExtraInfo(HttpServletRequest request, @RequestBody @Valid ExtraUserInfoRequestDto extraUserInfoRequestDto) {
-        try {
-            UserResponseDto userResponseDto = userService.submitExtraInfo(request, extraUserInfoRequestDto);
+        UserResponseDto userResponseDto = userService.submitExtraInfo(request, extraUserInfoRequestDto);
 
-            return ResponseEntity.status(HttpStatus.OK)
-                    .body(userResponseDto);
-        } catch (NotAuthorizedException |
-                 ResourceNotFoundException |
-                 RollbackException |
-                 TransactionSystemException exception) {
-            log.error(exception.toString());
-        }
-
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(UserResponseDto.builder()
-                        .isSuccess(false)
-                        .user(UserDto.builder().id(null).build())
-                        .build());
+        return ResponseEntity.status(HttpStatus.OK)
+            .body(userResponseDto);
     }
 
 }

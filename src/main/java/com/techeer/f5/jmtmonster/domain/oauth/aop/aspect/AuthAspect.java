@@ -1,24 +1,22 @@
 package com.techeer.f5.jmtmonster.domain.oauth.aop.aspect;
 
-import com.techeer.f5.jmtmonster.domain.oauth.domain.PersistentToken;
 import com.techeer.f5.jmtmonster.domain.oauth.repository.PersistentTokenRepository;
 import com.techeer.f5.jmtmonster.global.error.ErrorResponse;
-import com.techeer.f5.jmtmonster.global.error.exception.ErrorCode;
 import com.techeer.f5.jmtmonster.global.error.exception.NotAuthorizedException;
 import com.techeer.f5.jmtmonster.global.utils.JsonMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.util.UUID;
 
 @Aspect
@@ -36,37 +34,28 @@ public class AuthAspect {
     private void checkAuth() {
     }
 
-    private void sendErrorResponse(String message) {
+    private ResponseEntity<ErrorResponse> sendErrorResponse(String message) {
         NotAuthorizedException ex = new NotAuthorizedException(message);
         ErrorResponse errorResponse = ErrorResponse.of(ex.getCode(), ex.getMessage());
 
-        response.setStatus(ex.getCode().getStatus().value());
-        response.setContentType("application/json");
-
-        String result = jsonMapper.asJsonString(errorResponse);
-
-        try {
-            response.getWriter().write(result);
-        } catch (IOException ignored) {
-            log.error("Failed to set error response because of IOException");
-        }
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
     }
 
-    @Before("checkAuth()")
-    private void checkAuthBefore(JoinPoint joinPoint) {
+    @Around("checkAuth()")
+    private Object checkAuthAspect(ProceedingJoinPoint joinPoint) throws Throwable {
         String authorizationHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
         UUID token;
 
         try {
             token = UUID.fromString(authorizationHeader.substring("Bearer ".length()));
-        } catch (IllegalArgumentException | IndexOutOfBoundsException e) {
-            sendErrorResponse("Failed to parse authorization header bearer token");
-            return;
+        } catch (IllegalArgumentException | IndexOutOfBoundsException | NullPointerException e) {
+            return sendErrorResponse("토큰 UUID 파싱에 실패했습니다.");
         }
 
         if (persistentTokenRepository.findById(token).isEmpty()) {
-            sendErrorResponse("Token is not valid");
+            return sendErrorResponse("주어진 토큰이 올바르지 않습니다.");
         }
 
+        return joinPoint.proceed();
     }
 }

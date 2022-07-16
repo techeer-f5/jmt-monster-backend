@@ -16,8 +16,8 @@ public class RestaurantMapper {
         return Restaurant.builder()
                 .cid(cId)
                 .name(name)
-                .x_cord(x)
-                .y_cord(y)
+                .xCoordinate(x)
+                .yCoordinate(y)
                 .build();
     }
 

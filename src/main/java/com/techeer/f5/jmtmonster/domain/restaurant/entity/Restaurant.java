@@ -34,7 +34,7 @@ public class Restaurant {
 
     private String name;
 
-    private Long x_cord;
-    private Long y_cord;
+    private Long xCoordinate;
+    private Long yCoordinate;
 
 }

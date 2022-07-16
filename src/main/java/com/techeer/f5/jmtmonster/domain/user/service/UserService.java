@@ -51,6 +51,12 @@ public class UserService {
         return userRepository.findById(id);
     }
 
+    public User findById(UUID id) {
+        return userRepository.findById(id)
+                .orElseThrow(
+                        () -> new ResourceNotFoundException(User.class.getSimpleName(), "id", id));
+    }
+
     public Page<User> searchByEmail(Pageable pageable, String email) {
         return userRepository.searchByEmail(pageable, email);
     }

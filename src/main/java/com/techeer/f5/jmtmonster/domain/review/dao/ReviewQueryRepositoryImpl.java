@@ -23,6 +23,7 @@ public class ReviewQueryRepositoryImpl implements ReviewQueryRepository {
         List<Review> result = jpaQueryFactory.selectFrom(QReview.review)
             .where(QReview.review.user.id.eq(userId))
             .limit(pageable.getPageSize())
+            .offset(pageable.getOffset())
             .fetch();
 
         int total = result.size();

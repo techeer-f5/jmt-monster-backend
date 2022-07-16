@@ -31,8 +31,8 @@ public class RestaurantService {
         // 임시 값 저장
         jsonObject.put("cid", "562795624");
         jsonObject.put("name", "롯데리아 인천공항제2여객터미널3층점");
-        jsonObject.put("x_cord", "374960");
-        jsonObject.put("y_cord", "1102598");
+        jsonObject.put("xcoorDinate", "374960");
+        jsonObject.put("ycoorDinate", "1102598");
 
         Restaurant restaurant = restaurantMapper.toEntity(jsonObject, cid);
 

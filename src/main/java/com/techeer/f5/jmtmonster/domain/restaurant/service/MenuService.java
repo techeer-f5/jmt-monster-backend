@@ -56,8 +56,8 @@ public class MenuService {
         }
 
         // TODO: change raw type data
-        MenuList menuList2 = restaurantMapper.toMenuList(listMenu);
-        RestaurantInfo restaurantInfo = restaurantMapper.toInformation(cid, restaurantName, xCord, yCord, menuList2);
+//        MenuList menuList2 = restaurantMapper.toMenuList(listMenu);
+        RestaurantInfo restaurantInfo = restaurantMapper.toInformation(cid, restaurantName, xCord, yCord, listMenu);
 
         if (restaurantRepository.findByCid(cid).isPresent()) {
             // 이미 존재 => 조회된 정보 바로 전송

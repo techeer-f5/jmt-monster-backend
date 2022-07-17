@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
+
 @Builder
 @Getter
 @NoArgsConstructor
@@ -14,5 +16,5 @@ public class RestaurantInfo {
     private String name;
     private Long xCord;
     private Long yCord;
-    private MenuList menuList;
+    private ArrayList<String> menuList;
 }

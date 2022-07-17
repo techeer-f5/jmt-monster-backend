@@ -7,6 +7,7 @@ import com.techeer.f5.jmtmonster.domain.restaurant.entity.Restaurant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -21,21 +22,21 @@ public class RestaurantMapper {
                 .build();
     }
 
-    public RestaurantInfo toInformation(Long cid, String restaurantName, Long x, Long y, MenuList menuList) {
+    public RestaurantInfo toInformation(Long cid, String restaurantName, Long x, Long y, ArrayList<String> listMenu) {
         return RestaurantInfo.builder()
                 .cid(cid)
                 .name(restaurantName)
                 .xCord(x)
                 .yCord(y)
-                .menuList(menuList)
+                .menuList(listMenu)
                 .build();
     }
-
-    public MenuList toMenuList(List menu) {
-        return MenuList.builder()
-                .menu(menu)
-                .build();
-    }
+//
+//    public MenuList toMenuList(List menu) {
+//        return MenuList.builder()
+//                .menu(menu)
+//                .build();
+//    }
 
     public RestaurantResponseDto toResponseDto(RestaurantInfo restaurantInfo) {
         return RestaurantResponseDto.builder()

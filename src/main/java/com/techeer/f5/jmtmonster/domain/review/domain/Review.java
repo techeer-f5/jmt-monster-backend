@@ -1,10 +1,16 @@
 package com.techeer.f5.jmtmonster.domain.review.domain;
 
-
 import com.techeer.f5.jmtmonster.domain.user.domain.User;
 import com.techeer.f5.jmtmonster.global.domain.domain.BaseTimeEntity;
+
+import java.util.ArrayList;
+
 import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
@@ -19,6 +25,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 public class Review extends BaseTimeEntity {
 
     @Id
@@ -42,24 +49,24 @@ public class Review extends BaseTimeEntity {
     @NotNull
     private Star star;
 
-//    @NotNull
-    @OneToMany(mappedBy = "review", orphanRemoval = true)
-    private List<ReviewFood> foodList;
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "review", fetch = FetchType.EAGER)
+    @Builder.Default
+    @ToString.Exclude
+    private List<ReviewFood> foodList = new ArrayList<>();
 
-//    @NotNull
-    @OneToMany(mappedBy = "review", orphanRemoval = true)
-    private List<ReviewImage> imageList;
+    @Fetch(FetchMode.SUBSELECT)
+    @OneToMany(mappedBy = "review", fetch = FetchType.EAGER)
+    @Builder.Default
+    @ToString.Exclude
+    private List<ReviewImage> imageList = new ArrayList<>();
 
-    @Override
-    public String toString() {
-        return "Review{" +
-                "id=" + id +
-                ", user=" + user +
-                ", content=" + content +
-                ", like=" + like +
-                ", star=" + star +
-                ", foodList size=" + foodList.size() + // 순환 참조 발생해서 개수 반환
-                ", imageList size=" + imageList.size() +
-                '}';
+    public void addFoodList(List<ReviewFood> foodList) {
+        this.foodList.addAll(foodList);
     }
+
+    public void addImageList(List<ReviewImage> imageList) {
+        this.imageList.addAll(imageList);
+    }
+
 }

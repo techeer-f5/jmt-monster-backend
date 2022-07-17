@@ -59,7 +59,6 @@ public class HomeServiceTest {
                 .name("이지호")
                 .nickname("DPS0340")
                 .email("optional.int@kakao.com")
-                .address("서울대학로27번길 19-13")
                 .emailVerified(true)
                 .extraInfoInjected(true)
                 .verified(true)

@@ -33,8 +33,7 @@ public class User {
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "BINARY(16)")
-    @Builder.Default
-    private UUID id = UUID.randomUUID();
+    private UUID id;
 
     @Size(min = 1, max = 30, message = "이름 길이는 1자부터 30자까지 가능합니다.")
     @NotBlank
@@ -43,7 +42,7 @@ public class User {
 
     @Size(min = 1, max = 100, message = "이메일 길이는 1자부터 30자까지 가능합니다.")
     @Email
-    @NotNull
+    @NotBlank
     @Column(unique = true)
     private String email;
 
@@ -52,12 +51,6 @@ public class User {
     @Builder.Default
     @Setter
     private String nickname = null;
-
-    @Size(min = 1, max = 1024, message = "주소 길이는 1자부터 1024자까지 가능합니다.")
-    @Nullable
-    @Builder.Default
-    @Setter
-    private String address = null;
 
     @Size(min = 1, max = 4096, message = "이미지 주소 길이는 1자부터 1024자까지 가능합니다.")
     @Nullable
@@ -95,10 +88,9 @@ public class User {
         tokens.add(persistentToken);
     }
 
-    public boolean addExtraInfo(String nickname, String address, String imageUrl)
+    public boolean addExtraInfo(String nickname, String imageUrl)
             throws IllegalStateException {
         this.nickname = nickname;
-        this.address = address;
         this.imageUrl = imageUrl;
 
         extraInfoInjected = true;

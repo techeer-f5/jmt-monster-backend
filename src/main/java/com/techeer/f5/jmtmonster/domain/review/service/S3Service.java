@@ -16,7 +16,7 @@ public class S3Service {
 
     public String uploadImage(MultipartFile image) throws IOException {
         // Upload Images to S3 Bucket
-        return s3Uploader.upload(image, s3Uploader.getDIR_NAME());
+        return s3Uploader.upload(image, s3Uploader.getDirName());
     }
 
     public String deleteImage(String filename) {
@@ -26,7 +26,7 @@ public class S3Service {
     }
 
     public String deleteAndCreateImage(MultipartFile image,String filename) throws IOException {
-        String url = s3Uploader.upload(image, s3Uploader.getDIR_NAME());
+        String url = s3Uploader.upload(image, s3Uploader.getDirName());
         s3Uploader.delete(filename);
         return url;
     }

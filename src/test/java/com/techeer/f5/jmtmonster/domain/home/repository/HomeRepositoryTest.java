@@ -73,11 +73,11 @@ public class HomeRepositoryTest {
                 .name("이지호")
                 .nickname("DPS0340")
                 .email("optional.int@kakao.com")
-                .address("서울대학로27번길 19-13")
                 .emailVerified(true)
                 .extraInfoInjected(true)
                 .verified(true)
                 .build();
+
 
         user = userRepository.saveAndFlush(user);
 
@@ -185,8 +185,6 @@ public class HomeRepositoryTest {
 
         // when
         homeRepository.migrate(user, newHome);
-
-        assertEquals(user.getAddress(), newHome.getName());
 
         List<HomeToUser> foundHomeToUsers = homeRepository.findAllHomeToUsersByUser(user);
 

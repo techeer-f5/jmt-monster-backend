@@ -91,8 +91,6 @@ public class HomeQueryRepositoryImpl implements HomeQueryRepository {
                     .build();
         }
 
-        user.setAddress(home.getName());
-
         homeToUser.setCurrent(true);
 
         homeToUserRepository.saveAndFlush(homeToUser);

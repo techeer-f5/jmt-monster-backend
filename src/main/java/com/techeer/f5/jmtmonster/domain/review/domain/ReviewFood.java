@@ -17,6 +17,7 @@ import java.util.UUID;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@ToString
 public class ReviewFood extends BaseTimeEntity {
 
     @Id
@@ -28,22 +29,14 @@ public class ReviewFood extends BaseTimeEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
+    @ToString.Exclude
     private Review review;
 
     @NotNull
     private String food;
 
-    public void update(String food){
+    public void update(String food) {
         this.food = food;
-    }
-
-    @Override
-    public String toString() {
-        return "ReviewFood{" +
-                "id=" + id +
-                ", review id=" + review.getId() +
-                ", food=" + food +
-                '}';
     }
 
 }

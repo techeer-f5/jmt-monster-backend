@@ -4,6 +4,7 @@ import com.techeer.f5.jmtmonster.domain.restaurant.dto.mapper.RestaurantMapper;
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.RestaurantResponseDto;
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.service.RestaurantInfo;
 import com.techeer.f5.jmtmonster.domain.restaurant.repository.RestaurantRepository;
+import com.techeer.f5.jmtmonster.global.config.RestTemplateConfig;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,9 @@ import java.util.*;
 public class MenuService {
     private final RestaurantMapper restaurantMapper;
     private final RestaurantRepository restaurantRepository;
+    private final RestTemplateConfig restTemplateConfig;
 
     public RestaurantResponseDto getRestaurantInfo(@PathVariable("cid") long cid) {
-        RestTemplate restTemplate = new RestTemplate();
         HttpHeaders httpHeaders = new HttpHeaders();
         HttpEntity<String> httpEntity = new HttpEntity<>(httpHeaders); //엔티티로 만들기
         ArrayList listMenu = new ArrayList();
@@ -34,7 +35,7 @@ public class MenuService {
                 .toUri();
 
         // 전체 내용
-        ResponseEntity<Map> result = restTemplate.exchange(targetUrl, HttpMethod.GET, httpEntity, Map.class);
+        ResponseEntity<Map> result = restTemplateConfig.restTemplate().exchange(targetUrl, HttpMethod.GET, httpEntity, Map.class);
         Map<String, Object> resultMap = result.getBody();
 
         Map<String, Object> place = (Map<String, Object>) resultMap.get("findway");

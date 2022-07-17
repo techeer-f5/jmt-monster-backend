@@ -20,8 +20,6 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Restaurant {
-    // Todo 휴대폰 번호, 주소 등 추가 정보 저장이 필요할 시 Column 추가
-    // Todo 특히 주소에 대한 엔티티 고민해봐야 함
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -34,7 +32,7 @@ public class Restaurant {
 
     private String name;
 
-    private Long xcoorDinate;
-    private Long ycoorDinate;
+    private Long xCoordinate;
+    private Long yCoordinate;
 
 }

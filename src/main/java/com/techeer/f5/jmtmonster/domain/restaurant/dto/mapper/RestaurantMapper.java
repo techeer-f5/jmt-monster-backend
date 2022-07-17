@@ -1,45 +1,40 @@
 package com.techeer.f5.jmtmonster.domain.restaurant.dto.mapper;
 
-import com.nimbusds.jose.shaded.json.JSONObject;
-import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.MenuInfoResponseDto;
-import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.RestaurantInfoResponseDto;
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.RestaurantResponseDto;
+import com.techeer.f5.jmtmonster.domain.restaurant.dto.service.RestaurantInfo;
 import com.techeer.f5.jmtmonster.domain.restaurant.entity.Restaurant;
-import com.techeer.f5.jmtmonster.domain.restaurant.dto.service.MenuInfo;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
 
 @Component
 @RequiredArgsConstructor
 public class RestaurantMapper {
-    public Restaurant toEntity(JSONObject jsonObject, Long cid) {
+    public Restaurant toEntity(Long cId, String name, Long x, Long y) {
         return Restaurant.builder()
+                .cid(cId)
+                .name(name)
+                .xCoordinate(x)
+                .yCoordinate(y)
+                .build();
+    }
+
+    public RestaurantInfo toInformation(Long cid, String restaurantName, Long x, Long y, ArrayList<String> listMenu) {
+        return RestaurantInfo.builder()
                 .cid(cid)
-                .name(jsonObject.getAsString("name"))
-                .xcoorDinate(Long.parseLong(jsonObject.getAsString("xcoorDinate")))
-                .ycoorDinate(Long.parseLong(jsonObject.getAsString("ycoorDinate")))
+                .name(restaurantName)
+                .xCord(x)
+                .yCord(y)
+                .menuList(listMenu)
                 .build();
     }
 
-    public RestaurantResponseDto toResponseDto(Restaurant restaurant) {
+    public RestaurantResponseDto toResponseDto(RestaurantInfo restaurantInfo) {
         return RestaurantResponseDto.builder()
-                .cid(restaurant.getCid())
-                .name(restaurant.getName())
-                .build();
-    }
-
-    public MenuInfoResponseDto toMenuInfoResponseDto(MenuInfo menuInfo) {
-        return MenuInfoResponseDto.builder()
-                .cid(menuInfo.getCid())
-                .name(menuInfo.getRestaurantName())
-                .menuName(menuInfo.getMenuName())
-                .build();
-    }
-
-    public RestaurantInfoResponseDto toRestaurantInfoResponseDto(MenuInfo restaurantInfo) {
-        return RestaurantInfoResponseDto.builder()
                 .cid(restaurantInfo.getCid())
-                .name(restaurantInfo.getRestaurantName())
+                .name(restaurantInfo.getName())
+                .menuList(restaurantInfo.getMenuList())
                 .build();
     }
 }

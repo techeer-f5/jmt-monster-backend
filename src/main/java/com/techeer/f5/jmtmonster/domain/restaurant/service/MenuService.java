@@ -2,9 +2,7 @@ package com.techeer.f5.jmtmonster.domain.restaurant.service;
 
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.mapper.RestaurantMapper;
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.RestaurantResponseDto;
-import com.techeer.f5.jmtmonster.domain.restaurant.dto.service.MenuList;
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.service.RestaurantInfo;
-import com.techeer.f5.jmtmonster.domain.restaurant.entity.Restaurant;
 import com.techeer.f5.jmtmonster.domain.restaurant.repository.RestaurantRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.*;
@@ -51,20 +49,18 @@ public class MenuService {
 
         // Get listMenu
         for (Map<String, Object> oneMenuInfo : menuList) {
-            LinkedHashMap menu = (LinkedHashMap) oneMenuInfo;
+            LinkedHashMap<String, String> menu = (LinkedHashMap) oneMenuInfo;
             listMenu.add(menu.get("menu"));
         }
 
         // TODO: change raw type data
-//        MenuList menuList2 = restaurantMapper.toMenuList(listMenu);
         RestaurantInfo restaurantInfo = restaurantMapper.toInformation(cid, restaurantName, xCord, yCord, listMenu);
 
         if (restaurantRepository.findByCid(cid).isPresent()) {
-            // 이미 존재 => 조회된 정보 바로 전송
+            // response directly when it is existed
             return restaurantMapper.toResponseDto(restaurantInfo);
         }
 
-//         db에 저장
         restaurantRepository.save(restaurantMapper.toEntity(cid, restaurantName, xCord, yCord));
 
         return restaurantMapper.toResponseDto(restaurantInfo);

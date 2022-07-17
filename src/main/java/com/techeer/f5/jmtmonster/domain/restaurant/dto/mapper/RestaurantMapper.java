@@ -1,14 +1,12 @@
 package com.techeer.f5.jmtmonster.domain.restaurant.dto.mapper;
 
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.RestaurantResponseDto;
-import com.techeer.f5.jmtmonster.domain.restaurant.dto.service.MenuList;
 import com.techeer.f5.jmtmonster.domain.restaurant.dto.service.RestaurantInfo;
 import com.techeer.f5.jmtmonster.domain.restaurant.entity.Restaurant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
-import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -31,12 +29,6 @@ public class RestaurantMapper {
                 .menuList(listMenu)
                 .build();
     }
-//
-//    public MenuList toMenuList(List menu) {
-//        return MenuList.builder()
-//                .menu(menu)
-//                .build();
-//    }
 
     public RestaurantResponseDto toResponseDto(RestaurantInfo restaurantInfo) {
         return RestaurantResponseDto.builder()

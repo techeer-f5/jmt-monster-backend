@@ -6,12 +6,9 @@ import com.techeer.f5.jmtmonster.domain.restaurant.dto.service.RestaurantInfo;
 import com.techeer.f5.jmtmonster.domain.restaurant.repository.RestaurantRepository;
 import com.techeer.f5.jmtmonster.global.config.RestTemplateConfig;
 import lombok.RequiredArgsConstructor;
-import com.techeer.f5.jmtmonster.domain.restaurant.dto.response.MenuInfoResponseDto;
-import com.techeer.f5.jmtmonster.domain.restaurant.dto.service.MenuInfo;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;

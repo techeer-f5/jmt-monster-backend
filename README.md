@@ -7,7 +7,7 @@
 
 ## ⚙️ 기술 문서
 
-- [기획 및 기술 선정 Notion 페이지](https://litsynp.notion.site/7a3cbfc9e2724a8d9520757e2da254bd)
+- [기획 및 기술 선정 Notion 페이지](https://www.notion.so/acc30a106a0444629e1868dfab11a92c)
 
 ## **🌎 Production Server**
 
